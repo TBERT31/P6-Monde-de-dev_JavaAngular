@@ -30,13 +30,13 @@ public class User {
     private Long id;
 
     @NotBlank(message = "Username is mandatory")
-    @Size(max = 50, message = "Username must be between 3 than 50 characters")
+    @Size(min = 3, max = 50, message = "Username must be between 3 than 50 characters")
     @Column(name = "username", unique = true)
     @NonNull
     private String username;
 
     @NotBlank(message = "Email is mandatory")
-    @Size(message = "Email must be less than 50 characters")
+    @Size(max = 50, message = "Email must be less than 50 characters")
     @Column(name = "email", unique = true)
     @Email(message = "Email is not compliant")
     @NonNull

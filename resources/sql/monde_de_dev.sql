@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 05 juin 2024 à 20:39
+-- Généré le : jeu. 06 juin 2024 à 12:23
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -116,6 +116,7 @@ ALTER TABLE `comments`
 -- Index pour la table `subscriptions`
 --
 ALTER TABLE `subscriptions`
+  ADD PRIMARY KEY (`user_id`,`topic_id`),
   ADD KEY `fk_subscriptions_user_id` (`user_id`),
   ADD KEY `fk_subscriptions_topic_id` (`topic_id`);
 
