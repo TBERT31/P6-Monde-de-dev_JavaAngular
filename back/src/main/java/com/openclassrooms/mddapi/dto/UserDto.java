@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,6 +27,12 @@ public class UserDto {
     @JsonIgnore
     @Size(max = 120)
     private String password;
+
+    private List<Long> comments;
+
+    private List<Long> articles;
+
+    private List<Long> topics;
 
     private LocalDateTime createdAt;
 

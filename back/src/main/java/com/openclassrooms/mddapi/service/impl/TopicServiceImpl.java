@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +25,11 @@ public class TopicServiceImpl implements TopicService{
     @Override
     public List<Topic> getAllTopics() {
         return topicRepository.findAll();
+    }
+
+    @Override
+    public Optional<Topic> getTopicById(Long topic_id) {
+        return topicRepository.findById(topic_id);
     }
 
     @Override

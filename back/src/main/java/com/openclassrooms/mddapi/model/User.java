@@ -58,6 +58,9 @@ public class User {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Article> articles;
 
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private List<Topic> topics;
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
