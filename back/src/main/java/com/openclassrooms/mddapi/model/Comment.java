@@ -2,12 +2,14 @@ package com.openclassrooms.mddapi.model;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -27,13 +29,20 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
+    @NotBlank(message = "Message is mandatory")
     @Size(max = 2000)
-    private String comment;
+    @NonNull
+    private String message;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @NonNull
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "article_id", referencedColumnName = "id")
+    @NonNull
+    private Article article;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

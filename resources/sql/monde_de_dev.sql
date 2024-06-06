@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 05 juin 2024 à 19:19
+-- Généré le : mer. 05 juin 2024 à 20:39
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -45,8 +45,9 @@ CREATE TABLE `articles` (
 
 CREATE TABLE `comments` (
   `id` bigint(20) NOT NULL,
-  `comment` varchar(2000) DEFAULT NULL,
+  `message` varchar(2000) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
+  `article_id` bigint(20) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -108,7 +109,8 @@ ALTER TABLE `articles`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_comments_user_id` (`user_id`);
+  ADD KEY `fk_comments_user_id` (`user_id`),
+  ADD KEY `fk_comments_article_id` (`article_id`);
 
 --
 -- Index pour la table `subscriptions`
@@ -167,13 +169,14 @@ ALTER TABLE `users`
 -- Contraintes pour la table `articles`
 --
 ALTER TABLE `articles`
-  ADD CONSTRAINT `fk_articles_author_id` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `fk_articles_topic_id` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`);
+  ADD CONSTRAINT `fk_articles_author_id` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_articles_topic_id` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `comments`
 --
 ALTER TABLE `comments`
+  ADD CONSTRAINT `fk_comments_article_id` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_comments_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

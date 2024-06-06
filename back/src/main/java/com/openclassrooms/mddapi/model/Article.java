@@ -2,11 +2,13 @@ package com.openclassrooms.mddapi.model;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,22 +29,28 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
+    @NotBlank(message = "Title is mandatory")
     @Size(max = 50)
+    @NonNull
     private String title;
 
-
-    @NonNull
+    @NotBlank(message = "Content is mandatory")
     @Size(max = 2000)
+    @NonNull
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @NonNull
     private User author;
 
     @ManyToOne
     @JoinColumn(name = "topic_id", nullable = false)
+    @NonNull
     private Topic topic;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Comment> comments;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

@@ -2,13 +2,13 @@ package com.openclassrooms.mddapi.model;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,20 +29,26 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @NonNull
-    @Size(max = 50)
+    @NotBlank(message = "Username is mandatory")
+    @Size(max = 50, message = "Username must be between 3 than 50 characters")
     @Column(name = "username", unique = true)
+    @NonNull
     private String username;
 
-    @NonNull
-    @Size(max = 50)
+    @NotBlank(message = "Email is mandatory")
+    @Size(message = "Email must be less than 50 characters")
     @Column(name = "email", unique = true)
-    @Email
+    @Email(message = "Email is not compliant")
+    @NonNull
     private String email;
 
 
-    @NonNull
-    @Size(max = 120)
+    @NotBlank(message = "Password is mandatory")
+    @Size(min = 8, max = 120, message = "Password must be between 8 and 120 characters")
+    @Pattern(
+            regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}",
+            message = "Password must contain at least one digit, one lowercase letter, one uppercase letter, one special character and at least 8 characters"
+    )
     @Column(name = "password")
     private String password;
 
