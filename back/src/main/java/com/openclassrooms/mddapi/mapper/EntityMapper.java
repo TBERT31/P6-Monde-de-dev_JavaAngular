@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.mapper;
 
 import java.util.List;
 
+
 public interface EntityMapper<D, E> {
 
     E toEntity(D dto);
