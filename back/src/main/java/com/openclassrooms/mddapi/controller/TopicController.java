@@ -52,9 +52,9 @@ public class TopicController {
             @PathVariable("userId") Long userId
     ) {
         try {
-            topicService.subscribeUserToTopic(id, userId);
+            Topic topic = topicService.subscribeUserToTopic(id, userId);
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(topicMapper.toDto(topic));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -66,9 +66,9 @@ public class TopicController {
             @PathVariable("userId") Long userId
     ) {
         try {
-            topicService.unsubscribeUserFromTopic(id, userId);
+            Topic topic = topicService.unsubscribeUserFromTopic(id, userId);
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(topicMapper.toDto(topic));
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }

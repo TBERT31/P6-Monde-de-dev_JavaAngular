@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 07 juin 2024 à 11:55
+-- Généré le : ven. 07 juin 2024 à 14:48
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -74,6 +74,14 @@ CREATE TABLE `comments` (
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `comments`
+--
+
+INSERT INTO `comments` (`id`, `message`, `user_id`, `article_id`, `created_at`, `updated_at`) VALUES
+(1, 'mon message', 1, 1, '2024-06-07 14:36:20', '2024-06-07 14:36:20'),
+(2, 'mon message', 1, 1, '2024-06-07 14:40:22', '2024-06-07 14:40:22');
+
 -- --------------------------------------------------------
 
 --
@@ -104,7 +112,7 @@ CREATE TABLE `topics` (
 --
 
 INSERT INTO `topics` (`id`, `title`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'JavaScript', 'JavaScript est un langage de programmation de scripts principalement employé dans les pages web interactives et à ce titre est une partie essentielle des applications web. Avec les langages HTML et CSS, JavaScript est au cœur des langages utilisés par les développeurs web.', '2024-06-07 11:31:52', '2024-06-07 11:31:56'),
+(1, 'JavaScript', 'JavaScript est un langage de programmation de scripts principalement employé dans les pages web interactives et à ce titre est une partie essentielle des applications web. Avec les langages HTML et CSS, JavaScript est au cœur des langages utilisés par les développeurs web.', '2024-06-07 11:31:52', '2024-06-07 14:19:41'),
 (2, 'Java', 'Java est un langage de programmation de haut niveau orienté objet créé par James Gosling et Patrick Naughton, employés de Sun Microsystems, avec le soutien de Bill Joy, présenté officiellement le 23 mai 1995 au SunWorld. La société Sun est rachetée en 2009 par la société Oracle qui détient et maintient désormais Java.', '2024-06-07 11:31:58', '2024-06-07 11:32:00'),
 (3, 'Python', 'Python est un langage de programmation interprété, multiparadigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet.', '2024-06-07 11:32:02', '2024-06-07 11:32:06'),
 (4, 'C#', 'C# est un langage de programmation orientée objet, commercialisé par Microsoft depuis 2002 et destiné à développer sur la plateforme Microsoft .NET, au même titre que d’autres langages liés à cette plateforme.', '2024-06-07 11:32:08', '2024-06-07 11:32:12'),
@@ -198,7 +206,7 @@ ALTER TABLE `articles`
 -- AUTO_INCREMENT pour la table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `topics`

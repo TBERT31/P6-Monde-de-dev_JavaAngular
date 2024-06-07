@@ -43,21 +43,21 @@ public class UserController {
         }
     }
 
-//    @GetMapping("/email/{email}")
-//    public ResponseEntity<Optional<UserDto>> getUserByEmail(
-//            @PathVariable String email
-//    ){
-//        Optional<User> optionalUser = userService.getUserByEmail(email);
-//
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//            UserDto userDto = userMapper.toDto(user);
-//
-//            return ResponseEntity.ok(
-//                    Optional.of(userDto)
-//            );
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Optional<UserDto>> getUserByEmail(
+            @PathVariable String email
+    ){
+        Optional<User> optionalUser = userService.getUserByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            UserDto userDto = userMapper.toDto(user);
+
+            return ResponseEntity.ok(
+                    Optional.of(userDto)
+            );
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

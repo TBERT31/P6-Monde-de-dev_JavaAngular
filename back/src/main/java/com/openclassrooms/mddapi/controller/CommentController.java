@@ -55,8 +55,8 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<CommentDto> createComment(
-            @Valid @RequestBody CommentDto commentDto,
-            @RequestHeader("Authorization") String token
+            @Valid @RequestBody CommentDto commentDto//,
+            //@RequestHeader("Authorization") String token
     ) {
         Comment comment = commentMapper.toEntity(commentDto);
 
