@@ -31,7 +31,7 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public Optional<Article> saveArticle(Article article) {
-        return Optional.of(articleRepository.save(article));
+    public Article saveArticle(Article article) {
+        return articleRepository.save(article);
     }
 }

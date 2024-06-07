@@ -9,5 +9,5 @@ public interface ArticleService {
     List<Article> getAllArticles();
     List<Article> getArticlesByTopicId(Long topicId);
     Optional<Article> getArticleById(Long id);
-    Optional<Article> saveArticle(Article article);
+    Article saveArticle(Article article);
 }
