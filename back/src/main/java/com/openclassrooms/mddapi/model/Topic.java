@@ -47,7 +47,7 @@ public class Topic {
             name = "SUBSCRIPTIONS",
             joinColumns = @JoinColumn( name = "topic_id" ),
             inverseJoinColumns = @JoinColumn( name = "user_id" ) )
-    private List<User> users;
+    private List<User> users_subscribed;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

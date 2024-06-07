@@ -23,7 +23,7 @@ public class TopicDto {
 
     private List<Long> articles;
 
-    private List<Long> users;
+    private List<Long> users_subscribed;
 
     private LocalDateTime createdAt;
 

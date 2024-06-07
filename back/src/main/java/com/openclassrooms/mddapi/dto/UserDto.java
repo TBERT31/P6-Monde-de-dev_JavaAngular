@@ -32,7 +32,7 @@ public class UserDto {
 
     private List<Long> articles;
 
-    private List<Long> topics;
+    private List<Long> topics_subscribed;
 
     private LocalDateTime createdAt;
 

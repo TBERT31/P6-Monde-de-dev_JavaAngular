@@ -40,7 +40,7 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic>   {
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(article_id -> {Article article = this.articleService.getArticleById(article_id).orElse(null); " +
                     "if (article != null) { return article; } return null; }).collect(Collectors.toList()))"),
-            @Mapping(target = "users", expression = "java(Optional.ofNullable(topicDto.getUsers())" +
+            @Mapping(target = "users_subscribed", expression = "java(Optional.ofNullable(topicDto.getUsers_subscribed())" +
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(user_id -> { User user = this.userService.getUserById(user_id).orElse(null); " +
                     "if (user != null) { return user; } return null; }).collect(Collectors.toList()))"),
@@ -57,7 +57,7 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic>   {
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(article -> { return article.getId(); }).collect(Collectors.toList())" +
                     ")"),
-            @Mapping(target = "users", expression = "java(Optional.ofNullable(topic.getUsers())" +
+            @Mapping(target = "users_subscribed", expression = "java(Optional.ofNullable(topic.getUsers_subscribed())" +
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(user -> { return user.getId(); }).collect(Collectors.toList())" +
                     ")"),

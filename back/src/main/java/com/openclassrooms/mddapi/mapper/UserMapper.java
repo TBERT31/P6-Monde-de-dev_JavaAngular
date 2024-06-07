@@ -50,7 +50,7 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(article_id -> {Article article = this.articleService.getArticleById(article_id).orElse(null); " +
                     "if (article != null) { return article; } return null; }).collect(Collectors.toList()))"),
-            @Mapping(target = "topics", expression = "java(Optional.ofNullable(userDto.getTopics())" +
+            @Mapping(target = "topics_subscribed", expression = "java(Optional.ofNullable(userDto.getTopics_subscribed())" +
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(topic_id -> {Topic topic = this.topicService.getTopicById(topic_id).orElse(null); " +
                     "if (topic != null) { return topic; } return null; }).collect(Collectors.toList()))"),
@@ -72,7 +72,7 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(article -> { return article.getId(); }).collect(Collectors.toList())" +
                     ")"),
-            @Mapping(target="topics", expression = "java(Optional.ofNullable(user.getTopics())" +
+            @Mapping(target="topics_subscribed", expression = "java(Optional.ofNullable(user.getTopics_subscribed())" +
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(topic -> { return topic.getId(); }).collect(Collectors.toList())" +
                     ")"),

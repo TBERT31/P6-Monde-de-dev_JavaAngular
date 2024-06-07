@@ -40,12 +40,12 @@ public class TopicServiceImpl implements TopicService{
             throw new NotFoundException();
         }
 
-        boolean alreadySubscribed = topic.getUsers().stream().anyMatch(o -> o.getId().equals(userId));
+        boolean alreadySubscribed = topic.getUsers_subscribed().stream().anyMatch(o -> o.getId().equals(userId));
         if(alreadySubscribed) {
             throw new BadRequestException();
         }
 
-        topic.getUsers().add(user);
+        topic.getUsers_subscribed().add(user);
 
         this.topicRepository.save(topic);
     }
@@ -57,12 +57,12 @@ public class TopicServiceImpl implements TopicService{
             throw new NotFoundException();
         }
 
-        boolean alreadySubscribed = topic.getUsers().stream().anyMatch(o -> o.getId().equals(userId));
+        boolean alreadySubscribed = topic.getUsers_subscribed().stream().anyMatch(o -> o.getId().equals(userId));
         if(!alreadySubscribed) {
             throw new BadRequestException();
         }
 
-        topic.setUsers(topic.getUsers().stream().filter(user -> !user.getId().equals(userId)).collect(Collectors.toList()));
+        topic.setUsers_subscribed(topic.getUsers_subscribed().stream().filter(user -> !user.getId().equals(userId)).collect(Collectors.toList()));
 
         this.topicRepository.save(topic);
     }
