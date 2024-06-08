@@ -39,8 +39,8 @@ public abstract class CommentMapper implements EntityMapper<CommentDto, Comment>
                     "this.userService.getUserById(commentDto.getUser_id()).orElse(null) : null)"),
             @Mapping(target = "article", expression = "java(commentDto.getArticle_id() != null ? " +
                     "this.articleService.getArticleById(commentDto.getArticle_id()).orElse(null) : null)"),
-            @Mapping(source = "createdAt", target = "createdAt"),
-            @Mapping(source = "updatedAt", target = "updatedAt")
+            @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
+            @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract Comment toEntity(CommentDto commentDto);
 
@@ -49,8 +49,8 @@ public abstract class CommentMapper implements EntityMapper<CommentDto, Comment>
             @Mapping(source = "message", target = "message"),
             @Mapping(source = "comment.user.id", target = "user_id"),
             @Mapping(source = "comment.article.id", target = "article_id"),
-            @Mapping(source = "createdAt", target = "createdAt"),
-            @Mapping(source = "updatedAt", target = "updatedAt")
+            @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
+            @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract CommentDto toDto(Comment comment);
 }

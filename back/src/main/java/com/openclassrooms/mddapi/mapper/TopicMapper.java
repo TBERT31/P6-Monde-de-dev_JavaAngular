@@ -44,8 +44,8 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic>   {
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(user_id -> { User user = this.userService.getUserById(user_id).orElse(null); " +
                     "if (user != null) { return user; } return null; }).collect(Collectors.toList()))"),
-            @Mapping(source = "createdAt", target = "createdAt"),
-            @Mapping(source = "updatedAt", target = "updatedAt")
+            @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
+            @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract Topic toEntity(TopicDto topicDto);
 
@@ -61,8 +61,8 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic>   {
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(user -> { return user.getId(); }).collect(Collectors.toList())" +
                     ")"),
-            @Mapping(source = "createdAt", target = "createdAt"),
-            @Mapping(source = "updatedAt", target = "updatedAt")
+            @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
+            @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract TopicDto toDto(Topic topic);
 

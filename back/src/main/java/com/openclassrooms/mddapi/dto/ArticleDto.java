@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
@@ -31,7 +32,9 @@ public class ArticleDto {
 
     private List<Long> comments;
 
-    private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private String createdAt;
 
-    private LocalDateTime updatedAt;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private String updatedAt;
 }

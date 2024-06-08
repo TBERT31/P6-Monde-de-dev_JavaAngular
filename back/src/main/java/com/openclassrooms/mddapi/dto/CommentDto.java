@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -23,7 +24,9 @@ public class CommentDto {
     @NotNull(message = "Article is required")
     private Long article_id;
 
-    private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private String createdAt;
 
-    private LocalDateTime updatedAt;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private String updatedAt;
 }

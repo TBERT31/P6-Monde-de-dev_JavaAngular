@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -34,7 +35,9 @@ public class UserDto {
 
     private List<Long> topics_subscribed;
 
-    private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private String createdAt;
 
-    private LocalDateTime updatedAt;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private String updatedAt;
 }

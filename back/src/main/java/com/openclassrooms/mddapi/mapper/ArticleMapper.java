@@ -48,8 +48,8 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(comment_id -> { Comment comment = this.commentService.getCommentById(comment_id).orElse(null);" +
                     "if (comment != null) { return comment; } return null; }).collect(Collectors.toList()))"),
-            @Mapping(source = "createdAt", target = "createdAt"),
-            @Mapping(source = "updatedAt", target = "updatedAt")
+            @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
+            @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract Article toEntity(ArticleDto articleDto);
 
@@ -63,8 +63,8 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(comment -> { return comment.getId(); }).collect(Collectors.toList())" +
                     ")"),
-            @Mapping(source = "createdAt", target = "createdAt"),
-            @Mapping(source = "updatedAt", target = "updatedAt")
+            @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
+            @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract ArticleDto toDto(Article article);
 }

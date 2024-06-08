@@ -14,6 +14,7 @@ import org.mapstruct.Mappings;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -37,6 +38,7 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
     @Autowired
     TopicService topicService;
 
+
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "username", target = "username"),
@@ -54,8 +56,8 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(topic_id -> {Topic topic = this.topicService.getTopicById(topic_id).orElse(null); " +
                     "if (topic != null) { return topic; } return null; }).collect(Collectors.toList()))"),
-            @Mapping(source = "createdAt", target = "createdAt"),
-            @Mapping(source = "updatedAt", target = "updatedAt")
+            @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
+            @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract User toEntity(UserDto userDto);
 
@@ -63,7 +65,7 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "username", target = "username"),
             @Mapping(source = "email", target = "email"),
-            @Mapping(source = "password", target = "password"),
+            @Mapping(target = "password", ignore = true),
             @Mapping(target = "comments", expression = "java(Optional.ofNullable(user.getComments())" +
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(comment -> { return comment.getId(); }).collect(Collectors.toList())" +
@@ -76,8 +78,8 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                     ".orElseGet(Collections::emptyList).stream()" +
                     ".map(topic -> { return topic.getId(); }).collect(Collectors.toList())" +
                     ")"),
-            @Mapping(source = "createdAt", target = "createdAt"),
-            @Mapping(source = "updatedAt", target = "updatedAt")
+            @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
+            @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract UserDto toDto(User user);
 }
