@@ -3,11 +3,13 @@ package com.openclassrooms.mddapi.controller;
 //import io.swagger.v3.oas.annotations.tags.Tag;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.payload.request.LoginRequest;
+import com.openclassrooms.mddapi.payload.request.SignupRequest;
 import com.openclassrooms.mddapi.payload.response.JwtResponse;
-import com.openclassrooms.mddapi.repository.UserRepository;
+import com.openclassrooms.mddapi.payload.response.MessageResponse;
 import com.openclassrooms.mddapi.security.jwt.JwtUtils;
 
 import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
+import com.openclassrooms.mddapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,16 +35,16 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(
+    public ResponseEntity<JwtResponse> authenticateUser(
             @Valid @RequestBody LoginRequest loginRequest
     ) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(), loginRequest.getPassword()
+                        loginRequest.getEmailOrUsername(), loginRequest.getPassword()
                 )
         );
 
@@ -56,4 +58,32 @@ public class AuthController {
                 userDetails.getUsername()
         ));
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
+        if (userService.getUserByEmail(signUpRequest.getEmail()).isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Email is already taken!"));
+        }
+
+        if (userService.getUserByUsername(signUpRequest.getUsername()).isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Username is already taken!"));
+        }
+
+
+        User user = new User(
+                signUpRequest.getUsername(),
+                signUpRequest.getEmail(),
+                passwordEncoder.encode(signUpRequest.getPassword())
+        );
+
+        userService.saveUser(user);
+
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
 }

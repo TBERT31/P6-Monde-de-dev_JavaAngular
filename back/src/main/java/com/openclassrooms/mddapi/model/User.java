@@ -45,6 +45,7 @@ public class User {
 
     @NotBlank(message = "Password is mandatory")
     @Size(min = 8, max = 120, message = "Password must be between 8 and 120 characters")
+    @NonNull
     @Pattern(
             regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}",
             message = "Password must contain at least one digit, one lowercase letter, one uppercase letter, one special character and at least 8 characters"
