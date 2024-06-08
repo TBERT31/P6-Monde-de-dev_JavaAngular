@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.openclassrooms.mddapi.service.ArticleService;
 import com.openclassrooms.mddapi.mapper.ArticleMapper;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +58,7 @@ public class ArticleController {
 
     @PostMapping("")
     public ResponseEntity<ArticleDto> createArticle(
-            @RequestBody ArticleDto articleDto
+            @Valid @RequestBody ArticleDto articleDto
     ) {
         Article article = articleMapper.toEntity(articleDto);
         article = articleService.saveArticle(article);

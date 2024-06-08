@@ -30,7 +30,9 @@ public class TopicController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TopicDto> getTopicById(@PathVariable Long id) {
+    public ResponseEntity<TopicDto> getTopicById(
+            @PathVariable Long id
+    ) {
         try {
             Optional<Topic> optionalTopic = topicService.getTopicById(id);
 
