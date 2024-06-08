@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 07 juin 2024 à 14:55
+-- Généré le : sam. 08 juin 2024 à 23:12
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -80,7 +80,7 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`id`, `message`, `user_id`, `article_id`, `created_at`, `updated_at`) VALUES
 (1, 'mon message', 1, 1, '2024-06-07 14:36:20', '2024-06-07 14:36:20'),
-(2, 'mon message', 1, 1, '2024-06-07 14:40:22', '2024-06-07 14:40:22');
+(2, 'mon second message', 1, 1, '2024-06-07 14:40:22', '2024-06-08 22:43:42');
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,7 @@ CREATE TABLE `topics` (
 --
 
 INSERT INTO `topics` (`id`, `title`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'JavaScript', 'JavaScript est un langage de programmation de scripts principalement employé dans les pages web interactives et à ce titre est une partie essentielle des applications web. Avec les langages HTML et CSS, JavaScript est au cœur des langages utilisés par les développeurs web.', '2024-06-07 11:31:52', '2024-06-07 14:19:41'),
+(1, 'JavaScript', 'JavaScript est un langage de programmation de scripts principalement employé dans les pages web interactives et à ce titre est une partie essentielle des applications web. Avec les langages HTML et CSS, JavaScript est au cœur des langages utilisés par les développeurs web.', '2024-06-07 11:31:52', '2024-06-08 23:07:25'),
 (2, 'Java', 'Java est un langage de programmation de haut niveau orienté objet créé par James Gosling et Patrick Naughton, employés de Sun Microsystems, avec le soutien de Bill Joy, présenté officiellement le 23 mai 1995 au SunWorld. La société Sun est rachetée en 2009 par la société Oracle qui détient et maintient désormais Java.', '2024-06-07 11:31:58', '2024-06-07 11:32:00'),
 (3, 'Python', 'Python est un langage de programmation interprété, multiparadigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet.', '2024-06-07 11:32:02', '2024-06-07 11:32:06'),
 (4, 'C#', 'C# est un langage de programmation orientée objet, commercialisé par Microsoft depuis 2002 et destiné à développer sur la plateforme Microsoft .NET, au même titre que d’autres langages liés à cette plateforme.', '2024-06-07 11:32:08', '2024-06-07 11:32:12'),
@@ -141,14 +141,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'john.doe01', 'john.doe@test.com', 'Test!1234', '2024-06-07 11:30:34', '2024-06-07 11:30:34'),
-(2, 'jane.doe02', 'jane.doe@test.com', 'Test!1234', '2024-06-07 11:30:45', '2024-06-07 11:30:45'),
-(3, 'john.smith03', 'john.smith@test.com', 'Test!1234', '2024-06-07 11:30:53', '2024-06-07 11:30:57'),
-(4, 'jane.smith04', 'jane.smith@test.com', 'Test!1234', '2024-06-07 11:31:00', '2024-06-07 11:31:02'),
-(5, 'johnny.depp05', 'johnny.depp@test.com', 'Test!1234', '2024-06-07 11:31:04', '2024-06-07 11:31:07'),
-(6, 'janny.depp06', 'janny.depp@test.com', 'Test!1234', '2024-06-07 11:31:09', '2024-06-07 11:31:13'),
-(7, 'john.wick07', 'john.wick@test.com', 'Test!1234', '2024-06-07 11:31:15', '2024-06-07 11:31:18'),
-(8, 'jane.wick08', 'jane.wick@test.com', 'Test!1234', '2024-06-07 11:31:20', '2024-06-07 11:31:23');
+(1, 'john.doe01', 'john.doe@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:30:34', '2024-06-08 20:26:50'),
+(2, 'jane.doe02', 'jane.doe@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:30:45', '2024-06-08 20:26:53'),
+(3, 'john.smith03', 'john.smith@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:30:53', '2024-06-08 20:26:56'),
+(4, 'jane.smith04', 'jane.smith@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:31:00', '2024-06-08 20:27:00'),
+(5, 'johnny.depp05', 'johnny.depp@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:31:04', '2024-06-08 20:27:12'),
+(6, 'janny.depp06', 'janny.depp@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:31:09', '2024-06-08 20:27:09'),
+(7, 'john.wick07', 'john.wick@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:31:15', '2024-06-08 20:27:06'),
+(8, 'jane.wick08', 'jane.wick@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:31:20', '2024-06-08 20:27:02');
 
 --
 -- Index pour les tables déchargées
