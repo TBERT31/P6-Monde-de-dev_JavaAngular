@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -40,18 +41,30 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "content", target = "content"),
-            @Mapping(target = "author", expression = "java(articleDto.getAuthor_id() != null ? " +
-                    "this.userService.getUserById(articleDto.getAuthor_id()).orElse(null) : null)"),
-            @Mapping(target = "topic", expression = "java(articleDto.getTopic_id() != null ? " +
-                    "this.topicService.getTopicById(articleDto.getTopic_id()).orElse(null) : null)"),
-            @Mapping(target = "comments", expression = "java(Optional.ofNullable(articleDto.getComments())" +
-                    ".orElseGet(Collections::emptyList).stream()" +
-                    ".map(comment_id -> { Comment comment = this.commentService.getCommentById(comment_id).orElse(null);" +
-                    "if (comment != null) { return comment; } return null; }).collect(Collectors.toList()))"),
+            @Mapping(target = "author", expression = "java(mapToUser(articleDto.getAuthor_id()))"),
+            @Mapping(target = "topic", expression = "java(mapToTopic(articleDto.getTopic_id()))"),
+            @Mapping(target = "comments", expression = "java(mapToComments(articleDto.getComments()))"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
             @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract Article toEntity(ArticleDto articleDto);
+
+    public User mapToUser(Long userId) {
+        return userId != null ? userService.getUserById(userId).orElse(null) : null;
+    }
+
+    public Topic mapToTopic(Long topicId) {
+        return topicId != null ? topicService.getTopicById(topicId).orElse(null) : null;
+    }
+
+    public List<Comment> mapToComments(List<Long> commentIds) {
+        return Optional.ofNullable(commentIds)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .map(commentId -> commentService.getCommentById(commentId).orElse(null))
+                .filter(comment -> comment != null)
+                .collect(Collectors.toList());
+    }
 
     @Mappings({
             @Mapping(source = "id", target = "id"),
@@ -59,12 +72,17 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
             @Mapping(source = "content", target = "content"),
             @Mapping(source = "article.author.id", target = "author_id"),
             @Mapping(source = "article.topic.id", target = "topic_id"),
-            @Mapping(target = "comments", expression = "java(Optional.ofNullable(article.getComments())" +
-                    ".orElseGet(Collections::emptyList).stream()" +
-                    ".map(comment -> { return comment.getId(); }).collect(Collectors.toList())" +
-                    ")"),
+            @Mapping(target = "comments", expression = "java(mapToCommentIds(article.getComments()))"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
             @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract ArticleDto toDto(Article article);
+
+    public List<Long> mapToCommentIds(List<Comment> comments) {
+        return Optional.ofNullable(comments)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .map(Comment::getId)
+                .collect(Collectors.toList());
+    }
 }

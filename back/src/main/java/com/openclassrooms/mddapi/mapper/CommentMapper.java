@@ -35,14 +35,20 @@ public abstract class CommentMapper implements EntityMapper<CommentDto, Comment>
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "message", target = "message"),
-            @Mapping(target = "user", expression = "java(commentDto.getUser_id() != null ? " +
-                    "this.userService.getUserById(commentDto.getUser_id()).orElse(null) : null)"),
-            @Mapping(target = "article", expression = "java(commentDto.getArticle_id() != null ? " +
-                    "this.articleService.getArticleById(commentDto.getArticle_id()).orElse(null) : null)"),
+            @Mapping(target = "user", expression = "java(mapToUser(commentDto.getUser_id()))"),
+            @Mapping(target = "article", expression = "java(mapToArticle(commentDto.getArticle_id()))"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
             @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract Comment toEntity(CommentDto commentDto);
+
+    public User mapToUser(Long userId) {
+        return userId != null ? userService.getUserById(userId).orElse(null) : null;
+    }
+
+    public Article mapToArticle(Long articleId) {
+        return articleId != null ? articleService.getArticleById(articleId).orElse(null) : null;
+    }
 
     @Mappings({
             @Mapping(source = "id", target = "id"),

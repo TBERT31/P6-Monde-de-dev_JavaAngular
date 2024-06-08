@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -36,34 +37,58 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic>   {
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "description", target = "description"),
-            @Mapping(target = "articles", expression = "java(Optional.ofNullable(topicDto.getArticles())" +
-                    ".orElseGet(Collections::emptyList).stream()" +
-                    ".map(article_id -> {Article article = this.articleService.getArticleById(article_id).orElse(null); " +
-                    "if (article != null) { return article; } return null; }).collect(Collectors.toList()))"),
-            @Mapping(target = "users_subscribed", expression = "java(Optional.ofNullable(topicDto.getUsers_subscribed())" +
-                    ".orElseGet(Collections::emptyList).stream()" +
-                    ".map(user_id -> { User user = this.userService.getUserById(user_id).orElse(null); " +
-                    "if (user != null) { return user; } return null; }).collect(Collectors.toList()))"),
+            @Mapping(target = "articles", expression = "java(mapToArticles(topicDto.getArticles()))"),
+            @Mapping(target = "users_subscribed", expression = "java(mapToUsers(topicDto.getUsers_subscribed()))"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
             @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract Topic toEntity(TopicDto topicDto);
 
+    public List<Article> mapToArticles(List<Long> articleIds) {
+        return Optional.ofNullable(articleIds)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .map(articleService::getArticleById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> mapToUsers(List<Long> userIds) {
+        return Optional.ofNullable(userIds)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .map(userService::getUserById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
+    }
+
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "description", target = "description"),
-            @Mapping(target = "articles", expression = "java(Optional.ofNullable(topic.getArticles())" +
-                    ".orElseGet(Collections::emptyList).stream()" +
-                    ".map(article -> { return article.getId(); }).collect(Collectors.toList())" +
-                    ")"),
-            @Mapping(target = "users_subscribed", expression = "java(Optional.ofNullable(topic.getUsers_subscribed())" +
-                    ".orElseGet(Collections::emptyList).stream()" +
-                    ".map(user -> { return user.getId(); }).collect(Collectors.toList())" +
-                    ")"),
+            @Mapping(target = "articles", expression = "java(mapToArticleIds(topic.getArticles()))"),
+            @Mapping(target = "users_subscribed", expression = "java(mapToUserIds(topic.getUsers_subscribed()))"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
             @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract TopicDto toDto(Topic topic);
+
+    public List<Long> mapToArticleIds(List<Article> articles) {
+        return Optional.ofNullable(articles)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .map(Article::getId)
+                .collect(Collectors.toList());
+    }
+
+    public List<Long> mapToUserIds(List<User> users) {
+        return Optional.ofNullable(users)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .map(User::getId)
+                .collect(Collectors.toList());
+    }
 
 }
