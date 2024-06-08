@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
-//import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.openclassrooms.mddapi.dto.ArticleDto;
 import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.model.Article;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @RequestMapping("/api/articles")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-//@Tag(name = "Articles")
+@Tag(name = "Articles")
 public class ArticleController {
     private final ArticleService articleService;
     private final ArticleMapper articleMapper;

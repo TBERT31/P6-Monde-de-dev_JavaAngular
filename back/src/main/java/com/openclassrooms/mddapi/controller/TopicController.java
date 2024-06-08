@@ -3,7 +3,7 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.model.Topic;
-//import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.openclassrooms.mddapi.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import com.openclassrooms.mddapi.service.UserService;
 @RequestMapping("/api/topics")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-//@Tag(name = "Topics")
+@Tag(name = "Topics")
 public class TopicController {
 
     private final TopicService topicService;

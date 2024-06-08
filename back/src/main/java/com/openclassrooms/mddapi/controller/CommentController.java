@@ -1,6 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
-//import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.security.jwt.JwtUtils;
@@ -26,7 +26,7 @@ import java.util.Optional;
 @RequestMapping("/api/comments")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-//@Tag(name = "Comments")
+@Tag(name = "Comments")
 public class CommentController {
 
     private final CommentService commentService;
