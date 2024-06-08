@@ -35,7 +35,7 @@ public class Article {
     private String title;
 
     @NotBlank(message = "Content is mandatory")
-    @Size(max = 2000)
+    @Size(max = 10000)
     @NonNull
     private String content;
 

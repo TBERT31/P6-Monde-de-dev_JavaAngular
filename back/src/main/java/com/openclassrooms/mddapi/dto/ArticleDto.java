@@ -20,7 +20,7 @@ public class ArticleDto {
     private String title;
 
     @NotBlank(message = "Content is required")
-    @Size(max = 2000)
+    @Size(max = 10000)
     private String content;
 
     @NotNull(message = "Author is required")

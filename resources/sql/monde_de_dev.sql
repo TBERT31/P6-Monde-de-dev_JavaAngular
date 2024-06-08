@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 07 juin 2024 à 14:48
+-- Généré le : ven. 07 juin 2024 à 14:55
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `articles` (
   `id` bigint(20) NOT NULL,
   `title` varchar(50) DEFAULT NULL,
-  `content` varchar(2000) DEFAULT NULL,
+  `content` text DEFAULT NULL,
   `author_id` bigint(20) DEFAULT NULL,
   `topic_id` bigint(20) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),

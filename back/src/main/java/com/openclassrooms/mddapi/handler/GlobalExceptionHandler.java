@@ -11,8 +11,8 @@ import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.exception.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.authentication.BadCredentialsException;
-//import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -152,16 +152,16 @@ public class GlobalExceptionHandler {
     }
 
 
-//    @ExceptionHandler(BadCredentialsException.class)
-//    public ResponseEntity<ExceptionRepresentation> handleBadCredentialsException(){
-//        ExceptionRepresentation representation = ExceptionRepresentation.builder()
-//                .message("Your email and / or password is incorrect")
-//                .build();
-//
-//        return ResponseEntity
-//                .status(HttpStatus.UNAUTHORIZED)
-//                .body(representation);
-//    }
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ExceptionRepresentation> handleBadCredentialsException(){
+        ExceptionRepresentation representation = ExceptionRepresentation.builder()
+                .message("Your email and / or password is incorrect")
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(representation);
+    }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ExceptionRepresentation> handleDataIntegrityViolationException(DataIntegrityViolationException dataIntegrityViolationException){
@@ -185,16 +185,16 @@ public class GlobalExceptionHandler {
                 .body(representation);
     }
 
-//    @ExceptionHandler(DisabledException.class)
-//    public ResponseEntity<ExceptionRepresentation> handleDisabledException(DisabledException disabledException){
-//        ExceptionRepresentation representation = ExceptionRepresentation.builder()
-//                .message(disabledException.getMessage())
-//                .build();
-//
-//        return ResponseEntity
-//                .status(HttpStatus.FORBIDDEN)
-//                .body(representation);
-//    }
+    @ExceptionHandler(DisabledException.class)
+    public ResponseEntity<ExceptionRepresentation> handleDisabledException(DisabledException disabledException){
+        ExceptionRepresentation representation = ExceptionRepresentation.builder()
+                .message(disabledException.getMessage())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(representation);
+    }
 
     @ExceptionHandler(TransientPropertyValueException.class)
     public ResponseEntity<ExceptionRepresentation> handleTransientPropertyValueException(TransientPropertyValueException transientPropertyValueException){
