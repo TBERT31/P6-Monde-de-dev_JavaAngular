@@ -1,8 +1,10 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.TopicDto;
+import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.model.Topic;
 //import io.swagger.v3.oas.annotations.tags.Tag;
+import com.openclassrooms.mddapi.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +13,8 @@ import com.openclassrooms.mddapi.mapper.TopicMapper;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import com.openclassrooms.mddapi.security.jwt.JwtUtils;
+import com.openclassrooms.mddapi.service.UserService;
 
 @RestController
 @RequestMapping("/api/topics")
@@ -22,6 +25,8 @@ public class TopicController {
 
     private final TopicService topicService;
     private final TopicMapper topicMapper;
+    private final JwtUtils jwtUtils;
+    private final UserService userService;
 
     @GetMapping("")
     public ResponseEntity<List<TopicDto>> getAllTopics() {
@@ -51,8 +56,18 @@ public class TopicController {
     @PostMapping("{id}/subscribe/{userId}")
     public ResponseEntity<TopicDto> subscribeUserToTopic(
             @PathVariable("id") Long id,
-            @PathVariable("userId") Long userId
+            @PathVariable("userId") Long userId,
+            @RequestHeader("Authorization") String token
     ) {
+        String jwt = token.substring(7);
+        String email = jwtUtils.getUserNameFromJwtToken(jwt);
+
+        User user = userService.getUserByEmail(email).get();
+
+        if (user.getId() != userId) {
+            throw new ForbiddenException("You are not allowed to subscribe other users to topics");
+        }
+
         try {
             Topic topic = topicService.subscribeUserToTopic(id, userId);
 
@@ -65,8 +80,18 @@ public class TopicController {
     @DeleteMapping("{id}/subscribe/{userId}")
     public ResponseEntity<TopicDto> unsubscribeUserFromTopic(
             @PathVariable("id") Long id,
-            @PathVariable("userId") Long userId
+            @PathVariable("userId") Long userId,
+            @RequestHeader("Authorization") String token
     ) {
+        String jwt = token.substring(7);
+        String email = jwtUtils.getUserNameFromJwtToken(jwt);
+
+        User user = userService.getUserByEmail(email).get();
+
+        if (user.getId() != userId) {
+            throw new ForbiddenException("You are not allowed to unsubscribe other users to topics");
+        }
+
         try {
             Topic topic = topicService.unsubscribeUserFromTopic(id, userId);
 

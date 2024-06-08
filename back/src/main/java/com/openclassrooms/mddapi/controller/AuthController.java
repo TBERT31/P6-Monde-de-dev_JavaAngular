@@ -60,7 +60,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(
+    public ResponseEntity<MessageResponse> registerUser(
             @Valid @RequestBody SignupRequest signUpRequest
     ) {
 

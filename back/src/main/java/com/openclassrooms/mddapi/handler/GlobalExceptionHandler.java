@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.handler;
 
 
+import com.openclassrooms.mddapi.exception.ForbiddenException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -189,6 +190,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionRepresentation> handleDisabledException(DisabledException disabledException){
         ExceptionRepresentation representation = ExceptionRepresentation.builder()
                 .message(disabledException.getMessage())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(representation);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ExceptionRepresentation> handleForbiddenException(ForbiddenException forbiddenException){
+        ExceptionRepresentation representation = ExceptionRepresentation.builder()
+                .message(forbiddenException.getMessage())
                 .build();
 
         return ResponseEntity

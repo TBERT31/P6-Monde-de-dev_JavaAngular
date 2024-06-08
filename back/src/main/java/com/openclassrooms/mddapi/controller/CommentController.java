@@ -1,6 +1,10 @@
 package com.openclassrooms.mddapi.controller;
 
 //import io.swagger.v3.oas.annotations.tags.Tag;
+import com.openclassrooms.mddapi.exception.ForbiddenException;
+import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.security.jwt.JwtUtils;
+import com.openclassrooms.mddapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +31,8 @@ public class CommentController {
 
     private final CommentService commentService;
     private final CommentMapper commentMapper;
+    private final UserService userService;
+    private final JwtUtils jwtUtils;
 
     @GetMapping("/{id}")
     public ResponseEntity<CommentDto> getCommentById(@PathVariable Long id) {
@@ -55,9 +61,18 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<CommentDto> createComment(
-            @Valid @RequestBody CommentDto commentDto//,
-            //@RequestHeader("Authorization") String token
+            @Valid @RequestBody CommentDto commentDto,
+            @RequestHeader("Authorization") String token
     ) {
+        String jwt = token.substring(7);
+        String email = jwtUtils.getUserNameFromJwtToken(jwt);
+
+        User user = userService.getUserByEmail(email).get();
+
+        if(user.getId() != commentDto.getUser_id()) {
+            throw new ForbiddenException("You are not allowed to create a comment for another user");
+        }
+
         Comment comment = commentMapper.toEntity(commentDto);
 
         comment = commentService.saveComment(comment);

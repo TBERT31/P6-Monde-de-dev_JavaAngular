@@ -2,8 +2,13 @@ package com.openclassrooms.mddapi.controller;
 
 //import io.swagger.v3.oas.annotations.tags.Tag;
 import com.openclassrooms.mddapi.dto.ArticleDto;
+import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.model.Article;
+import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.security.jwt.JwtUtils;
+import com.openclassrooms.mddapi.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.openclassrooms.mddapi.service.ArticleService;
@@ -22,6 +27,8 @@ import java.util.Optional;
 public class ArticleController {
     private final ArticleService articleService;
     private final ArticleMapper articleMapper;
+    private final JwtUtils jwtUtils;
+    private final UserService userService;
 
     @GetMapping("")
     public ResponseEntity<List<ArticleDto>> getAllArticles() {
@@ -58,8 +65,19 @@ public class ArticleController {
 
     @PostMapping("")
     public ResponseEntity<ArticleDto> createArticle(
-            @Valid @RequestBody ArticleDto articleDto
+            @Valid @RequestBody ArticleDto articleDto,
+            @RequestHeader("Authorization") String token
     ) {
+
+        String jwt = token.substring(7);
+        String email = jwtUtils.getUserNameFromJwtToken(jwt);
+
+        User user = userService.getUserByEmail(email).get();
+
+        if(user.getId() != articleDto.getAuthor_id()) {
+            throw new ForbiddenException("You are not allowed to create an article for another user");
+        }
+
         Article article = articleMapper.toEntity(articleDto);
         article = articleService.saveArticle(article);
         return ResponseEntity.ok(articleMapper.toDto(article));
