@@ -1,0 +1,22 @@
+<div class="me">
+    <mat-card class="">
+        <mat-card-title>
+
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <button mat-icon-button (click)="back()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <h1>User information</h1>
+            </div>
+            
+        </mat-card-title>
+        <mat-card-content>
+            <div *ngIf="user" fxLayout="column" fxLayoutAlign="start center">
+                <p>Name: </p>
+                <p>Email: </p>
+                <p><i>Create at: </i> </p>
+                <p><i>Last update: </i> </p>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
