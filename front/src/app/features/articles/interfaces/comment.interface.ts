@@ -3,6 +3,6 @@ export interface Comment {
     message: string;
     user_id: number;
     article_id: number;
-    createdAt: Date;
+    createdAt?: Date;
     updatedAt?: Date;
 }

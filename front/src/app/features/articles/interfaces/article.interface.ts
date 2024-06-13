@@ -5,6 +5,6 @@ export interface Article {
     user_id: number;
     topic_id: number;
     comments: number[];
-    createdAt: Date;
+    createdAt?: Date;
     updatedAt?: Date;
 }

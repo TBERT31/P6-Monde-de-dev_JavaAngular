@@ -6,7 +6,7 @@ export interface User {
     comments: number[];
     articles: number[];
     topics_subscribed: number[];
-    createdAt: Date;
+    createdAt?: Date;
     updatedAt?: Date;
   }
   

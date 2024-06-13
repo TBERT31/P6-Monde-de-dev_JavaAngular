@@ -11,11 +11,11 @@ export class UserService {
 
     constructor(private httpClient: HttpClient) { }
 
-    public getById(id: number): Observable<User> {
+    public getUserById(id: number): Observable<User> {
         return this.httpClient.get<User>(`${this.pathService}/${id}`);
     }
 
-    public getByEmail(email: string): Observable<User> {
+    public getUserByEmail(email: string): Observable<User> {
         return this.httpClient.get<User>(`${this.pathService}/${email}`);
     }
 }

@@ -7,7 +7,7 @@ import { Session } from '../interfaces/session.interface';
 })
 export class SessionService {
     public isLogged = false;
-    public sessionInformation: Session | undefined;
+    public session: Session | undefined;
 
     private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
 
@@ -16,13 +16,13 @@ export class SessionService {
     }
 
     public logIn(user: Session): void {
-        this.sessionInformation = user;
+        this.session = user;
         this.isLogged = true;
         this.next();
     }
 
     public logOut(): void {
-        this.sessionInformation = undefined;
+        this.session = undefined;
         this.isLogged = false;
         this.next();
     }

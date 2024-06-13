@@ -10,7 +10,7 @@ export class JwtInterceptor implements HttpInterceptor {
     if (this.sessionService.isLogged) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.sessionService.sessionInformation!.token}`,
+          Authorization: `Bearer ${this.sessionService.session!.token}`,
         },
       });
     }

@@ -4,6 +4,6 @@ export interface Topic {
     description: string;
     articles: number[];
     users_subscribed: number[];
-    createdAt: Date;
+    createdAt?: Date;
     updatedAt?: Date;
 }

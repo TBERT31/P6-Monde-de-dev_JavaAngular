@@ -12,13 +12,19 @@ export class TeacherService {
 
     constructor(private httpClient: HttpClient) { }
 
-    public all(): Observable<Topic[]> {
+    public getAllTopics(): Observable<Topic[]> {
         return this.httpClient.get<Topic[]>(this.pathService);
     }
 
-    public getById(id: number): Observable<Topic> {
+    public getTopicById(id: number): Observable<Topic> {
         return this.httpClient.get<Topic>(`${this.pathService}/${id}`);
     }
 
-    
+    public subscribeUserToTopic(id: number, userId: number): Observable<Topic> {
+        return this.httpClient.post<Topic>(`${this.pathService}/${id}/subscribe/${userId}`, null);
+    }
+
+    public unsubscribeUserToTopic(id: number, userId: number): Observable<Topic> {
+        return this.httpClient.delete<Topic>(`${this.pathService}/${id}/subscribe/${userId}`);
+    }
 }
