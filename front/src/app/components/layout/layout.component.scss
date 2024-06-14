@@ -1,0 +1,112 @@
+mat-drawer-content{
+    position: relative;
+    height: 100vh;
+}
+
+.account-button{
+    width: 40px;
+    height: 40px;
+    color: #777;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background-color: #d9d9d9;
+}
+
+.header{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    img {
+        width: 131px;
+        height: 75px;
+    }
+
+    .toolbar-container {
+        background-color: #fff;
+        border-bottom: 1px solid #000;
+        padding: 2.5rem;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        .links-container {
+            display: flex;
+            align-items: center;
+
+            & a {
+                font-size: 1.1rem;
+                font-weight: 400;
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+                margin-left: 2rem;
+            }
+
+            & button {
+                margin-left: 2rem;
+            }
+        }
+
+        .account-icon {
+            font-size: 1.5rem;
+        }
+          
+        .menu-button {
+            width: 40px;
+            height: 40px;
+            display: none;
+        }
+        
+        .menu-icon {
+            font-size: 2rem;
+        }
+          
+        @media (max-width: 640px) {
+            .links-container {
+              display: none;
+            }
+            
+            .menu-button {
+              display: block;
+            }
+        }
+    }
+}
+
+.sidenav{
+    border: 1px solid #000;
+    width: 70%;
+
+    &-content{
+        padding-top: 0;
+        padding-right: 1rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: end;
+
+        button{
+            margin-bottom: 5%;
+        }
+    }
+
+    &-links{
+        font-size: 1.2rem;
+        font-weight: 400;
+        display: flex;
+        flex-direction: column;
+        margin-top: 20%;
+
+        a{
+            margin: 0.5rem;
+        }
+    }
+
+}  
+
+
+

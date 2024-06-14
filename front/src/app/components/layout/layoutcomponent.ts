@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, HostListener } from '@angular/core';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -7,15 +7,19 @@ import { SessionService } from 'src/app/services/session.service';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+  selector: 'app-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss']
 })
-export class ToolbarComponent implements OnInit, OnDestroy {
+export class LayoutComponent implements OnInit, OnDestroy {
+  @ViewChild('drawer') drawer!: MatSidenav;
+
   showToolbar: boolean = true;
   showToolbarSubscription: Subscription | null = null;
+  resizeSubscription: Subscription | null = null;
   isLoggedIn$: Observable<boolean>;
-  @ViewChild('drawer') drawer!: MatSidenav;
+  private readonly mobileWidth = 768;
+
 
   constructor(
     private authService: AuthService,
@@ -31,6 +35,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ).subscribe((event: NavigationEnd) => {
       this.toolbarDisplayer(event);
     });
+
+    this.checkScreenWidth(window.innerWidth);
   }
 
   ngOnDestroy() {
@@ -39,8 +45,34 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: UIEvent) {
+    const target = event.target as Window;
+    this.checkScreenWidth(target.innerWidth);
+  }
+
+  checkScreenWidth(width: number) {
+    const isMobile = width < this.mobileWidth;
+    const isLoginOrRegister = this.router.url === '/login' || this.router.url === '/register';
+
+    if (isMobile && isLoginOrRegister) {
+      this.showToolbar = false;
+    } else {
+      this.showToolbar = true;
+    }
+  }
+
+
   toolbarDisplayer(event: NavigationEnd) {
-    this.showToolbar = !(event.url === '/' || event.url === '');
+    const isHome = event.url === '/';
+    const isLoginOrRegister = event.url === '/login' || event.url === '/register';
+    const isMobile = window.innerWidth < this.mobileWidth;
+
+    if ((isMobile && isLoginOrRegister) || isHome) {
+      this.showToolbar = false;
+    } else {
+      this.showToolbar = true;
+    }
   }
 
   public $isLogged(): Observable<boolean> {

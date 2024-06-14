@@ -1,4 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    scrollbar-width: thin; 
+    scrollbar-color: #7550EB #f1f1f1; 
+}
+
+.mat-drawer-backdrop.mat-drawer-shown {
+    background-color: rgba(255,255,255, 0.7); 
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

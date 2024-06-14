@@ -15,7 +15,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { MatCardModule } from '@angular/material/card';
 import { MeComponent } from './components/me/me.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { LayoutComponent } from './components/layout/layoutcomponent';
 import { HomeComponent } from './components/home/home.component';
 
 
@@ -34,7 +34,7 @@ const materialModule = [
     AppComponent,
     NotFoundComponent,
     MeComponent,
-    ToolbarComponent,
+    LayoutComponent,
     HomeComponent
   ],
   imports: [

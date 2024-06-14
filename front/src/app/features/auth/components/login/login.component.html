@@ -1,31 +1,25 @@
 <div class="login">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>
-                <div>
-                    <button mat-icon-button (click)="back()">
-                        <mat-icon>west</mat-icon>
-                    </button>
-                    <h1>Se connecter</h1>
-                </div>
-            </mat-card-title>
-        </mat-card-header>
-        <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
-            <mat-card-content>
-                <mat-form-field>
-                    <input matInput placeholder="Email" formControlName="email">
+    <div class="section-title">
+        <button class="back-button" mat-icon-button (click)="back()">
+            <mat-icon class="back-icon">keyboard_backspace</mat-icon>
+        </button>
+        <h1>Se connecter</h1>
+        <span></span>
+    </div>
+    <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+            <div class="field-group">
+                <label for="email">E-mail ou nom d'utilisateur</label>
+                <mat-form-field appearance="outline">
+                    <input matInput id="email" type="email" formControlName="email">
                 </mat-form-field>
-                <mat-form-field>
-                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password"
-                        formControlName="password">
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hide">
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
+            </div>
+            <div class="field-group">
+                <label for="password">Mot de passe</label>
+                <mat-form-field appearance="outline">
+                    <input matInput id="password" type="password" formControlName="password">
                 </mat-form-field>
-            </mat-card-content>
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Se connecter</button>
-            <p *ngIf="onError" class="error">An error occurred</p>
-        </form>
-    </mat-card>
+            </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Se connecter</button>
+        <p *ngIf="onError" class="error">An error occurred</p>
+    </form>
 </div>
