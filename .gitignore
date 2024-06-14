@@ -77,3 +77,4 @@ HELP.md
 # System files
 /front/.DS_Store
 /front/Thumbs.db
+/front/.env

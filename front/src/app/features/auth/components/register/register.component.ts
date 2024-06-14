@@ -13,28 +13,33 @@ export class RegisterComponent {
 
   public onError = false;
 
+  private readonly passwordPattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=,?;./:!§£*()-_¨µ<>{}]).{8,}$/;
+
   public form = this.fb.group({
     username: [
       '',
       [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(20)
+        Validators.maxLength(50)
       ]
     ],
     email: [
       '',
       [
         Validators.required,
-        Validators.email
+        Validators.email,
+        Validators.minLength(3),
+        Validators.maxLength(50)
       ]
     ],
     password: [
       '',
       [
         Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(40)
+        Validators.minLength(8),
+        Validators.maxLength(120),
+        Validators.pattern(this.passwordPattern) 
       ]
     ]
   });
@@ -53,4 +58,7 @@ export class RegisterComponent {
     );
   }
 
+  public back() {
+    window.history.back();
+  }
 }

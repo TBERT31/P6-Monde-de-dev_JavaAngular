@@ -11,8 +11,12 @@ export class UnauthGuard implements CanActivate {
   ) {
   }
 
-  public canActivate(): boolean {
-    if (this.sessionService.isLogged) {
+  canActivate(): boolean {
+    let isLogged: boolean = false;
+    this.sessionService.$isLogged().subscribe(loggedIn => {
+      isLogged = loggedIn;
+    });
+    if (isLogged) {
       this.router.navigate(['articles']);
       return false;
     }

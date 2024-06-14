@@ -1,25 +1,35 @@
 <div class="login">
     <div class="section-title">
         <button class="back-button" mat-icon-button (click)="back()">
-            <mat-icon class="back-icon">keyboard_backspace</mat-icon>
+            <mat-icon class="back-button-icon">keyboard_backspace</mat-icon>
         </button>
-        <h1>Se connecter</h1>
-        <span></span>
+        <div class="logo-container">
+            <img src="/assets/logo_p6.png" alt="logo" class="logo"/>
+        </div>
+        <div class="">
+            <h1 class="title">Se connecter</h1>
+        </div>
     </div>
     <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
-            <div class="field-group">
-                <label for="email">E-mail ou nom d'utilisateur</label>
-                <mat-form-field appearance="outline">
-                    <input matInput id="email" type="email" formControlName="email">
-                </mat-form-field>
-            </div>
-            <div class="field-group">
-                <label for="password">Mot de passe</label>
-                <mat-form-field appearance="outline">
-                    <input matInput id="password" type="password" formControlName="password">
-                </mat-form-field>
-            </div>
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Se connecter</button>
-        <p *ngIf="onError" class="error">An error occurred</p>
+        <div class="field-group">
+            <label class="field-group-label" for="emailOrUsername">E-mail ou nom d'utilisateur</label>
+            <mat-form-field class="field-group-input" appearance="outline">
+                <input matInput id="emailOrUsername" type="text" formControlName="emailOrUsername">
+            </mat-form-field>
+            <mat-error *ngIf="form.get('emailOrUsername')?.invalid && form.get('emailOrUsername')?.touched">
+                E-mail ou nom d'utilisateur invalide
+            </mat-error>
+        </div>
+        <div class="field-group">
+            <label class="field-group-label" for="password">Mot de passe</label>
+            <mat-form-field class="field-group-input"  appearance="outline">
+                <input matInput id="password" type="password" formControlName="password">
+            </mat-form-field>
+            <mat-error *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+                Mot de passe invalide
+            </mat-error>
+        </div>
+        <button class="submit-button" mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Se connecter</button>
+        <p *ngIf="onError" class="error">Une erreur s'est produite</p>
     </form>
 </div>

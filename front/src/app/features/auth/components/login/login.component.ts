@@ -15,19 +15,24 @@ export class LoginComponent {
   public hide = true;
   public onError = false;
 
+  private readonly passwordPattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=,?;./:!§£*()-_¨µ<>{}]).{8,}$/;
+
   public form = this.fb.group({
-    email: [
+    emailOrUsername: [
       '',
       [
         Validators.required,
-        Validators.email
+        Validators.minLength(3),
+        Validators.maxLength(50)
       ]
     ],
     password: [
       '',
       [
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(8),
+        Validators.maxLength(120),
+        Validators.pattern(this.passwordPattern) 
       ]
     ]
   });
@@ -43,7 +48,7 @@ export class LoginComponent {
     this.authService.login(loginRequest).subscribe({
       next: (response: Session) => {
         this.sessionService.logIn(response);
-        this.router.navigate(['/sessions']);
+        this.router.navigate(['/articles']);
       },
       error: error => this.onError = true,
     });

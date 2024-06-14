@@ -9,4 +9,33 @@
 }
 
 html, body { height: 100%; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-form-field-wrapper{
+    padding: 0;
+    border: none;
+}
+
+.field-group-input {
+    .mat-form-field-outline {
+        .mat-form-field-outline-start,
+        .mat-form-field-outline-end {
+            border-color: rgba(0, 0, 0, 0.87); 
+        }
+    }    
+
+    &.ng-touched.ng-invalid .mat-form-field-outline-start,
+    &.ng-touched.ng-invalid .mat-form-field-outline-end,
+    &.ng-touched.ng-invalid .mat-form-field-outline-gap,
+    &.ng-touched.ng-invalid .mat-form-field-outline-thick {
+        border-color: red ; 
+    }
+
+    &:focus-within .mat-form-field-outline-start,
+    &:focus-within .mat-form-field-outline-end,
+    &:focus-within .mat-form-field-outline-gap,
+    &:focus-within .mat-form-field-outline-thick {
+        border-color: rgba(103, 58, 183, 1) ; 
+    }
+}
