@@ -11,16 +11,16 @@ const routes: Routes = [
     canActivate: [UnauthGuard],
     loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
   },
-  // {
-  //   path: 'articles',
-  //   canActivate: [AuthGuard],
-  //   loadChildren: () => import('./features/sessions/articles.module').then(m => m.ArticlesModule)
-  // },
-  // {
-  //   path: 'topics',
-  //   canActivate: [AuthGuard],
-  //   loadChildren: () => import('./features/sessions/topics.module').then(m => m.TopicsModule)
-  // },
+  {
+    path: 'articles',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./features/articles/articles.module').then(m => m.ArticlesModule)
+  },
+  {
+    path: 'topics',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./features/topics/topics.module').then(m => m.TopicsModule)
+  },
   {
     path: 'me',
     canActivate: [AuthGuard],

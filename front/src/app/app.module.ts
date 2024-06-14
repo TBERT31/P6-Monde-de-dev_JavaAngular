@@ -9,10 +9,15 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { MatCardModule } from '@angular/material/card';
 import { MeComponent } from './components/me/me.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { HomeComponent } from './components/home/home.component';
+
 
 const materialModule = [
   MatButtonModule,
@@ -20,13 +25,17 @@ const materialModule = [
   MatIconModule,
   MatSnackBarModule,
   MatToolbarModule,
+  MatSidenavModule,
+  MatListModule
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
-    MeComponent
+    MeComponent,
+    ToolbarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
