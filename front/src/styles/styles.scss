@@ -39,3 +39,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         border-color: rgba(103, 58, 183, 1) ; 
     }
 }
+
+.articles, .topics{
+    .mat-card-header-text{
+        margin: 0;
+        padding: 0;
+    }
+}

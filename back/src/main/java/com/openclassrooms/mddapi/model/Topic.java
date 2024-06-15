@@ -30,12 +30,12 @@ public class Topic {
     private Long id;
 
     @NotBlank(message = "Title is mandatory")
-    @Size(max = 50)
+    @Size(max = 200)
     @NonNull
     private String title;
 
     @NotBlank(message = "Description is mandatory")
-    @Size(max = 2000)
+    @Size(max = 10000)
     @NonNull
     private String description;
 

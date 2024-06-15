@@ -30,7 +30,7 @@ public class Article {
     private Long id;
 
     @NotBlank(message = "Title is mandatory")
-    @Size(max = 50)
+    @Size(max = 200)
     @NonNull
     private String title;
 

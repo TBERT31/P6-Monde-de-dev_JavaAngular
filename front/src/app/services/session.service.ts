@@ -6,7 +6,7 @@ import { Session } from '../interfaces/session.interface';
   providedIn: 'root'
 })
 export class SessionService {
-  private readonly SESSION_STORAGE_KEY = 'sferze848A4ZR4EFZZED$ù*setgdvf^ùsdùf2644161fcsdsdgfgb';
+  private readonly SESSION_STORAGE_KEY = 'userSession';
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
   public session: Session | undefined;
 
@@ -32,6 +32,15 @@ export class SessionService {
 
   public getSession(): Session | undefined {
     return this.session;
+  }
+
+  public getToken(): string | null {
+    const session = localStorage.getItem(this.SESSION_STORAGE_KEY);
+    if (session) {
+      const parsedSession = JSON.parse(session);
+      return parsedSession.token || null;
+    }
+    return null;
   }
 
   private saveSession(): void {

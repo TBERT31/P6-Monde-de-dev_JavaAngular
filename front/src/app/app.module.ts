@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MeComponent } from './components/me/me.component';
 import { LayoutComponent } from './components/layout/layoutcomponent';
 import { HomeComponent } from './components/home/home.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 
 const materialModule = [
@@ -35,7 +36,7 @@ const materialModule = [
     NotFoundComponent,
     MeComponent,
     LayoutComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,22 @@
-<p>articles-list works!</p>
+<div class="articles">
+    <div class="articles-controls">
+        <button mat-raised-button color="primary" type="button" class="create-button">Créer un article</button>
+        <button type="button" class="sort-button">
+            <span>Trier par ↓</span> 
+        </button>
+    </div>
+    <div class="articles-cards-container">
+        <mat-card class="articles-card" appearance="outlined" *ngFor="let article of (articles$ | async)">
+            <mat-card-header class="articles-card-header">
+              <mat-card-title-group>
+                <mat-card-title class="title">{{article.title}}</mat-card-title>
+                <mat-card-subtitle class="date">{{article.updatedAt}}</mat-card-subtitle>
+                <mat-card-subtitle class="author">{{article.user_id}}</mat-card-subtitle>
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content class="articles-card-body">
+                {{ article.content | truncate:450 }}
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
