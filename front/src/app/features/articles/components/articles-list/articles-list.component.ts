@@ -20,4 +20,6 @@ export class ArticlesListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
+
 }

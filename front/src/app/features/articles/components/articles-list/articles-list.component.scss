@@ -50,12 +50,36 @@
         &-header {
             height: 30%;
 
-            .title{
-                overflow: hidden;
-            }
+            .header-group{
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 100%;
+                
+                .title{
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                }
+    
+                .subtitle-group{
+                    display: flex;
+                    position: relative;
+        
+                    .date, .author{
+                        color: #000;
+                    }
 
-            .date{
-                color: #000;
+                    .author{
+                        position: absolute;
+                        top: 22%;
+                        left: 50%;
+                        transform: translate(-50%, 0);
+                    }
+                }
+
             }
         }
         
