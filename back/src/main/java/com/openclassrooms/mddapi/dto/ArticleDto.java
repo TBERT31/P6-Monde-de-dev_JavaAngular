@@ -25,7 +25,7 @@ public class ArticleDto {
     private String content;
 
     @NotNull(message = "Author is required")
-    private Long author_id;
+    private String author;
 
     @NotNull(message = "Topic is required")
     private Long topic_id;

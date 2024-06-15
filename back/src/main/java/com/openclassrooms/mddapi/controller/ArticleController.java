@@ -74,7 +74,7 @@ public class ArticleController {
 
         User user = userService.getUserByEmail(email).get();
 
-        if(user.getId() != articleDto.getAuthor_id()) {
+        if(user.getUsername() != articleDto.getAuthor()) {
             throw new ForbiddenException("You are not allowed to create an article for another user");
         }
 

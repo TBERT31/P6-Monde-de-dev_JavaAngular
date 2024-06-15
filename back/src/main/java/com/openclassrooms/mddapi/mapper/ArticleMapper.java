@@ -41,7 +41,7 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "content", target = "content"),
-            @Mapping(target = "author", expression = "java(mapToUser(articleDto.getAuthor_id()))"),
+            @Mapping(target = "author", expression = "java(mapToUser(articleDto.getAuthor()))"),
             @Mapping(target = "topic", expression = "java(mapToTopic(articleDto.getTopic_id()))"),
             @Mapping(target = "comments", expression = "java(mapToComments(articleDto.getComments()))"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
@@ -49,8 +49,8 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
     })
     public abstract Article toEntity(ArticleDto articleDto);
 
-    public User mapToUser(Long userId) {
-        return userId != null ? userService.getUserById(userId).orElse(null) : null;
+    public User mapToUser(String username) {
+        return username != null ? userService.getUserByUsername(username).orElse(null) : null;
     }
 
     public Topic mapToTopic(Long topicId) {
@@ -70,7 +70,7 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "content", target = "content"),
-            @Mapping(source = "article.author.id", target = "author_id"),
+            @Mapping(source = "article.author.username", target = "author"),
             @Mapping(source = "article.topic.id", target = "topic_id"),
             @Mapping(target = "comments", expression = "java(mapToCommentIds(article.getComments()))"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
