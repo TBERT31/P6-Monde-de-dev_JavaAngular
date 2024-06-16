@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Article } from '../interfaces/article.interface'; 
@@ -14,8 +14,15 @@ export class ArticlesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAllArticles(): Observable<Article[]> {
-    return this.httpClient.get<Article[]>(this.pathService);
+  public getAllArticles(sortBy: string = 'id', order: string = 'asc'): Observable<Article[]> {
+    let params = new HttpParams();
+    if (sortBy) {
+      params = params.set('sortBy', sortBy);
+    }
+    if (order) {
+      params = params.set('order', order);
+    }
+    return this.httpClient.get<Article[]>(this.pathService, { params });
   }
 
   public getArticleById(id: number): Observable<Article> {

@@ -6,12 +6,15 @@
         routerLink="create">
             Créer un article
         </button>
-        <button type="button" class="sort-button">
-            <span>Trier par ↓</span> 
+        <button type="button" class="sort-button" (click)="toggleSortOrder()">
+            <span>Trier par {{ order === 'desc' ? '↓' : '↑' }}</span> 
         </button>
     </div>
     <div class="articles-cards-container">
-        <mat-card class="articles-card" 
+        <mat-card class="articles-card"
+        #tooltip="matTooltip"
+        [matTooltip]="article.title"
+        matTooltipHideDelay="10"
         [routerLink]="['detail',article.id]"
         appearance="outlined" 
         *ngFor="let article of (articles$ | async)">

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ArticleService {
-    List<Article> getAllArticles();
+    List<Article> getAllArticles(String sortBy, String order);
     List<Article> getArticlesByTopicId(Long topicId);
     Optional<Article> getArticleById(Long id);
     Article saveArticle(Article article);

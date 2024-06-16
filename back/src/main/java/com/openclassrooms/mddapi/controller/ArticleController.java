@@ -31,9 +31,21 @@ public class ArticleController {
     private final UserService userService;
 
     @GetMapping("")
-    public ResponseEntity<List<ArticleDto>> getAllArticles() {
-        List<Article> articles = articleService.getAllArticles();
-        return ResponseEntity.ok(articleMapper.toDto(articles));
+    public ResponseEntity<List<ArticleDto>> getAllArticles(
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String order
+    ) {
+        if (sortBy == null) {
+            sortBy = "id";
+        }
+
+        if (order == null) {
+            order = "asc";
+        }
+
+        return ResponseEntity.ok(
+                articleMapper.toDto(articleService.getAllArticles(sortBy, order))
+        );
     }
 
     @GetMapping("/{id}")

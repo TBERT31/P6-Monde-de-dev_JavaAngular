@@ -2,26 +2,36 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Article } from '../../interfaces/article.interface';
 import { ArticlesService } from '../../services/articles.service';
-import { SessionService } from 'src/app/services/session.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-articles-list',
   templateUrl: './articles-list.component.html',
   styleUrls: ['./articles-list.component.scss']
 })
-export class ArticlesListComponent implements OnInit {
+export class ArticlesListComponent implements OnInit, OnDestroy {
+  public articles$: Observable<Article[]> | undefined;
+  private sortBy: string = 'updatedAt';
+  public order: string = 'desc';
+  //private subscription: Subscription = new Subscription();
 
-  public articles$: Observable<Article[]> = this.articleService.getAllArticles();
-
-  constructor(
-    private articleService : ArticlesService,
-  ) { }
+  constructor(private articleService: ArticlesService) {}
 
   ngOnInit(): void {
-    
+    this.loadArticles();
   }
 
 
+  // Pas forcement utile car le pipe async s'occupe de désinscrire les observables
+  ngOnDestroy():void {
+    //this.subscription.unsubscribe();
+  }
 
+  loadArticles(): void {
+    this.articles$ = this.articleService.getAllArticles(this.sortBy, this.order);
+  }
+
+  toggleSortOrder(): void {
+    this.order = this.order === 'asc' ? 'desc' : 'asc';
+    this.loadArticles();
+  }
 }
