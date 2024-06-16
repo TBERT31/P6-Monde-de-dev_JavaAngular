@@ -12,22 +12,27 @@
     </div>
     <div class="articles-cards-container">
         <mat-card class="articles-card"
-        #tooltip="matTooltip"
-        [matTooltip]="article.title"
-        matTooltipHideDelay="10"
         [routerLink]="['detail',article.id]"
         appearance="outlined" 
         *ngFor="let article of (articles$ | async)">
             <mat-card-header class="articles-card-header">
               <mat-card-title-group class="header-group">
-                <mat-card-title class="title">{{article.title | truncate:40}}</mat-card-title>
+                <mat-card-title
+                #tooltip="matTooltip"
+                [matTooltip]="article.title"
+                matTooltipHideDelay="10" 
+                class="title">{{article.title | truncate:40}}</mat-card-title>
                 <div class="subtitle-group">
                     <mat-card-subtitle class="date">{{article.updatedAt}}</mat-card-subtitle>
                     <mat-card-subtitle class="author">{{ article.author }}</mat-card-subtitle>
                 </div>
               </mat-card-title-group>
             </mat-card-header>
-            <mat-card-content class="articles-card-body">
+            <mat-card-content 
+            #tooltip="matTooltip"
+            matTooltip="cliquez pour en savoir plus."
+            matTooltipHideDelay="10"
+            class="articles-card-body">
                 {{ article.content | truncate:450 }}
             </mat-card-content>
         </mat-card>
