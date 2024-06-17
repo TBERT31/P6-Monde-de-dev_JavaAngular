@@ -18,7 +18,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
   showToolbarSubscription: Subscription | null = null;
   resizeSubscription: Subscription | null = null;
   isLoggedIn$: Observable<boolean>;
-  private readonly mobileWidth = 768;
+  private readonly mobileWidthLoginsPages = 768;
+  drawerCanBeVisible: boolean = window.innerWidth < 640;
 
 
   constructor(
@@ -52,8 +53,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   checkScreenWidth(width: number) {
-    const isMobile = width < this.mobileWidth;
+    const isMobile = width < this.mobileWidthLoginsPages;
     const isLoginOrRegister = this.router.url === '/login' || this.router.url === '/register';
+    this.drawerCanBeVisible = width < 640;
 
     if (isMobile && isLoginOrRegister) {
       this.showToolbar = false;
@@ -66,7 +68,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   toolbarDisplayer(event: NavigationEnd) {
     const isHome = event.url === '/';
     const isLoginOrRegister = event.url === '/login' || event.url === '/register';
-    const isMobile = window.innerWidth < this.mobileWidth;
+    const isMobile = window.innerWidth < this.mobileWidthLoginsPages;
 
     if ((isMobile && isLoginOrRegister) || isHome) {
       this.showToolbar = false;
