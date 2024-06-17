@@ -1,0 +1,121 @@
+.article-form{
+    width: 100%;
+    margin: auto;
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    position: relative;
+    max-width: 1200px;
+
+    .back-button{
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+
+        &-icon{
+            font-size: 2rem;
+        }
+    }
+
+    &-title{
+        font-weight: bold;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+
+        .create-button-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+
+            button{
+                width: 100px;
+                background-color: rgb(103, 58, 183);
+                border-radius: 5px;
+                color: rgb(255, 255, 255);
+                cursor: pointer;
+
+                &:disabled {
+                    background-color: rgba(103, 58, 183, 0.8); 
+                    color: rgba(255, 255, 255, 0.8); 
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: rgb(103, 58, 183);
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: rgb(103, 58, 183);
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-color: rgb(103, 58, 183);
+    outline-color: rgb(103, 58, 183);
+  }
+
+  ::ng-deep .mat-form-field-ripple {
+    background-color: rgb(103, 58, 183) !important;
+  }
+
+  // Remove the asterisk for required fields
+  ::ng-deep .mat-form-field-required-marker {
+    display: none;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline-thick {
+    color: red;
+  }
+
+  // Error styles for mat-form-field
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline,
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline-thick,
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline-start,
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline-end {
+    border-color: red;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-ripple {
+    background-color: red !important;
+  }
+
+  @media screen and (max-width: 640px){
+    padding-top: 0;
+
+    h1{
+        font-size: 1.5rem;
+    }
+
+    .back-button{
+        position: static;
+        margin-right: 80%;
+    }
+
+  }
+
+  @media screen and (max-width: 340px){
+    padding-top: 0;
+
+    h1{
+        font-size: 1.2rem;
+    }
+
+    form{
+        width: 80%;
+    }
+
+  }
+}

@@ -6,10 +6,18 @@
     position="end">
       <mat-nav-list class="sidenav-content">
             <div class="sidenav-links">
-              <a routerLink="articles" class="link" routerLinkActive="active">Articles</a>
-              <a routerLink="topics" class="link" routerLinkActive="active">Thèmes</a>
+              <a routerLink="articles" 
+              class="link" 
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">Articles</a>
+              <a routerLink="topics" 
+              class="link" 
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">Thèmes</a>
             </div>
-            <button routerLink="me" class="link account-button">
+            <button routerLink="me" class="link account-button" 
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
                 <mat-icon class="account-icon" aria-hidden="false" aria-label="account icon">person_outline</mat-icon>
             </button>
       </mat-nav-list>
@@ -24,9 +32,16 @@
         
                 <div *ngIf="$isLogged() | async">
                   <div class="links-container">
-                    <a routerLink="articles" class="link" routerLinkActive="active">Articles</a>
-                    <a routerLink="topics" class="link" routerLinkActive="active">Thèmes</a>
-                    <button routerLink="me" class="link account-button">
+                    <a routerLink="articles" 
+                    class="link" routerLinkActive="active"  
+                    [routerLinkActiveOptions]="{ exact: true }">Articles</a>
+                    <a routerLink="topics" 
+                    class="link" 
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">Thèmes</a>
+                    <button routerLink="me" class="link account-button"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }">
                         <mat-icon class="account-icon" aria-hidden="false" aria-label="account icon">person_outline</mat-icon>
                     </button>
                   </div>

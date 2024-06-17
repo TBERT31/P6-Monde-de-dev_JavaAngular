@@ -57,8 +57,4 @@ export class RegisterComponent {
       }
     );
   }
-
-  public back() {
-    window.history.back();
-  }
 }

@@ -1,1 +1,35 @@
-<p>topics-list works!</p>
+<div class="topics">
+    <div class="topics-cards-container">
+        <mat-card class="topics-card"
+        appearance="outlined" 
+        *ngFor="let topic of (topics$ | async)">
+            <mat-card-header class="topics-card-header">
+              <mat-card-title-group class="header-group">
+                <mat-card-title
+                class="title">{{topic.title | truncate:100}}</mat-card-title>
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content 
+            class="topics-card-body">
+                {{ topic.description | truncate:1000 }}
+            </mat-card-content>
+
+            <div class="topics-card-btn-container">
+                <button mat-raised-button color="primary" 
+                type="button" 
+                *ngIf="!isSubscribed(topic)"
+                class="topics-card-btn"
+                (click)="subscribe(topic)">
+                    S'abonner
+                </button>
+                <button mat-raised-button color="primary" 
+                type="button" 
+                *ngIf="isSubscribed(topic)"
+                class="topics-card-btn"
+                (click)="unsubscribe(topic)">
+                    Se désabonner
+                </button>
+            </div>
+        </mat-card>
+    </div>
+</div>

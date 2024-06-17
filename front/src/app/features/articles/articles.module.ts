@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 registerLocaleData(localeFr);
 
 const materialModules = [
@@ -24,7 +25,8 @@ const materialModules = [
   MatIconModule,
   MatInputModule,
   MatSnackBarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatSelectModule
 ];
 
 @NgModule({

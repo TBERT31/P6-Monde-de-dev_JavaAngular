@@ -55,6 +55,11 @@ mat-drawer-content{
 
             & button {
                 margin-left: 2rem;
+
+                &.active {
+                    border: 2px solid rgb(117, 80, 235);
+                    color: rgb(117, 80, 235);
+                }
             }
         }
 
@@ -99,6 +104,11 @@ mat-drawer-content{
 
         button{
             margin-bottom: 5%;
+
+            &.active {
+                border: 2px solid rgb(117, 80, 235);
+                color: rgb(117, 80, 235);
+            }
         }
     }
 

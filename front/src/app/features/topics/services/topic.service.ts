@@ -6,7 +6,7 @@ import { Topic } from '../interfaces/topic.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class TeacherService {
+export class TopicService {
 
     private pathService = 'api/topics';
 

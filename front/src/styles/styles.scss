@@ -12,9 +12,11 @@ html, body { height: 100%; }
 
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.mat-form-field-wrapper{
-    padding: 0;
-    border: none;
+.login, .register{
+    .mat-form-field-wrapper{
+        padding: 0;
+        border: none;
+    }
 }
 
 .field-group-input {

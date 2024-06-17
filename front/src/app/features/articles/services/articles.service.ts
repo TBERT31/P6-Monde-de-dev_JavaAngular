@@ -33,8 +33,8 @@ export class ArticlesService {
     return this.httpClient.get<Article[]>(`${this.pathService}/topic/${topicId}`);
   }
 
-  public createArticle(form: FormData): Observable<Article> {
-    return this.httpClient.post<Article>(this.pathService, form);
+  public createArticle(article: Article): Observable<Article> {
+    return this.httpClient.post<Article>(this.pathService, article);
   }
 
 }

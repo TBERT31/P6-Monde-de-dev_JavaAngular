@@ -11,6 +11,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TopicsListComponent } from './components/topics-list/topics-list.component';
 import { TopicsRoutingModule } from './topics-routing.module';
 import localeFr from '@angular/common/locales/fr';
+import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
+import { MatTooltipModule } from '@angular/material/tooltip';
 registerLocaleData(localeFr);
 
 const materialModules = [
@@ -20,12 +22,14 @@ const materialModules = [
   MatIconModule,
   MatInputModule,
   MatSnackBarModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTooltipModule
 ];
 
 @NgModule({
   declarations: [
-    TopicsListComponent
+    TopicsListComponent,
+    TruncatePipe
   ],
   imports: [
     CommonModule,

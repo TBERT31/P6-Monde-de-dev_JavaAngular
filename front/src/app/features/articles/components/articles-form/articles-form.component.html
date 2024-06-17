@@ -1,1 +1,48 @@
-<p>article-form works!</p>
+<div class="article-form">
+    <button class="back-button" mat-icon-button (click)="back()">
+        <mat-icon class="back-button-icon">keyboard_backspace</mat-icon>
+    </button>
+
+    <h1 class="article-form-title">Créer un nouvel article</h1>
+
+    <form [formGroup]="articleForm!" (ngSubmit)="submit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Sélectionner un thème</mat-label>
+          <mat-select ngDefaultControl formControlName="topic_id">
+            <mat-option 
+            placeholder="Sélectionner un thème"
+            *ngFor="let topic of topics$ | async" [value]="topic.id">
+              {{topic.title}} 
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="articleForm.get('topic_id')?.invalid && articleForm.get('topic_id')?.touched">
+            Veuillez bien sélectionner le thème de l'article
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Titre de l'article</mat-label>
+            <input 
+            matInput 
+            formControlName="title"
+            placeholder="Titre de l'article">
+            <mat-error *ngIf="articleForm.get('title')?.invalid && articleForm.get('title')?.touched">
+              Veuillez bien renseigner le titre de l'article
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Contenu de l'article</mat-label>
+          <textarea 
+          matInput rows="10" 
+          formControlName="content"
+          placeholder="Contenu de l'article"></textarea>
+          <mat-error *ngIf="articleForm.get('content')?.invalid && articleForm.get('content')?.touched">
+            Veuillez bien renseigner le contenu de l'article
+          </mat-error>
+        </mat-form-field>
+        <div class="create-button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="articleForm!.invalid">
+            Créer
+          </button>
+        </div>
+    </form>
+</div>
