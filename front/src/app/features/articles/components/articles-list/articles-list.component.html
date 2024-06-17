@@ -18,22 +18,28 @@
             <mat-card-header class="articles-card-header">
               <mat-card-title-group class="header-group">
                 <mat-card-title
-                #tooltip="matTooltip"
+                #tooltipTitle="matTooltip"
                 [matTooltip]="article.title"
                 matTooltipHideDelay="10" 
-                class="title">{{article.title | truncate:40}}</mat-card-title>
+                class="title">{{article.title | truncate:100}}</mat-card-title>
                 <div class="subtitle-group">
                     <mat-card-subtitle class="date">{{article.updatedAt}}</mat-card-subtitle>
-                    <mat-card-subtitle class="author">{{ article.author }}</mat-card-subtitle>
+                    <mat-card-subtitle 
+                    #tooltipAuthor="matTooltip"
+                    [matTooltip]="article.author"
+                    matTooltipHideDelay="10" 
+                    class="author">
+                        {{ article.author | truncate:15 }}
+                    </mat-card-subtitle>
                 </div>
               </mat-card-title-group>
             </mat-card-header>
             <mat-card-content 
-            #tooltip="matTooltip"
+            #tooltipContent="matTooltip"
             matTooltip="cliquez pour en savoir plus."
             matTooltipHideDelay="10"
             class="articles-card-body">
-                {{ article.content | truncate:450 }}
+                {{ article.content | truncate:1000 }}
             </mat-card-content>
         </mat-card>
     </div>

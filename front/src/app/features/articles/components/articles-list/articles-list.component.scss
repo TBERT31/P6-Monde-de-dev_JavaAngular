@@ -28,6 +28,14 @@
             font-size: 1rem;
             font-weight: bolder;
         }
+
+        @media screen and (max-width: 640px) {
+            flex-direction: column;
+
+            .sort-button {
+                margin: 0.5rem 0;
+            }
+        }
     }
 
     &-cards-container{
@@ -77,6 +85,10 @@
                         top: 22%;
                         left: 50%;
                         transform: translate(-50%, 0);
+
+                        @media screen and (max-width: 300px) {
+                            left: 80%;
+                        }
                     }
                 }
 
@@ -90,6 +102,36 @@
             display: -webkit-box;
             -webkit-line-clamp: 9;
             -webkit-box-orient: vertical;
+        }
+
+        @media screen and (max-width: 1000px) {
+            width: 42%;
+        }
+
+        @media screen and (max-width: 640px) {
+            width: 100%;
+            height: 200px;
+
+            &-body {
+                -webkit-line-clamp: 7;
+            }
+        }
+
+        @media screen and (max-width: 340px) {
+            height: 250px;
+            
+            .title{
+                font-size: 1rem;
+            }
+
+            .date, .author{
+                font-size: 0.8rem;
+            }
+
+            &-body {
+                font-size: 0.8rem;
+                -webkit-line-clamp: 9;
+            }
         }
     }
 }
