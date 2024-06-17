@@ -43,6 +43,14 @@ mat-drawer-content{
                 text-decoration: none;
                 cursor: pointer;
                 margin-left: 2rem;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+
+                &.active {
+                    color: rgb(117, 80, 235);
+                }
             }
 
             & button {
@@ -103,6 +111,14 @@ mat-drawer-content{
 
         a{
             margin: 0.5rem;
+        }
+
+        :hover {
+            text-decoration: underline;
+        }
+
+        .active {
+            color: rgb(117, 80, 235);
         }
     }
 

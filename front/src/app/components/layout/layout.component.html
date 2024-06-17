@@ -1,5 +1,9 @@
 <mat-drawer-container class="sidenav-container custom-backdrop"  [hasBackdrop]="true">
-    <mat-drawer #drawer mode="over" class="sidenav" position="end">
+    <mat-drawer 
+    *ngIf="$isLogged() | async"
+    #drawer mode="over" 
+    class="sidenav" 
+    position="end">
       <mat-nav-list class="sidenav-content">
             <div class="sidenav-links">
               <a routerLink="articles" class="link">Articles</a>
@@ -18,17 +22,19 @@
                 <img src="/assets/logo_p6.png" alt="logo" class="logo"/>
                 </a>
         
-                <div class="links-container" *ngIf="$isLogged() | async">
-                  <a routerLink="articles" class="link">Articles</a>
-                  <a routerLink="topics" class="link">Thèmes</a>
-                  <button routerLink="me" class="link account-button">
-                      <mat-icon class="account-icon" aria-hidden="false" aria-label="account icon">person_outline</mat-icon>
+                <div *ngIf="$isLogged() | async">
+                  <div class="links-container">
+                    <a routerLink="articles" class="link" routerLinkActive="active">Articles</a>
+                    <a routerLink="topics" class="link" routerLinkActive="active">Thèmes</a>
+                    <button routerLink="me" class="link account-button">
+                        <mat-icon class="account-icon" aria-hidden="false" aria-label="account icon">person_outline</mat-icon>
+                    </button>
+                  </div>
+          
+                  <button mat-icon-button class="menu-button" (click)="drawer.toggle()">
+                    <mat-icon class="menu-icon">menu</mat-icon>
                   </button>
                 </div>
-        
-                <button mat-icon-button class="menu-button" (click)="drawer.toggle()">
-                  <mat-icon class="menu-icon">menu</mat-icon>
-                </button>
             </mat-toolbar>
         </header>
             
