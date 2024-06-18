@@ -19,7 +19,7 @@ public class CommentDto {
     private String message;
 
     @NotNull(message = "User is required")
-    private Long user_id;
+    private String username;
 
     @NotNull(message = "Article is required")
     private Long article_id;

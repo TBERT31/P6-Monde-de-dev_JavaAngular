@@ -42,7 +42,7 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "content", target = "content"),
             @Mapping(target = "author", expression = "java(mapToUser(articleDto.getAuthor()))"),
-            @Mapping(target = "topic", expression = "java(mapToTopic(articleDto.getTopic_id()))"),
+            @Mapping(target = "topic", expression = "java(mapToTopic(articleDto.getTopic_title()))"),
             @Mapping(target = "comments", expression = "java(mapToComments(articleDto.getComments()))"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
             @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
@@ -53,8 +53,8 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
         return username != null ? userService.getUserByUsername(username).orElse(null) : null;
     }
 
-    public Topic mapToTopic(Long topicId) {
-        return topicId != null ? topicService.getTopicById(topicId).orElse(null) : null;
+    public Topic mapToTopic(String topicTitle) {
+        return topicTitle != null ? topicService.getTopicByTitle(topicTitle).orElse(null) : null;
     }
 
     public List<Comment> mapToComments(List<Long> commentIds) {
@@ -71,7 +71,7 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "content", target = "content"),
             @Mapping(source = "article.author.username", target = "author"),
-            @Mapping(source = "article.topic.id", target = "topic_id"),
+            @Mapping(source = "article.topic.title", target = "topic_title"),
             @Mapping(target = "comments", expression = "java(mapToCommentIds(article.getComments()))"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
             @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")

@@ -69,7 +69,7 @@ public class CommentController {
 
         User user = userService.getUserByEmail(email).get();
 
-        if(user.getId() != commentDto.getUser_id()) {
+        if(!user.getUsername().equals(commentDto.getUsername())) {
             throw new ForbiddenException("You are not allowed to create a comment for another user");
         }
 

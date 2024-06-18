@@ -1,1 +1,47 @@
-<p>article-detail works!</p>
+<div class="articles-detail" *ngIf="article">
+    <div class="articles-detail-header">
+        <div class="articles-detail-title-container">
+            <button class="back-button" mat-icon-button (click)="back()">
+                <mat-icon class="back-button-icon">keyboard_backspace</mat-icon>
+            </button>
+            <h1 class="articles-detail-title">{{ article.title }}</h1>
+        </div>
+        <div class="articles-detail-subtitle">
+            <span class="articles-detail-date">{{ article.updatedAt | date: 'dd/MM/yyyy' }}</span>
+            <span class="articles-detail-author">{{ article.author }}</span>
+            <span class="articles-detail-topic">{{ article.topic_title }}</span>
+        </div>
+    </div>
+    <div class="articles-detail-main">
+        <p class="articles-detail-content">{{ article.content }}</p>
+
+        <hr class="articles-detail-separation">
+
+        <h3 class="comment-title">Commentaires</h3>
+
+        <div class="comment-area">
+            <div class="comment-area-list" *ngFor="let comment of comments$ | async">
+                <p class="comment-area-username">{{ comment.username }}</p>
+                <p class="comment-area-message">{{ comment.message }}</p>
+            </div>
+        
+            <form class="comment-area-form" [formGroup]="commentForm!" (ngSubmit)="sendComment()">
+                <mat-form-field appearance="outline" class="comment-area-field">
+                    <mat-label>Écrivez ici votre commentaire</mat-label>
+                    <input
+                        class="comment-area-input"
+                        matInput
+                        formControlName="message"
+                        placeholder="Écrivez ici votre commentaire"
+                    />
+                    <mat-error *ngIf="commentForm.get('message')?.invalid && commentForm.get('message')?.touched">
+                        Veuillez bien renseigner le message de votre commentaire
+                    </mat-error>
+                </mat-form-field>
+                <button class="comment-area-submit" mat-raised-button color="primary" type="submit" [disabled]="commentForm!.invalid">
+                    <mat-icon class="send-icon">send</mat-icon>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

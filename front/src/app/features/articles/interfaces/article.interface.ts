@@ -3,7 +3,7 @@ export interface Article {
     title: string;
     content: string;
     author: string;
-    topic_id: number;
+    topic_title: string;
     comments: number[];
     createdAt?: Date;
     updatedAt?: Date;

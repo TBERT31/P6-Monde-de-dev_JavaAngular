@@ -33,6 +33,11 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
+    public Optional<Topic> getTopicByTitle(String topic_title) {
+        return topicRepository.findByTitle(topic_title);
+    }
+
+    @Override
     public Topic subscribeUserToTopic(Long topicId, Long userId) {
         Topic topic = topicRepository.findById(topicId).orElse(null);
         User user = userRepository.findById(userId).orElse(null);

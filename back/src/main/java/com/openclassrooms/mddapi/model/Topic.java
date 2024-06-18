@@ -32,6 +32,7 @@ public class Topic {
     @NotBlank(message = "Title is mandatory")
     @Size(max = 200)
     @NonNull
+    @Column(name = "title", unique = true)
     private String title;
 
     @NotBlank(message = "Description is mandatory")

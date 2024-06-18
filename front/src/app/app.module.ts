@@ -17,7 +17,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MeComponent } from './components/me/me.component';
 import { LayoutComponent } from './components/layout/layoutcomponent';
 import { HomeComponent } from './components/home/home.component';
-import { TruncatePipe } from './pipes/truncate.pipe';
+import { TruncatePipe } from './shared/pipes/truncate.pipe';
+import { SharedModule } from './shared/shared.module';
 
 
 const materialModule = [

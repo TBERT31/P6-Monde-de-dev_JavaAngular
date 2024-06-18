@@ -45,7 +45,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
 
   public initForm(article?: Article): void {
       this.articleForm = this.fb.group({
-        topic_id: [article ? article.topic_id : '', [Validators.required]],
+        topic_title: [article ? article.topic_title : '', [Validators.required]],
         title: [article ? article.title : '', [Validators.required, Validators.maxLength(200)]],
         content: [article ? article.content : '', [Validators.required, Validators.maxLength(2000)]],
       });

@@ -35,15 +35,15 @@ public abstract class CommentMapper implements EntityMapper<CommentDto, Comment>
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "message", target = "message"),
-            @Mapping(target = "user", expression = "java(mapToUser(commentDto.getUser_id()))"),
+            @Mapping(target = "user", expression = "java(mapToUser(commentDto.getUsername()))"),
             @Mapping(target = "article", expression = "java(mapToArticle(commentDto.getArticle_id()))"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
             @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")
     })
     public abstract Comment toEntity(CommentDto commentDto);
 
-    public User mapToUser(Long userId) {
-        return userId != null ? userService.getUserById(userId).orElse(null) : null;
+    public User mapToUser(String username) {
+        return username != null ? userService.getUserByUsername(username).orElse(null) : null;
     }
 
     public Article mapToArticle(Long articleId) {
@@ -53,7 +53,7 @@ public abstract class CommentMapper implements EntityMapper<CommentDto, Comment>
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "message", target = "message"),
-            @Mapping(source = "comment.user.id", target = "user_id"),
+            @Mapping(source = "comment.user.username", target = "username"),
             @Mapping(source = "comment.article.id", target = "article_id"),
             @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy/MM/dd"),
             @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy/MM/dd")

@@ -7,7 +7,7 @@ import { CommentRequest } from '../interfaces/api/commentRequest.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class MessagesService {
+export class CommentsService {
 
   private pathService = 'api/comments';
 

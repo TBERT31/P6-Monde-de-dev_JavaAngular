@@ -13,7 +13,7 @@ import localeFr from '@angular/common/locales/fr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
+import { SharedModule } from '../../shared/shared.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 registerLocaleData(localeFr);
@@ -34,13 +34,13 @@ const materialModules = [
     ArticlesListComponent,
     ArticleFormComponent,
     ArticleDetailComponent,
-    TruncatePipe
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     ArticlesRoutingModule,
+    SharedModule,
     ...materialModules
   ],
   providers: [

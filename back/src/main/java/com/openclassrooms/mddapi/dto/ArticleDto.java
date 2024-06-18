@@ -28,7 +28,7 @@ public class ArticleDto {
     private String author;
 
     @NotNull(message = "Topic is required")
-    private Long topic_id;
+    private String topic_title;
 
     private List<Long> comments;
 

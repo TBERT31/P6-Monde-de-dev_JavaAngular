@@ -8,14 +8,14 @@
     <form [formGroup]="articleForm!" (ngSubmit)="submit()">
         <mat-form-field appearance="outline">
           <mat-label>Sélectionner un thème</mat-label>
-          <mat-select ngDefaultControl formControlName="topic_id">
+          <mat-select ngDefaultControl formControlName="topic_title">
             <mat-option 
             placeholder="Sélectionner un thème"
-            *ngFor="let topic of topics$ | async" [value]="topic.id">
+            *ngFor="let topic of topics$ | async" [value]="topic.title">
               {{topic.title}} 
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="articleForm.get('topic_id')?.invalid && articleForm.get('topic_id')?.touched">
+          <mat-error *ngIf="articleForm.get('topic_title')?.invalid && articleForm.get('topic_title')?.touched">
             Veuillez bien sélectionner le thème de l'article
           </mat-error>
         </mat-form-field>
