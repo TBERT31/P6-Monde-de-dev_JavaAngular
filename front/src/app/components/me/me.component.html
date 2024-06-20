@@ -1,22 +1,33 @@
 <div class="me">
-    <mat-card class="">
-        <mat-card-title>
-
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <button mat-icon-button (click)="back()">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-                <h1>User information</h1>
-            </div>
-            
-        </mat-card-title>
-        <mat-card-content>
-            <div *ngIf="user" fxLayout="column" fxLayoutAlign="start center">
-                <p>Name: </p>
-                <p>Email: </p>
-                <p><i>Create at: </i> </p>
-                <p><i>Last update: </i> </p>
-            </div>
-        </mat-card-content>
-    </mat-card>
+    <div class="me-profil">
+        <h1 class="me-profil-title">Profil utilisateur</h1>
+        <form *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="submit()">
+        <mat-form-field appearance="outline">
+            <input 
+            matInput 
+            formControlName="username"
+            type="text"
+            placeholder="Nom d'utilisateur">
+            <mat-error *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched">
+            Veuillez bien renseigner le nom de l'utilisateur
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <input 
+            matInput 
+            formControlName="email"
+            type="email"
+            placeholder="Email">
+            <mat-error *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+            Veuillez bien renseigner l'email
+            </mat-error>
+        </mat-form-field>
+        <div class="save-button-container">
+            <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
+            Sauvegarder
+            </button>
+        </div>
+        </form>
+    </div>
 </div>
+  

@@ -80,7 +80,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg4MDY5NCwiZXhwIjoxNzE3OTY3MDk0fQ.y0yFl7p-Z6GtOoDBeUuyKeR2Xnwx3_NQmW3saJ2ow0fdh6LiNKhUU3bRkcIqGgsL063dMORarHCzDK-eo7bYfA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -109,7 +109,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg4MDY5NCwiZXhwIjoxNzE3OTY3MDk0fQ.y0yFl7p-Z6GtOoDBeUuyKeR2Xnwx3_NQmW3saJ2ow0fdh6LiNKhUU3bRkcIqGgsL063dMORarHCzDK-eo7bYfA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -139,7 +139,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg4MDY5NCwiZXhwIjoxNzE3OTY3MDk0fQ.y0yFl7p-Z6GtOoDBeUuyKeR2Xnwx3_NQmW3saJ2ow0fdh6LiNKhUU3bRkcIqGgsL063dMORarHCzDK-eo7bYfA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -170,7 +170,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg4MDY5NCwiZXhwIjoxNzE3OTY3MDk0fQ.y0yFl7p-Z6GtOoDBeUuyKeR2Xnwx3_NQmW3saJ2ow0fdh6LiNKhUU3bRkcIqGgsL063dMORarHCzDK-eo7bYfA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -179,7 +179,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"My try article\",\r\n    \"content\": \"Here is my content\",\r\n    \"author_id\": 1,\r\n    \"topic_id\": 1\r\n}",
+							"raw": "{\r\n    \"title\": \"My try article\",\r\n    \"content\": \"Here is my content\",\r\n    \"author\": \"john.doe01\",\r\n    \"topic_title\": \"Python\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -213,7 +213,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg3MjE1OCwiZXhwIjoxNzE3OTU4NTU4fQ.WDik_7-FfCrt6Kz873FDGQGZgu5z64-ZDADYunT-R448U-LvWCEBIV2ro2yF1lqCx1-ToJVcLcTCsqhqtSEkvA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -222,7 +222,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"message\": \"mon message 2\",\r\n    \"user_id\": 1,\r\n    \"article_id\": 1\r\n}",
+							"raw": "{\r\n    \"message\": \"mon message 2\",\r\n    \"username\": \"john.doe01\",\r\n    \"article_id\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -252,7 +252,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg3MjE1OCwiZXhwIjoxNzE3OTU4NTU4fQ.WDik_7-FfCrt6Kz873FDGQGZgu5z64-ZDADYunT-R448U-LvWCEBIV2ro2yF1lqCx1-ToJVcLcTCsqhqtSEkvA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -282,7 +282,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg3MjE1OCwiZXhwIjoxNzE3OTU4NTU4fQ.WDik_7-FfCrt6Kz873FDGQGZgu5z64-ZDADYunT-R448U-LvWCEBIV2ro2yF1lqCx1-ToJVcLcTCsqhqtSEkvA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -318,7 +318,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg3MjE1OCwiZXhwIjoxNzE3OTU4NTU4fQ.WDik_7-FfCrt6Kz873FDGQGZgu5z64-ZDADYunT-R448U-LvWCEBIV2ro2yF1lqCx1-ToJVcLcTCsqhqtSEkvA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -348,7 +348,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg3MjE1OCwiZXhwIjoxNzE3OTU4NTU4fQ.WDik_7-FfCrt6Kz873FDGQGZgu5z64-ZDADYunT-R448U-LvWCEBIV2ro2yF1lqCx1-ToJVcLcTCsqhqtSEkvA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -378,13 +378,22 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg3MjE1OCwiZXhwIjoxNzE3OTU4NTU4fQ.WDik_7-FfCrt6Kz873FDGQGZgu5z64-ZDADYunT-R448U-LvWCEBIV2ro2yF1lqCx1-ToJVcLcTCsqhqtSEkvA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
 						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "localhost:8080/api/topics/1/subscribe/1",
 							"host": [
@@ -410,7 +419,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg3MjE1OCwiZXhwIjoxNzE3OTU4NTU4fQ.WDik_7-FfCrt6Kz873FDGQGZgu5z64-ZDADYunT-R448U-LvWCEBIV2ro2yF1lqCx1-ToJVcLcTCsqhqtSEkvA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -447,7 +456,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg3MjE1OCwiZXhwIjoxNzE3OTU4NTU4fQ.WDik_7-FfCrt6Kz873FDGQGZgu5z64-ZDADYunT-R448U-LvWCEBIV2ro2yF1lqCx1-ToJVcLcTCsqhqtSEkvA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -477,7 +486,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxNzg3MjE1OCwiZXhwIjoxNzE3OTU4NTU4fQ.WDik_7-FfCrt6Kz873FDGQGZgu5z64-ZDADYunT-R448U-LvWCEBIV2ro2yF1lqCx1-ToJVcLcTCsqhqtSEkvA",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0LmNvbSIsImlhdCI6MTcxODg2ODU3MiwiZXhwIjoxNzE4OTU0OTcyfQ.EOKhWJy21a8OIPGV3qWK9i5yiHISI5Jr-Tm-_zGzyJWMCdBKfrg9u1wwjPoUQaCRwnhQX32_GPe-sdmpCvT6LQ",
 									"type": "string"
 								}
 							]
@@ -495,6 +504,45 @@
 								"users",
 								"email",
 								"john.doe@test.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huLmRvZUB0ZXN0Mi5jb20iLCJpYXQiOjE3MTg4Njg3NjIsImV4cCI6MTcxODk1NTE2Mn0.q_vPqvP_nzNVFMOKTZkaH8PdC9Z2MHJN1APBgMgZwywE_JEX8Pfu9M8GiiYZG8O8hQHRcZO3eoh06Av-IUzyhg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john.doe@test.com\",\r\n    \"username\": \"john.doe01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"1"
 							]
 						}
 					},

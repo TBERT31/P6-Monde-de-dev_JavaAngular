@@ -18,4 +18,8 @@ export class UserService {
     public getUserByEmail(email: string): Observable<User> {
         return this.httpClient.get<User>(`${this.pathService}/${email}`);
     }
+
+    public updateUser(user: User): Observable<User> {
+        return this.httpClient.put<User>(`${this.pathService}/${user.id}`, user);
+    }
 }

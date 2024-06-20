@@ -18,7 +18,7 @@ public class CommentDto {
     @Size(max = 2000)
     private String message;
 
-    @NotNull(message = "User is required")
+    @NotNull(message = "Username is required")
     private String username;
 
     @NotNull(message = "Article is required")

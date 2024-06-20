@@ -19,17 +19,26 @@ import { LayoutComponent } from './components/layout/layoutcomponent';
 import { HomeComponent } from './components/home/home.component';
 import { TruncatePipe } from './shared/pipes/truncate.pipe';
 import { SharedModule } from './shared/shared.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
-const materialModule = [
+const materialModules = [
   MatButtonModule,
   MatCardModule,
+  MatFormFieldModule,
   MatIconModule,
+  MatInputModule,
   MatSnackBarModule,
-  MatToolbarModule,
+  MatTooltipModule,
+  MatSelectModule,
+  MatListModule,
   MatSidenavModule,
-  MatListModule
-]
+  MatToolbarModule
+];
 
 @NgModule({
   declarations: [
@@ -41,10 +50,11 @@ const materialModule = [
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule, 
     HttpClientModule,
-    ...materialModule
+    ...materialModules
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

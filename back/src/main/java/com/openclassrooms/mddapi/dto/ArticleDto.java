@@ -27,7 +27,7 @@ public class ArticleDto {
     @NotNull(message = "Author is required")
     private String author;
 
-    @NotNull(message = "Topic is required")
+    @NotNull(message = "Topic_title is required")
     private String topic_title;
 
     private List<Long> comments;
