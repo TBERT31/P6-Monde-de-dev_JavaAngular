@@ -1,9 +1,12 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.ArticleDto;
+import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.exception.ForbiddenException;
+import com.openclassrooms.mddapi.mapper.TopicMapper;
 import com.openclassrooms.mddapi.mapper.UserMapper;
+import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,6 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.validation.Valid;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -35,6 +39,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
     private final JwtUtils jwtUtils;
+    private final TopicMapper topicMapper;
 
     // dans le cas des erreurs 403/404 sur ces routes sensibles,
     // nous préfèrerons rester vague afin d'éviter de dévoiler des informations sur les utilisateurs
@@ -146,5 +151,10 @@ public class UserController {
         }
     }
 
-
+    @GetMapping("/{id}/topics")
+    public ResponseEntity<List<TopicDto>> getUserSubscribedTopics(@PathVariable Long id) {
+        List<Topic> topics = userService.getUserSubscribedTopics(id);
+        List<TopicDto> topicDtos = topicMapper.toDto(topics);
+        return ResponseEntity.ok(topicDtos);
+    }
 }
