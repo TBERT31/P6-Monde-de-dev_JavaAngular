@@ -2,32 +2,61 @@
     <div class="me-profil">
         <h1 class="me-profil-title">Profil utilisateur</h1>
         <form *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="submit()">
-        <mat-form-field appearance="outline">
-            <input 
-            matInput 
-            formControlName="username"
-            type="text"
-            placeholder="Nom d'utilisateur">
-            <mat-error *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched">
-            Veuillez bien renseigner le nom de l'utilisateur
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <input 
-            matInput 
-            formControlName="email"
-            type="email"
-            placeholder="Email">
-            <mat-error *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
-            Veuillez bien renseigner l'email
-            </mat-error>
-        </mat-form-field>
-        <div class="save-button-container">
-            <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
-            Sauvegarder
-            </button>
-        </div>
+            <mat-form-field appearance="outline">
+                <input 
+                matInput 
+                formControlName="username"
+                type="text"
+                placeholder="Nom d'utilisateur">
+                <mat-error *ngIf="userForm.get('username')?.invalid && userForm.get('username')?.touched">
+                    Veuillez bien renseigner le nom de l'utilisateur
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <input 
+                matInput 
+                formControlName="email"
+                type="email"
+                placeholder="Email">
+                <mat-error *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+                    Veuillez bien renseigner l'email
+                </mat-error>
+            </mat-form-field>
+            <div class="buttons-container">
+                <button class="save-button" mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
+                    Sauvegarder
+                </button>
+                <a class="logout-button" type="button" (click)="logout()">
+                    Se déconnecter
+                </a>
+            </div>
         </form>
     </div>
+
+    <hr class="me-separation"/>
+
+    <div class="me-subscribes">
+        <h2 class="me-subscribes-title">Abonnements</h2>
+        <div class="me-subscribes-cards-container">
+            <mat-card class="me-subscribes-card" appearance="outlined" *ngFor="let topic of topicsSubscribed">
+                <mat-card-header class="me-subscribes-card-header">
+                    <mat-card-title-group class="header-group">
+                        <mat-card-title class="title">{{topic.title | truncate:100}}</mat-card-title>
+                    </mat-card-title-group>
+                </mat-card-header>
+                <mat-card-content class="me-subscribes-card-body">
+                    {{ topic.description | truncate:1000 }}
+                </mat-card-content>
+                <div class="me-subscribes-card-btn-container">
+                    <button mat-raised-button 
+                    color="primary" 
+                    type="button" 
+                    (click)="unsubscribe(topic)"
+                    class="me-subscribes-card-btn">
+                        Se désabonner
+                    </button>
+                </div>
+            </mat-card>
+        </div>
+    </div>
 </div>
-  

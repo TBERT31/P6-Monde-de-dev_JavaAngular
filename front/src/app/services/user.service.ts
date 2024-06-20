@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { Session } from '../interfaces/session.interface';
+import { Topic } from '../features/topics/interfaces/topic.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,9 @@ export class UserService {
 
     public updateUser(user: User): Observable<Session> {
         return this.httpClient.put<Session>(`${this.pathService}/${user.id}`, user);
+    }
+
+    public getuserSubscribedTopics(id: number): Observable<Topic[]> {
+        return this.httpClient.get<Topic[]>(`${this.pathService}/${id}/topics`);
     }
 }

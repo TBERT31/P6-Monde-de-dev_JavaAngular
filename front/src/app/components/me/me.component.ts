@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from 'src/app/features/auth/services/auth.service'; 
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../interfaces/user.interface';
 import { SessionService } from 'src/app/services/session.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Session } from 'src/app/interfaces/session.interface';
-
+import { Topic } from 'src/app/features/topics/interfaces/topic.interface';
+import { TopicService } from 'src/app/features/topics/services/topic.service';
 
 @Component({
   selector: 'app-me',
@@ -23,15 +23,16 @@ export class MeComponent implements OnInit, OnDestroy {
   public username: string = "";
   public email: string = "";
   public onError = false;
+  public topicsSubscribed: Topic[] = [];
   private subscriptions: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
     private userService: UserService,
     private matSnackBar: MatSnackBar,
     private router: Router,
     private sessionService: SessionService,
+    private topicService: TopicService
   ) {
     this.userForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
@@ -49,6 +50,7 @@ export class MeComponent implements OnInit, OnDestroy {
         user => {
           this.user = user;
           this.initForm(user);
+          this.loadTopcisSubscribed();
         },
         (error: HttpErrorResponse) => {
           this.router.navigate(['/login']);
@@ -70,6 +72,12 @@ export class MeComponent implements OnInit, OnDestroy {
     });
   }
 
+  loadTopcisSubscribed(): void {
+    this.userService.getuserSubscribedTopics(this.userId).subscribe(topics => {
+      this.topicsSubscribed = topics;
+    });
+  }
+
   public submit(): void {
     if (this.userForm.valid) {
       const updatedUser: User = { ...this.user, ...this.userForm.value };
@@ -86,7 +94,18 @@ export class MeComponent implements OnInit, OnDestroy {
     }
   }
 
-  public back(): void {
-    window.history.back();
+  public logout(): void {
+    this.sessionService.logOut();
+    this.router.navigate(['']);
+  }
+
+  public unsubscribe(topic: Topic): void {
+    if (this.userId !== undefined) {
+      const sub = this.topicService.unsubscribeUserToTopic(topic.id, this.userId).subscribe(() => {
+        this.topicsSubscribed = this.topicsSubscribed.filter(t => t.id !== topic.id);
+        this.matSnackBar.open('Vous êtes désabonné du topic : ' + topic.title, 'Fermer', { duration: 3000 });
+      });
+      this.subscriptions.add(sub);
+    }
   }
 }

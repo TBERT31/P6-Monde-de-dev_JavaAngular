@@ -17,7 +17,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MeComponent } from './components/me/me.component';
 import { LayoutComponent } from './components/layout/layoutcomponent';
 import { HomeComponent } from './components/home/home.component';
-import { TruncatePipe } from './shared/pipes/truncate.pipe';
 import { SharedModule } from './shared/shared.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -54,6 +53,7 @@ const materialModules = [
     AppRoutingModule,
     BrowserAnimationsModule, 
     HttpClientModule,
+    SharedModule,
     ...materialModules
   ],
   providers: [

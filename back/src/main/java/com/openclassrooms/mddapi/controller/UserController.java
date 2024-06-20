@@ -152,7 +152,19 @@ public class UserController {
     }
 
     @GetMapping("/{id}/topics")
-    public ResponseEntity<List<TopicDto>> getUserSubscribedTopics(@PathVariable Long id) {
+    public ResponseEntity<List<TopicDto>> getUserSubscribedTopics(
+            @PathVariable Long id,
+            @RequestHeader("Authorization") String token
+    ) {
+        String jwt = token.substring(7);
+        String email = jwtUtils.getUserNameFromJwtToken(jwt);
+
+        User authUser = userService.getUserByEmail(email).orElse(null);
+
+        if (authUser == null || authUser.getId() != id.longValue()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         List<Topic> topics = userService.getUserSubscribedTopics(id);
         List<TopicDto> topicDtos = topicMapper.toDto(topics);
         return ResponseEntity.ok(topicDtos);

@@ -12,7 +12,7 @@ import { TopicsListComponent } from './components/topics-list/topics-list.compon
 import { TopicsRoutingModule } from './topics-routing.module';
 import localeFr from '@angular/common/locales/fr';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SharedModule} from '../../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 registerLocaleData(localeFr);
 
 const materialModules = [
