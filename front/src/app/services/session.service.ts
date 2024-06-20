@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Session } from '../interfaces/session.interface';
+import { jwtDecode } from 'jwt-decode';
+
 
 @Injectable({
   providedIn: 'root'
@@ -73,11 +75,25 @@ export class SessionService {
     this.isLoggedSubject.next(false);
   }
 
-  private isLoggedIn(): boolean {
-    return !!localStorage.getItem(this.SESSION_STORAGE_KEY);
+  public isLoggedIn(): boolean {
+    const token = this.getToken();
+    return !!token && !this.isTokenExpired(token);
   }
 
   private isValidSession(session: Session): boolean {
-    return !!(session.token && session.id && session.email && session.username);
+    return !!(session.token && session.id && session.email && session.username) && !this.isTokenExpired(session.token);
+  }
+
+  private isTokenExpired(token: string): boolean {
+    try {
+      const decodedToken: any = jwtDecode(token);
+      const expirationDate = new Date(0);
+      expirationDate.setUTCSeconds(decodedToken.exp);
+
+      return expirationDate < new Date();
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return true;
+    }
   }
 }
