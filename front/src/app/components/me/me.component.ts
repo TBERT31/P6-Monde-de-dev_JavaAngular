@@ -9,7 +9,7 @@ import { SessionService } from 'src/app/services/session.service';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Session } from 'src/app/interfaces/session.interface';
-import { LoginRequest } from 'src/app/features/auth/interfaces/loginRequest.interface';
+
 
 @Component({
   selector: 'app-me',
@@ -22,6 +22,7 @@ export class MeComponent implements OnInit, OnDestroy {
   public userId: number = 0;
   public username: string = "";
   public email: string = "";
+  public onError = false;
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -72,35 +73,14 @@ export class MeComponent implements OnInit, OnDestroy {
   public submit(): void {
     if (this.userForm.valid) {
       const updatedUser: User = { ...this.user, ...this.userForm.value };
-      this.userService.updateUser(updatedUser).subscribe(
-        response => {
-
+      this.userService.updateUser(updatedUser).subscribe({
+        next: (response: Session) => {
           this.sessionService.logOut();
-
-          this.userService.getUserById(this.userId).subscribe(
-            user => {
-              this.user = user;
-              const updatedSession: Session = {
-                token: this.sessionService.getToken() || '',
-                type: 'Bearer', 
-                id: user.id,
-                email: user.email,
-                username: user.username
-              };
-      
-              this.sessionService.logIn(updatedSession);
-            },
-            (error: HttpErrorResponse) => {
-              this.router.navigate(['/login']);
-            }
-          );
-
+          this.sessionService.logIn(response);
           this.matSnackBar.open('Profil mis à jour avec succès', 'Fermer', { duration: 3000 });
         },
-        (error: HttpErrorResponse) => {
-          this.matSnackBar.open('Erreur lors de la mise à jour du profil', 'Fermer', { duration: 3000 });
-        }
-      );
+        error: error => this.matSnackBar.open('Erreur lors de la mise à jour du profil: '+error.message, 'Fermer', { duration: 3000 })
+      });
     } else {
       this.userForm.markAllAsTouched();
     }
