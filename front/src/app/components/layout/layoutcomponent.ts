@@ -23,7 +23,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private authService: AuthService,
     private router: Router,
     private sessionService: SessionService
   ) {
@@ -64,7 +63,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-
   toolbarDisplayer(event: NavigationEnd) {
     const isHome = event.url === '/';
     const isLoginOrRegister = event.url === '/login' || event.url === '/register';
@@ -79,11 +77,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   public $isLogged(): Observable<boolean> {
     return this.sessionService.$isLogged();
-  }
-
-  public logout(): void {
-    this.sessionService.logOut();
-    this.router.navigate(['']);
   }
 
   navigateHome(): void {

@@ -87,8 +87,18 @@ mat-drawer-content{
             }
             
             .menu-button {
-              display: block;
+                display: flex;
+                background-color: transparent;
+                justify-content: center;
+                align-items: center;
+
+                .menu-icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
             }
+            
         }
     }
 }

@@ -9,15 +9,18 @@
               <a routerLink="articles" 
               class="link" 
               routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }">Articles</a>
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="drawer.toggle()">Articles</a>
               <a routerLink="topics" 
               class="link" 
               routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }">Thèmes</a>
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="drawer.toggle()">Thèmes</a>
             </div>
             <button routerLink="me" class="link account-button" 
             routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="drawer.toggle()">
                 <mat-icon class="account-icon" aria-hidden="false" aria-label="account icon">person_outline</mat-icon>
             </button>
       </mat-nav-list>
