@@ -30,6 +30,7 @@
                     Se déconnecter
                 </a>
             </div>
+            <p *ngIf="errorMsg" class="error">{{errorMsg}}</p>
         </form>
     </div>
 
@@ -51,7 +52,7 @@
                     <button mat-raised-button 
                     color="primary" 
                     type="button" 
-                    (click)="unsubscribe(topic)"
+                    (click)="unsubscribeToTopic(topic)"
                     class="me-subscribes-card-btn">
                         Se désabonner
                     </button>

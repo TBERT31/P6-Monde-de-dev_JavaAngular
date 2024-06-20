@@ -22,7 +22,7 @@ export class MeComponent implements OnInit, OnDestroy {
   public userId: number = 0;
   public username: string = "";
   public email: string = "";
-  public onError = false;
+  public errorMsg: string = "";
   public topicsSubscribed: Topic[] = [];
   private subscriptions: Subscription = new Subscription();
 
@@ -46,7 +46,7 @@ export class MeComponent implements OnInit, OnDestroy {
       this.userId = session.id;
       this.username = session.username;
       this.email = session.email;
-      this.userService.getUserById(session.id).subscribe(
+      const sub = this.userService.getUserById(session.id).subscribe(
         user => {
           this.user = user;
           this.initForm(user);
@@ -56,6 +56,7 @@ export class MeComponent implements OnInit, OnDestroy {
           this.router.navigate(['/login']);
         }
       );
+      this.subscriptions.add(sub);
     } else {
       this.router.navigate(['/login']);
     }
@@ -73,22 +74,28 @@ export class MeComponent implements OnInit, OnDestroy {
   }
 
   loadTopcisSubscribed(): void {
-    this.userService.getuserSubscribedTopics(this.userId).subscribe(topics => {
+    const sub = this.userService.getuserSubscribedTopics(this.userId).subscribe(topics => {
       this.topicsSubscribed = topics;
     });
+    this.subscriptions.add(sub);
   }
 
   public submit(): void {
     if (this.userForm.valid) {
       const updatedUser: User = { ...this.user, ...this.userForm.value };
-      this.userService.updateUser(updatedUser).subscribe({
+      const sub = this.userService.updateUser(updatedUser).subscribe({
         next: (response: Session) => {
           this.sessionService.logOut();
           this.sessionService.logIn(response);
           this.matSnackBar.open('Profil mis à jour avec succès', 'Fermer', { duration: 3000 });
         },
-        error: error => this.matSnackBar.open('Erreur lors de la mise à jour du profil: '+error.message, 'Fermer', { duration: 3000 })
+        error: error => {
+          console.error(error.error.message);
+          this.errorMsg = "Une erreur est survenue lors de la mise à jour du profil. Veuillez réessayer plus tard.";
+          this.matSnackBar.open('Erreur lors de la mise à jour du profil: '+error.error.message, 'Fermer', { duration: 3000 })
+        }
       });
+      this.subscriptions.add(sub);
     } else {
       this.userForm.markAllAsTouched();
     }
@@ -99,7 +106,7 @@ export class MeComponent implements OnInit, OnDestroy {
     this.router.navigate(['']);
   }
 
-  public unsubscribe(topic: Topic): void {
+  public unsubscribeToTopic(topic: Topic): void {
     if (this.userId !== undefined) {
       const sub = this.topicService.unsubscribeUserToTopic(topic.id, this.userId).subscribe(() => {
         this.topicsSubscribed = this.topicsSubscribed.filter(t => t.id !== topic.id);

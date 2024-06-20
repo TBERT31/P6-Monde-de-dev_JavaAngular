@@ -36,7 +36,7 @@ export class TopicsListComponent implements OnInit, OnDestroy {
     return topic.users_subscribed.includes(this.userId!);
   }
 
-  public subscribe(topic: Topic): void {
+  public subscribeToTopic(topic: Topic): void {
     if (this.userId !== undefined) {
       const sub = this.topicService.subscribeUserToTopic(topic.id, this.userId).subscribe(() => {
         topic.users_subscribed.push(this.userId!);
@@ -45,7 +45,7 @@ export class TopicsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  public unsubscribe(topic: Topic): void {
+  public unsubscribeToTopic(topic: Topic): void {
     if (this.userId !== undefined) {
       const sub = this.topicService.unsubscribeUserToTopic(topic.id, this.userId).subscribe(() => {
         const index = topic.users_subscribed.indexOf(this.userId!);

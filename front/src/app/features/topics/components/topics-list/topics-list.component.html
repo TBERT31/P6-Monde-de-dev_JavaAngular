@@ -19,14 +19,14 @@
                 type="button" 
                 *ngIf="!isSubscribed(topic)"
                 class="topics-card-btn"
-                (click)="subscribe(topic)">
+                (click)="subscribeToTopic(topic)">
                     S'abonner
                 </button>
                 <button mat-raised-button color="primary" 
                 type="button" 
                 *ngIf="isSubscribed(topic)"
                 class="topics-card-btn"
-                (click)="unsubscribe(topic)">
+                (click)="unsubscribeToTopic(topic)">
                     Se désabonner
                 </button>
             </div>
