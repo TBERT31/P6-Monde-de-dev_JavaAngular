@@ -9,7 +9,7 @@
     &-title-container{
         display: flex;
         flex-direction: row;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
 
 
@@ -41,7 +41,7 @@
 
         @media screen and (max-width: 860px) {
             display: flex;
-            justify-content: start;
+            justify-content: flex-start;
             align-items: center;
             margin-bottom: 0;
         }
@@ -101,11 +101,11 @@
             width: 20%;
             margin-right: 2%;
             display: flex;
-            align-items: start; 
+            align-items: flex-start; 
 
             @media screen and (max-width: 860px) {
-                align-items: end; 
-                justify-content: end;
+                align-items: flex-end; 
+                justify-content: flex-end;
             }
         }
 
