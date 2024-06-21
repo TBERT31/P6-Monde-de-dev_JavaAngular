@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controller;
 
+import com.openclassrooms.mddapi.exception.NotFoundException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.model.User;
@@ -39,7 +40,7 @@ public class CommentController {
         try {
             Optional<Comment> optionalComment = commentService.getCommentById(id);
 
-            if (optionalComment == null) {
+            if (optionalComment.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
 
@@ -67,7 +68,8 @@ public class CommentController {
         String jwt = token.substring(7);
         String email = jwtUtils.getUserNameFromJwtToken(jwt);
 
-        User user = userService.getUserByEmail(email).get();
+        User user = userService.getUserByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
         if(!user.getUsername().equals(commentDto.getUsername())) {
             throw new ForbiddenException("You are not allowed to create a comment for another user");

@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.mapper;
 import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.model.Article;
 import com.openclassrooms.mddapi.model.Comment;
-import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.ArticleService;
 import com.openclassrooms.mddapi.service.UserService;

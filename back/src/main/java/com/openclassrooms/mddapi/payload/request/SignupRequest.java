@@ -1,6 +1,5 @@
 package com.openclassrooms.mddapi.payload.request;
 
-import javax.persistence.Column;
 import javax.validation.constraints.*;
 
 import lombok.Data;

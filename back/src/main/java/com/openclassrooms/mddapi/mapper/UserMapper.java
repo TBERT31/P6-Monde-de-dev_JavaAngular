@@ -14,11 +14,7 @@ import org.mapstruct.Mappings;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -57,7 +53,7 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                 .orElseGet(Collections::emptyList)
                 .stream()
                 .map(commentId -> commentService.getCommentById(commentId).orElse(null))
-                .filter(comment -> comment != null)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
@@ -66,7 +62,7 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                 .orElseGet(Collections::emptyList)
                 .stream()
                 .map(articleId -> articleService.getArticleById(articleId).orElse(null))
-                .filter(article -> article != null)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
@@ -75,7 +71,7 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                 .orElseGet(Collections::emptyList)
                 .stream()
                 .map(topicId -> topicService.getTopicById(topicId).orElse(null))
-                .filter(topic -> topic != null)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 

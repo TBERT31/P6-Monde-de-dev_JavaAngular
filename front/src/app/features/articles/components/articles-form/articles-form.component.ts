@@ -62,8 +62,8 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
     const articleSub = this.articlesService
       .createArticle(article)
       .subscribe({
-        next: (newArticle: Article) => this.exitPage('Article created!'),
-        error: (err: HttpErrorResponse) => this.matSnackBar.open('Error creating article', 'Close', { duration: 3000 })
+        next: (newArticle: Article) => this.exitPage('Article créé!'),
+        error: (err: HttpErrorResponse) => this.matSnackBar.open('Erreur durant la création de l\'article '+err.error.message, 'Close', { duration: 3000 })
     });
     this.subscriptions.add(articleSub);
   }

@@ -1,9 +1,8 @@
 package com.openclassrooms.mddapi.controller;
 
-import com.openclassrooms.mddapi.dto.ArticleDto;
 import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.dto.UserDto;
-import com.openclassrooms.mddapi.exception.ForbiddenException;
+import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.mapper.TopicMapper;
 import com.openclassrooms.mddapi.mapper.UserMapper;
 import com.openclassrooms.mddapi.model.Topic;
@@ -25,7 +24,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +50,8 @@ public class UserController {
         String jwt = token.substring(7);
         String email = jwtUtils.getUserNameFromJwtToken(jwt);
 
-        User authUser = userService.getUserByEmail(email).get();
+        User authUser = userService.getUserByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
         if (authUser.getId() != id.longValue()) {
             //throw new ForbiddenException("You are not allowed to access this user's information");
@@ -80,14 +79,15 @@ public class UserController {
         String jwt = token.substring(7);
         String jwtEmail = jwtUtils.getUserNameFromJwtToken(jwt);
 
-        User authUser = userService.getUserByEmail(jwtEmail).get();
+        User authUser = userService.getUserByEmail(jwtEmail)
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
         Optional<User> optionalUser = userService.getUserByEmail(email);
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
-            if (authUser.getId() != user.getId()) {
+            if (!authUser.getId().equals(user.getId())) {
                 //throw new ForbiddenException("You are not allowed to access this user's information");
                 return ResponseEntity.badRequest().build();
             }
