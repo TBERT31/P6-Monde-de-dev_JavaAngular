@@ -41,10 +41,20 @@ public abstract class CommentMapper implements EntityMapper<CommentDto, Comment>
     })
     public abstract Comment toEntity(CommentDto commentDto);
 
+    /**
+     * Convertit un nom d'utilisateur en User.
+     * @param username le nom d'utilisateur à convertir.
+     * @return le User converti.
+     */
     public User mapToUser(String username) {
         return username != null ? userService.getUserByUsername(username).orElse(null) : null;
     }
 
+    /**
+     * Convertit un identifiant d'article en Article.
+     * @param articleId l'identifiant de l'article à convertir.
+     * @return l'Article converti.
+     */
     public Article mapToArticle(Long articleId) {
         return articleId != null ? articleService.getArticleById(articleId).orElse(null) : null;
     }

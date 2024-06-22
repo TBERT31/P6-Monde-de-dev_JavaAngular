@@ -22,7 +22,9 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * Contrôleur pour les opérations liées aux commentaires.
+ */
 @RestController
 @RequestMapping("/api/comments")
 @RequiredArgsConstructor
@@ -35,15 +37,23 @@ public class CommentController {
     private final UserService userService;
     private final JwtUtils jwtUtils;
 
+    /**
+     * Récupère un commentaire par son identifiant.
+     * @param id l'identifiant du commentaire.
+     * @return le commentaire.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<CommentDto> getCommentById(@PathVariable Long id) {
         try {
+            // Récupère le commentaire par son identifiant.
             Optional<Comment> optionalComment = commentService.getCommentById(id);
 
+            // Vérifie si le commentaire existe.
             if (optionalComment.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
 
+            // Récupère le commentaire.
             Comment comment = optionalComment.get();
 
             return ResponseEntity.ok().body(commentMapper.toDto(comment));
@@ -52,6 +62,11 @@ public class CommentController {
         }
     }
 
+    /**
+     * Récupère les commentaires par l'identifiant de l'article.
+     * @param articleId l'identifiant de l'article.
+     * @return une liste de commentaires.
+     */
     @GetMapping("/article/{articleId}")
     public ResponseEntity<List<CommentDto>> getCommentByArticleId(
             @PathVariable Long articleId
@@ -60,21 +75,31 @@ public class CommentController {
         return ResponseEntity.ok(commentMapper.toDto(comments));
     }
 
+    /**
+     * Crée un nouveau commentaire.
+     * @param commentDto les données du commentaire à créer.
+     * @param token le jeton d'authentification de l'utilisateur.
+     * @return le commentaire créé.
+     */
     @PostMapping("")
     public ResponseEntity<CommentDto> createComment(
             @Valid @RequestBody CommentDto commentDto,
             @RequestHeader("Authorization") String token
     ) {
+        // Récupère l'utilisateur à partir du jeton d'authentification.
         String jwt = token.substring(7);
         String email = jwtUtils.getUserNameFromJwtToken(jwt);
 
+        // Vérifie si l'utilisateur existe.
         User user = userService.getUserByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
+        // Vérifie si l'utilisateur est autorisé à créer un commentaire.
         if(!user.getUsername().equals(commentDto.getUsername())) {
             throw new ForbiddenException("You are not allowed to create a comment for another user");
         }
 
+        // Crée un nouveau commentaire.
         Comment comment = commentMapper.toEntity(commentDto);
 
         comment = commentService.saveComment(comment);

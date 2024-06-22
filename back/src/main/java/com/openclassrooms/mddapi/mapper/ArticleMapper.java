@@ -46,14 +46,29 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
     })
     public abstract Article toEntity(ArticleDto articleDto);
 
+    /**
+     * Convertit un nom d'utilisateur en User.
+     * @param username le nom d'utilisateur à convertir.
+     * @return le User converti.
+     */
     public User mapToUser(String username) {
         return username != null ? userService.getUserByUsername(username).orElse(null) : null;
     }
 
+    /**
+     * Convertit un titre de sujet en Topic.
+     * @param topicTitle le titre du sujet à convertir.
+     * @return le Topic converti.
+     */
     public Topic mapToTopic(String topicTitle) {
         return topicTitle != null ? topicService.getTopicByTitle(topicTitle).orElse(null) : null;
     }
 
+    /**
+     * Convertit une liste d'identifiants de commentaires en une liste de Comment.
+     * @param commentIds la liste d'identifiants de commentaires à convertir.
+     * @return la liste de Comment convertie.
+     */
     public List<Comment> mapToComments(List<Long> commentIds) {
         return Optional.ofNullable(commentIds)
                 .orElseGet(Collections::emptyList)
@@ -75,6 +90,11 @@ public abstract class ArticleMapper implements EntityMapper<ArticleDto, Article>
     })
     public abstract ArticleDto toDto(Article article);
 
+    /**
+     * Convertit une liste de Comment en une liste d'identifiants de commentaires.
+     * @param comments la liste de Comment à convertir.
+     * @return la liste d'identifiants de commentaires convertie.
+     */
     public List<Long> mapToCommentIds(List<Comment> comments) {
         return Optional.ofNullable(comments)
                 .orElseGet(Collections::emptyList)

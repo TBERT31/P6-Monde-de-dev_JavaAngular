@@ -22,7 +22,14 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);
 
-
+    /**
+     * Commence le traitement de l'exception d'authentification.
+     * @param request la requête HTTP.
+     * @param response la réponse HTTP.
+     * @param authException l'exception d'authentification.
+     * @throws IOException si une erreur d'entrée/sortie se produit.
+     * @throws ServletException si une erreur de servlet se produit.
+     */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException, ServletException {

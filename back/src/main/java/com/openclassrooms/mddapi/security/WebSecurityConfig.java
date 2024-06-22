@@ -18,6 +18,9 @@ import com.openclassrooms.mddapi.security.jwt.AuthEntryPointJwt;
 import com.openclassrooms.mddapi.security.jwt.AuthTokenFilter;
 import com.openclassrooms.mddapi.security.services.UserDetailsServiceImpl;
 
+/**
+ * Configuration de la sécurité Web.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -26,33 +29,58 @@ import com.openclassrooms.mddapi.security.services.UserDetailsServiceImpl;
         prePostEnabled = true
 )
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    // Injecte une instance de UserDetailsServiceImpl
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
+    // Injecte une instance de AuthEntryPointJwt
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
+    /**
+     * Déclare un bean Spring pour AuthTokenFilter.
+     * @return une nouvelle instance de AuthTokenFilter.
+     */
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
     }
 
+    /**
+     * Configure le gestionnaire d'authentification pour utiliser notre service d'utilisateur et notre encodeur de mot de passe.
+     * @param authenticationManagerBuilder le constructeur du gestionnaire d'authentification.
+     * @throws Exception si une erreur se produit lors de la configuration du gestionnaire d'authentification.
+     */
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
+    /**
+     * Déclare un bean Spring pour AuthenticationManager.
+     * @return une instance de AuthenticationManager.
+     * @throws Exception si une erreur se produit lors de la création du bean.
+     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
+    /**
+     * Déclare un bean Spring pour PasswordEncoder qui utilise BCryptPasswordEncoder.
+     * @return une nouvelle instance de BCryptPasswordEncoder.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configure la sécurité HTTP.
+     * @param http l'objet HttpSecurity à configurer.
+     * @throws Exception si une erreur se produit lors de la configuration de la sécurité HTTP.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
@@ -75,6 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().authenticated();
 
+        // Ajoute le filtre d'authentification JWT avant UsernamePasswordAuthenticationFilter
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -17,6 +17,9 @@ import java.util.Optional;
 import com.openclassrooms.mddapi.security.jwt.JwtUtils;
 import com.openclassrooms.mddapi.service.UserService;
 
+/**
+ * Contrôleur pour les opérations liées aux sujets.
+ */
 @RestController
 @RequestMapping("/api/topics")
 @RequiredArgsConstructor
@@ -29,23 +32,35 @@ public class TopicController {
     private final JwtUtils jwtUtils;
     private final UserService userService;
 
+    /**
+     * Récupère tous les sujets.
+     * @return une liste de sujets.
+     */
     @GetMapping("")
     public ResponseEntity<List<TopicDto>> getAllTopics() {
         List<Topic> topics = topicService.getAllTopics();
         return ResponseEntity.ok(topicMapper.toDto(topics));
     }
 
+    /**
+     * Récupère un sujet par son identifiant.
+     * @param id l'identifiant du sujet.
+     * @return le sujet.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<TopicDto> getTopicById(
             @PathVariable Long id
     ) {
         try {
+            // Récupère le sujet par son identifiant.
             Optional<Topic> optionalTopic = topicService.getTopicById(id);
 
+            // Vérifie si le sujet existe.
             if (optionalTopic.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
 
+            // Récupère le sujet.
             Topic topic = optionalTopic.get();
 
             return ResponseEntity.ok().body(topicMapper.toDto(topic));
@@ -54,23 +69,34 @@ public class TopicController {
         }
     }
 
+    /**
+     * Abonne un utilisateur à un sujet.
+     * @param id l'identifiant du sujet.
+     * @param userId l'identifiant de l'utilisateur.
+     * @param token le jeton d'authentification de l'utilisateur.
+     * @return le sujet.
+     */
     @PostMapping("{id}/subscribe/{userId}")
     public ResponseEntity<TopicDto> subscribeUserToTopic(
             @PathVariable("id") Long id,
             @PathVariable("userId") Long userId,
             @RequestHeader("Authorization") String token
     ) {
+        // Récupère l'utilisateur à partir du jeton d'authentification.
         String jwt = token.substring(7);
         String email = jwtUtils.getUserNameFromJwtToken(jwt);
 
+        // Vérifie si l'utilisateur existe.
         User user = userService.getUserByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
+        // Vérifie si l'utilisateur est autorisé à s'abonner à d'autres utilisateurs.
         if (!user.getId().equals(userId)) {
             throw new ForbiddenException("You are not allowed to subscribe other users to topics");
         }
 
         try {
+            // Abonne l'utilisateur au sujet.
             Topic topic = topicService.subscribeUserToTopic(id, userId);
 
             return ResponseEntity.ok().body(topicMapper.toDto(topic));
@@ -79,23 +105,34 @@ public class TopicController {
         }
     }
 
+    /**
+     * Désabonne un utilisateur d'un sujet.
+     * @param id l'identifiant du sujet.
+     * @param userId l'identifiant de l'utilisateur.
+     * @param token le jeton d'authentification de l'utilisateur.
+     * @return le sujet.
+     */
     @DeleteMapping("{id}/subscribe/{userId}")
     public ResponseEntity<TopicDto> unsubscribeUserFromTopic(
             @PathVariable("id") Long id,
             @PathVariable("userId") Long userId,
             @RequestHeader("Authorization") String token
     ) {
+        // Récupère l'utilisateur à partir du jeton d'authentification.
         String jwt = token.substring(7);
         String email = jwtUtils.getUserNameFromJwtToken(jwt);
 
+        // Vérifie si l'utilisateur existe.
         User user = userService.getUserByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
+        // Vérifie si l'utilisateur est autorisé à se désabonner d'autres utilisateurs.
         if (!user.getId().equals(userId)) {
             throw new ForbiddenException("You are not allowed to unsubscribe other users to topics");
         }
 
         try {
+            // Désabonne l'utilisateur du sujet.
             Topic topic = topicService.unsubscribeUserFromTopic(id, userId);
 
             return ResponseEntity.ok().body(topicMapper.toDto(topic));

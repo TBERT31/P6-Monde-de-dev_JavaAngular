@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-
+/**
+ * Contrôleur pour les opérations d'authentification.
+ */
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -37,21 +39,28 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
 
+    /**
+     * Authentifie un utilisateur.
+     * @param loginRequest les informations d'authentification de l'utilisateur.
+     * @return une réponse avec le jeton JWT si l'authentification est réussie.
+     */
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(
             @Valid @RequestBody LoginRequest loginRequest
     ) {
-
+        // Authentifie l'utilisateur avec les informations d'authentification fournies.
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmailOrUsername(), loginRequest.getPassword()
                 )
         );
 
+        // Met à jour le contexte de sécurité avec l'utilisateur authentifié.
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
+        // Retourne le jeton JWT et les informations de l'utilisateur.
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getEmail(),
@@ -59,24 +68,30 @@ public class AuthController {
         ));
     }
 
+    /**
+     * Enregistre un nouvel utilisateur.
+     * @param signUpRequest les informations d'enregistrement de l'utilisateur.
+     * @return une réponse indiquant si l'enregistrement a réussi.
+     */
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> registerUser(
             @Valid @RequestBody SignupRequest signUpRequest
     ) {
-
+        // Vérifie si l'adresse e-mail est déjà utilisée.
         if (userService.getUserByEmail(signUpRequest.getEmail()).isPresent()) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
 
+        // Vérifie si le nom d'utilisateur est déjà utilisé.
         if (userService.getUserByUsername(signUpRequest.getUsername()).isPresent()) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
 
-
+        // Crée un nouvel utilisateur.
         User user = new User(
                 signUpRequest.getUsername(),
                 signUpRequest.getEmail(),

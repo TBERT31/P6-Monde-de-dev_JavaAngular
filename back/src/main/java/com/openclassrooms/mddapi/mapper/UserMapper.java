@@ -48,6 +48,11 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
     })
     public abstract User toEntity(UserDto userDto);
 
+    /**
+     * Convertit une liste d'identifiants de commentaires en une liste de Comment.
+     * @param commentIds la liste d'identifiants de commentaires à convertir.
+     * @return la liste de Comment convertie.
+     */
     public List<Comment> mapToCommentList(List<Long> commentIds) {
         return Optional.ofNullable(commentIds)
                 .orElseGet(Collections::emptyList)
@@ -57,6 +62,11 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Convertit une liste d'identifiants d'articles en une liste d'Article.
+     * @param articleIds la liste d'identifiants d'articles à convertir.
+     * @return la liste d'Article convertie.
+     */
     public List<Article> mapToArticleList(List<Long> articleIds) {
         return Optional.ofNullable(articleIds)
                 .orElseGet(Collections::emptyList)
@@ -66,6 +76,11 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Convertit une liste d'identifiants de sujets en une liste de Topic.
+     * @param topicIds la liste d'identifiants de sujets à convertir.
+     * @return la liste de Topic convertie.
+     */
     public List<Topic> mapToTopicList(List<Long> topicIds) {
         return Optional.ofNullable(topicIds)
                 .orElseGet(Collections::emptyList)
@@ -88,6 +103,11 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
     })
     public abstract UserDto toDto(User user);
 
+    /**
+     * Convertit une liste de Comment en une liste d'identifiants de commentaires.
+     * @param comments la liste de Comment à convertir.
+     * @return la liste d'identifiants de commentaires convertie.
+     */
     public List<Long> mapToCommentIds(List<Comment> comments) {
         return Optional.ofNullable(comments)
                 .orElseGet(Collections::emptyList)
@@ -96,6 +116,11 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Convertit une liste d'Article en une liste d'identifiants d'articles.
+     * @param articles la liste d'Article à convertir.
+     * @return la liste d'identifiants d'articles convertie.
+     */
     public List<Long> mapToArticleIds(List<Article> articles) {
         return Optional.ofNullable(articles)
                 .orElseGet(Collections::emptyList)
@@ -104,6 +129,11 @@ public abstract class UserMapper implements EntityMapper<UserDto, User>  {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Convertit une liste de Topic en une liste d'identifiants de sujets.
+     * @param topics la liste de Topic à convertir.
+     * @return la liste d'identifiants de sujets convertie.
+     */
     public List<Long> mapToTopicIds(List<Topic> topics) {
         return Optional.ofNullable(topics)
                 .orElseGet(Collections::emptyList)

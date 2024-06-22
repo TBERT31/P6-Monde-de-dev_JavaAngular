@@ -18,7 +18,9 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * Contrôleur pour les opérations liées aux articles.
+ */
 @RestController
 @RequestMapping("/api/articles")
 @RequiredArgsConstructor
@@ -30,15 +32,23 @@ public class ArticleController {
     private final JwtUtils jwtUtils;
     private final UserService userService;
 
+    /**
+     * Récupère tous les articles.
+     * @param sortBy le champ par lequel trier les articles.
+     * @param order l'ordre du tri.
+     * @return une liste d'articles.
+     */
     @GetMapping("")
     public ResponseEntity<List<ArticleDto>> getAllArticles(
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String order
     ) {
+        // Gère les paramètres de tri facultatifs.
         if (sortBy == null) {
             sortBy = "id";
         }
 
+        // Gère l'ordre de tri facultatif.
         if (order == null) {
             order = "asc";
         }
@@ -48,17 +58,25 @@ public class ArticleController {
         );
     }
 
+    /**
+     * Récupère un article par son identifiant.
+     * @param id l'identifiant de l'article.
+     * @return l'article.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<ArticleDto> getArticleById(
             @PathVariable Long id
     ) {
         try {
+            // Vérifie si l'article existe.
             Optional<Article> optionalArticle = articleService.getArticleById(id);
 
+            // Retourne une réponse 404 si l'article n'existe pas.
             if (optionalArticle.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
 
+            // Retourne l'article.
             Article article = optionalArticle.get();
             return ResponseEntity.ok().body(articleMapper.toDto(article));
 
@@ -67,6 +85,11 @@ public class ArticleController {
         }
     }
 
+    /**
+     * Récupère les articles par l'identifiant du sujet.
+     * @param topicId l'identifiant du sujet.
+     * @return une liste d'articles.
+     */
     @GetMapping("/topic/{topicId}")
     public ResponseEntity<List<ArticleDto>> getArticleByTopicId(
             @PathVariable Long topicId
@@ -75,22 +98,31 @@ public class ArticleController {
         return ResponseEntity.ok(articleMapper.toDto(articles));
     }
 
+    /**
+     * Crée un nouvel article.
+     * @param articleDto les données de l'article à créer.
+     * @param token le jeton d'authentification de l'utilisateur.
+     * @return l'article créé.
+     */
     @PostMapping("")
     public ResponseEntity<ArticleDto> createArticle(
             @Valid @RequestBody ArticleDto articleDto,
             @RequestHeader("Authorization") String token
     ) {
-
+        // Récupère l'utilisateur à partir du jeton d'authentification.
         String jwt = token.substring(7);
         String email = jwtUtils.getUserNameFromJwtToken(jwt);
 
+        // Vérifie si l'utilisateur existe.
         User user = userService.getUserByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
+        // Vérifie si l'utilisateur est autorisé à créer un article pour un autre utilisateur.
         if(!user.getUsername().equals(articleDto.getAuthor())) {
             throw new ForbiddenException("You are not allowed to create an article for another user");
         }
 
+        // Crée l'article.
         Article article = articleMapper.toEntity(articleDto);
         article = articleService.saveArticle(article);
         return ResponseEntity.ok(articleMapper.toDto(article));

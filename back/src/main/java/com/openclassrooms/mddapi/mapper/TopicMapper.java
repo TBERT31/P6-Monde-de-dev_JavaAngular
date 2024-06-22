@@ -44,6 +44,11 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic>   {
     })
     public abstract Topic toEntity(TopicDto topicDto);
 
+    /**
+     * Convertit une liste d'identifiants d'articles en une liste d'Articles.
+     * @param articleIds la liste d'identifiants d'articles à convertir.
+     * @return la liste d'Articles convertie.
+     */
     public List<Article> mapToArticles(List<Long> articleIds) {
         return Optional.ofNullable(articleIds)
                 .orElseGet(Collections::emptyList)
@@ -54,6 +59,11 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic>   {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Convertit une liste d'identifiants d'utilisateurs en une liste d'Users.
+     * @param userIds la liste d'identifiants d'utilisateurs à convertir.
+     * @return la liste d'Users convertie.
+     */
     public List<User> mapToUsers(List<Long> userIds) {
         return Optional.ofNullable(userIds)
                 .orElseGet(Collections::emptyList)
@@ -75,6 +85,11 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic>   {
     })
     public abstract TopicDto toDto(Topic topic);
 
+    /**
+     * Convertit une liste d'Articles en une liste d'identifiants d'articles.
+     * @param articles la liste d'Articles à convertir.
+     * @return la liste d'identifiants d'articles convertie.
+     */
     public List<Long> mapToArticleIds(List<Article> articles) {
         return Optional.ofNullable(articles)
                 .orElseGet(Collections::emptyList)
@@ -83,6 +98,11 @@ public abstract class TopicMapper implements EntityMapper<TopicDto, Topic>   {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Convertit une liste d'Users en une liste d'identifiants d'utilisateurs.
+     * @param users la liste d'Users à convertir.
+     * @return la liste d'identifiants d'utilisateurs convertie.
+     */
     public List<Long> mapToUserIds(List<User> users) {
         return Optional.ofNullable(users)
                 .orElseGet(Collections::emptyList)
