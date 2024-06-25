@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ViewChild, HostListener } from '@angular/
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { SessionService } from 'src/app/services/session.service';
 import { MatSidenav } from '@angular/material/sidenav';
 
@@ -20,6 +19,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   isLoggedIn$: Observable<boolean>;
   private readonly mobileWidthLoginsPages = 768;
   drawerCanBeVisible: boolean = window.innerWidth < 640;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private router: Router,
@@ -29,19 +29,19 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.showToolbarSubscription = this.router.events.pipe(
+    const showToolbarSub = this.router.events.pipe(
       filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       this.updateToolbarVisibility(event.url);
     });
 
+    this.subscriptions.add(showToolbarSub);
+
     this.updateToolbarVisibility(this.router.url, window.innerWidth);
   }
 
   ngOnDestroy() {
-    if (this.showToolbarSubscription) {
-      this.showToolbarSubscription.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -68,12 +68,14 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   navigateHome(): void {
-    this.isLoggedIn$.subscribe(isLoggedIn => {
+    const logInSub = this.isLoggedIn$.subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.router.navigate(['articles']);
       } else {
         this.router.navigate(['/']);
       }
     });
+
+    this.subscriptions.add(logInSub);
   }
 }

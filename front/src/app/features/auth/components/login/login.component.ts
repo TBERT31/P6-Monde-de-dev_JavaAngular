@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Session } from 'src/app/interfaces/session.interface';
 import { SessionService } from 'src/app/services/session.service';
 import { LoginRequest } from '../../interfaces/loginRequest.interface';
@@ -11,9 +13,9 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
-  public hide = true;
+export class LoginComponent implements OnDestroy {
   public onError = false;
+  private destroy$ = new Subject<void>();
 
   private readonly passwordPattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=,?;./:!§£*()-_¨µ<>{}]).{8,}$/;
 
@@ -45,7 +47,9 @@ export class LoginComponent {
 
   public submit(): void {
     const loginRequest = this.form.value as LoginRequest;
-    this.authService.login(loginRequest).subscribe({
+    this.authService.login(loginRequest).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: (response: Session) => {
         this.sessionService.logIn(response);
         this.router.navigate(['/articles']);
@@ -54,4 +58,8 @@ export class LoginComponent {
     });
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
