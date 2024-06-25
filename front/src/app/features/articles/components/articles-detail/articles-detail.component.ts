@@ -57,14 +57,14 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  private initCommentForm() {
+  private initCommentForm(): void{
     this.commentForm = this.fb.group({
       message: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(2000)]],
     });
   }
 
   // Pas besoin d'unsubscribe cet observable là le pipe async s'en charge
-  private loadComments() {
+  private loadComments(): void{
     if (this.article) {
       this.comments$ = this.commentsService.getCommentByArticleId(this.article.id);
     }
@@ -90,7 +90,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  public back() {
+  public back(): void {
     window.history.back();
   }
 }

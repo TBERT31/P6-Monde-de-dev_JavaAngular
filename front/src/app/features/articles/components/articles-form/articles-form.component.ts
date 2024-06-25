@@ -73,7 +73,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
     this.router.navigate(['articles']);
   }
 
-  public back() {
+  public back(): void {
     window.history.back();
   }
 }
