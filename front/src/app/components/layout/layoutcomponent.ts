@@ -21,7 +21,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
   private readonly mobileWidthLoginsPages = 768;
   drawerCanBeVisible: boolean = window.innerWidth < 640;
 
-
   constructor(
     private router: Router,
     private sessionService: SessionService
@@ -33,10 +32,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.showToolbarSubscription = this.router.events.pipe(
       filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      this.toolbarDisplayer(event);
+      this.updateToolbarVisibility(event.url);
     });
 
-    this.checkScreenWidth(window.innerWidth);
+    this.updateToolbarVisibility(this.router.url, window.innerWidth);
   }
 
   ngOnDestroy() {
@@ -51,28 +50,17 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.checkScreenWidth(target.innerWidth);
   }
 
-  checkScreenWidth(width: number) {
-    const isMobile = width < this.mobileWidthLoginsPages;
-    const isLoginOrRegister = this.router.url === '/login' || this.router.url === '/register';
+  private checkScreenWidth(width: number) {
     this.drawerCanBeVisible = width < 640;
-
-    if (isMobile && isLoginOrRegister) {
-      this.showToolbar = false;
-    } else {
-      this.showToolbar = true;
-    }
+    this.updateToolbarVisibility(this.router.url, width);
   }
 
-  toolbarDisplayer(event: NavigationEnd) {
-    const isHome = event.url === '/';
-    const isLoginOrRegister = event.url === '/login' || event.url === '/register';
-    const isMobile = window.innerWidth < this.mobileWidthLoginsPages;
+  private updateToolbarVisibility(url: string, width?: number) {
+    const isHome = url === '/';
+    const isLoginOrRegister = url === '/login' || url === '/register';
+    const isMobile = (width ?? window.innerWidth) < this.mobileWidthLoginsPages;
 
-    if ((isMobile && isLoginOrRegister) || isHome) {
-      this.showToolbar = false;
-    } else {
-      this.showToolbar = true;
-    }
+    this.showToolbar = !(isMobile && isLoginOrRegister) && !isHome;
   }
 
   public $isLogged(): Observable<boolean> {
