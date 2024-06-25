@@ -31,7 +31,7 @@ import com.openclassrooms.mddapi.security.services.UserDetailsServiceImpl;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // Injecte une instance de UserDetailsServiceImpl
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     // Injecte une instance de AuthEntryPointJwt
     @Autowired
