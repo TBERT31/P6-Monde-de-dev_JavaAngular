@@ -12,5 +12,5 @@ public interface ArticleService {
     List<Article> getAllArticles(String sortBy, String order);
     List<Article> getArticlesByTopicId(Long topicId);
     Optional<Article> getArticleById(Long id);
-    Article saveArticle(Article article);
+    Article createArticle(Article article, String emailJwt);
 }
