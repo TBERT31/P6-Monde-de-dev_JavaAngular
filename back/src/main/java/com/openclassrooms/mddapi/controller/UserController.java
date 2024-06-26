@@ -170,31 +170,4 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
-
-    /**
-     * Récupère les sujets auxquels un utilisateur est abonné.
-     * @param id l'identifiant de l'utilisateur.
-     * @param token le jeton d'authentification de l'utilisateur.
-     * @return une liste de sujets.
-     */
-    @GetMapping("/{id}/topics")
-    public ResponseEntity<List<TopicDto>> getUserSubscribedTopics(
-            @PathVariable Long id,
-            @RequestHeader("Authorization") String token
-    ) {
-        try {
-            // Récupère l'email de l'utilisateur authentifié.
-            String jwt = token.substring(7);
-            String emailJwt = jwtUtils.getUserNameFromJwtToken(jwt);
-
-            // Récupère et retourne les sujets auxquels l'utilisateur est abonné.
-            List<Topic> topics = userService.getUserSubscribedTopics(id, emailJwt);
-            List<TopicDto> topicDtos = topicMapper.toDto(topics);
-            return ResponseEntity.ok(topicDtos);
-        } catch (ForbiddenException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        } catch (NumberFormatException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
 }

@@ -14,4 +14,5 @@ public interface TopicService {
     Optional<Topic> getTopicByTitle(String topic_title);
     Topic subscribeUserToTopic(Long topic_id, Long user_id, String emailJwt);
     Topic unsubscribeUserFromTopic(Long topic_id, Long user_id, String emailJwt);
+    List<Topic> getTopicsByUserId(Long user_id, String emailJwt);
 }

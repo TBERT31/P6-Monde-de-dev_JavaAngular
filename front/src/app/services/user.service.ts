@@ -24,8 +24,4 @@ export class UserService {
     public updateUser(user: User): Observable<Session> {
         return this.httpClient.put<Session>(`${this.pathService}/${user.id}`, user);
     }
-
-    public getuserSubscribedTopics(id: number): Observable<Topic[]> {
-        return this.httpClient.get<Topic[]>(`${this.pathService}/${id}/topics`);
-    }
 }

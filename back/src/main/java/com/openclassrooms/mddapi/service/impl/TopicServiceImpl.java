@@ -135,4 +135,21 @@ public class TopicServiceImpl implements TopicService{
 
         return topicRepository.save(topic);
     }
+
+    @Override
+    public List<Topic> getTopicsByUserId(Long userId, String emailJwt) {
+        // Récupère l'utilisateur authentifié.
+        User authUser = userRepository.findByEmail(emailJwt)
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + emailJwt));
+
+        // Vérifie si l'utilisateur authentifié est autorisé à accéder aux sujets auxquels l'utilisateur demandé est abonné.
+        if (authUser == null || authUser.getId() != userId.longValue()) {
+            throw new ForbiddenException("You are not allowed to access this user's information");
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ForbiddenException("You are not allowed to access this user's information"));
+
+        return user.getTopics_subscribed();
+    }
 }

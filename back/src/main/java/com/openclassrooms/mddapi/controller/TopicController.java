@@ -117,4 +117,29 @@ public class TopicController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    /**
+     * Récupère les sujets auxquels l'utilisateur est abonné.
+     * @param userId l'identifiant de l'utilisateur.
+     * @param token le jeton d'authentification de l'utilisateur.
+     * @return le sujet.
+     */
+    @GetMapping("user/{userId}")
+    public ResponseEntity<List<TopicDto>> getTopicsByUserId(
+            @PathVariable("userId") Long userId,
+            @RequestHeader("Authorization") String token
+    ) {
+        try {
+            // Récupère l'utilisateur à partir du jeton d'authentification.
+            String jwt = token.substring(7);
+            String emailJwt = jwtUtils.getUserNameFromJwtToken(jwt);
+
+            // Réccupère les sujets auxquels l'utilisateur est abonné.
+            List<Topic> topics = topicService.getTopicsByUserId(userId, emailJwt);
+
+            return ResponseEntity.ok().body(topicMapper.toDto(topics));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

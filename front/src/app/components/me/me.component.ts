@@ -74,7 +74,7 @@ export class MeComponent implements OnInit, OnDestroy {
   }
 
   loadTopcisSubscribed(): void {
-    const sub = this.userService.getuserSubscribedTopics(this.userId).subscribe(topics => {
+    const sub = this.topicService.getTopicsByUserId(this.userId).subscribe(topics => {
       this.topicsSubscribed = topics;
     });
     this.subscriptions.add(sub);

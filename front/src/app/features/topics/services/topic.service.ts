@@ -27,4 +27,8 @@ export class TopicService {
     public unsubscribeUserToTopic(id: number, userId: number): Observable<Topic> {
         return this.httpClient.delete<Topic>(`${this.pathService}/${id}/subscribe/${userId}`);
     }
+
+    public getTopicsByUserId(id: number): Observable<Topic[]> {
+        return this.httpClient.get<Topic[]>(`${this.pathService}/user/${id}`);
+    }
 }

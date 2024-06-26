@@ -158,26 +158,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsernameOrEmail(emailOrUsername, emailOrUsername);
     }
 
-    /**
-     * Récupère les sujets auxquels l'utilisateur est abonné.
-     *
-     * @param userId l'identifiant de l'utilisateur
-     * @return la liste des sujets auxquels l'utilisateur est abonné
-     */
-    @Override
-    public List<Topic> getUserSubscribedTopics(Long userId, String emailJwt) {
-
-        // Récupère l'utilisateur authentifié.
-        User authUser = userRepository.findByEmail(emailJwt)
-                .orElseThrow(() -> new NotFoundException("User not found with email: " + emailJwt));
-
-        // Vérifie si l'utilisateur authentifié est autorisé à accéder aux sujets auxquels l'utilisateur demandé est abonné.
-        if (authUser == null || authUser.getId() != userId.longValue()) {
-            throw new ForbiddenException("You are not allowed to access this user's information");
-        }
-
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
-        return user.getTopics_subscribed();
-    }
-
 }

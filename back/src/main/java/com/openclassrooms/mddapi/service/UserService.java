@@ -19,5 +19,4 @@ public interface UserService {
     User updateUserById(Long id, User user, String emailJwt);
     User registerUser(User user);
     Optional<User> getUserByEmailOrUsername(String emailOrUsername);
-    List<Topic> getUserSubscribedTopics(Long userId, String emailJwt);
 }
