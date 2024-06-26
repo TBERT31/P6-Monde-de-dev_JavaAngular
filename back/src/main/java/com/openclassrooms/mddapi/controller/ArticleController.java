@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import com.openclassrooms.mddapi.dto.ArticleDto;
 import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.model.Article;
-import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.security.jwt.JwtUtils;
 import com.openclassrooms.mddapi.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ import com.openclassrooms.mddapi.mapper.ArticleMapper;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
+
 
 /**
  * Contrôleur pour les opérations liées aux articles.
@@ -61,7 +60,8 @@ public class ArticleController {
     @GetMapping("/{id}")
     public ResponseEntity<ArticleDto> getArticleById(@PathVariable Long id) {
         try {
-            Article article = articleService.getArticleById(id).get();
+            Article article = articleService.getArticleById(id)
+                    .orElseThrow(() -> new NotFoundException("Article not found with id: " + id));
             return ResponseEntity.ok().body(articleMapper.toDto(article));
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();

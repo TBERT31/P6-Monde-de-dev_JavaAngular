@@ -1,11 +1,8 @@
 package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.TopicDto;
-import com.openclassrooms.mddapi.exception.ForbiddenException;
-import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.model.Topic;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.openclassrooms.mddapi.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +27,6 @@ public class TopicController {
     private final TopicService topicService;
     private final TopicMapper topicMapper;
     private final JwtUtils jwtUtils;
-    private final UserService userService;
 
     /**
      * Récupère tous les sujets.
@@ -82,22 +78,13 @@ public class TopicController {
             @PathVariable("userId") Long userId,
             @RequestHeader("Authorization") String token
     ) {
-        // Récupère l'utilisateur à partir du jeton d'authentification.
-        String jwt = token.substring(7);
-        String email = jwtUtils.getUserNameFromJwtToken(jwt);
-
-        // Vérifie si l'utilisateur existe.
-        User user = userService.getUserByEmail(email)
-                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
-
-        // Vérifie si l'utilisateur est autorisé à s'abonner à d'autres utilisateurs.
-        if (!user.getId().equals(userId)) {
-            throw new ForbiddenException("You are not allowed to subscribe other users to topics");
-        }
-
         try {
+            // Récupère l'utilisateur à partir du jeton d'authentification.
+            String jwt = token.substring(7);
+            String emailJwt = jwtUtils.getUserNameFromJwtToken(jwt);
+
             // Abonne l'utilisateur au sujet.
-            Topic topic = topicService.subscribeUserToTopic(id, userId);
+            Topic topic = topicService.subscribeUserToTopic(id, userId, emailJwt);
 
             return ResponseEntity.ok().body(topicMapper.toDto(topic));
         } catch (NumberFormatException e) {
@@ -118,22 +105,13 @@ public class TopicController {
             @PathVariable("userId") Long userId,
             @RequestHeader("Authorization") String token
     ) {
-        // Récupère l'utilisateur à partir du jeton d'authentification.
-        String jwt = token.substring(7);
-        String email = jwtUtils.getUserNameFromJwtToken(jwt);
-
-        // Vérifie si l'utilisateur existe.
-        User user = userService.getUserByEmail(email)
-                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
-
-        // Vérifie si l'utilisateur est autorisé à se désabonner d'autres utilisateurs.
-        if (!user.getId().equals(userId)) {
-            throw new ForbiddenException("You are not allowed to unsubscribe other users to topics");
-        }
-
         try {
+            // Récupère l'utilisateur à partir du jeton d'authentification.
+            String jwt = token.substring(7);
+            String emailJwt = jwtUtils.getUserNameFromJwtToken(jwt);
+
             // Désabonne l'utilisateur du sujet.
-            Topic topic = topicService.unsubscribeUserFromTopic(id, userId);
+            Topic topic = topicService.unsubscribeUserFromTopic(id, userId, emailJwt);
 
             return ResponseEntity.ok().body(topicMapper.toDto(topic));
         } catch (NumberFormatException e) {

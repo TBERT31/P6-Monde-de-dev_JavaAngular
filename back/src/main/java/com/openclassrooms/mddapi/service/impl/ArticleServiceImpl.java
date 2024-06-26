@@ -1,16 +1,15 @@
 package com.openclassrooms.mddapi.service.impl;
 
-import com.openclassrooms.mddapi.exception.BadRequestException;
+
 import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.model.Article;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.TopicRepository;
-import com.openclassrooms.mddapi.service.UserService;
+import com.openclassrooms.mddapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.service.ArticleService;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
@@ -28,7 +27,7 @@ public class ArticleServiceImpl implements ArticleService{
 
     private final ArticleRepository articleRepository;
     private final TopicRepository topicRepository;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     /**
      * Récupère tous les articles.
@@ -80,11 +79,7 @@ public class ArticleServiceImpl implements ArticleService{
      */
     @Override
     public Optional<Article> getArticleById(Long id) {
-        Optional<Article> article = articleRepository.findById(id);
-        if (article.isEmpty()) {
-            throw new NotFoundException("Article not found with id: " + id);
-        }
-        return article;
+        return articleRepository.findById(id);
     }
 
     /**
@@ -103,7 +98,7 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     /**
-     * Sauvegarde l'article en base de données (utilisé pour une création ou une mise à jour).
+     * Créé un nouvel article.
      *
      * @param article l'article à sauvegarder
      * @return l'article sauvegardé
@@ -111,7 +106,7 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public Article createArticle(Article article, String emailJwt) {
         // Vérifie si l'utilisateur contenu dans le jwt existe.
-        User user = userService.getUserByEmail(emailJwt)
+        User user = userRepository.findByEmail(emailJwt)
                 .orElseThrow(() -> new NotFoundException("User not found with email: " + emailJwt));
 
         // Vérifie si l'utilisateur est autorisé à créer un article pour un autre utilisateur.

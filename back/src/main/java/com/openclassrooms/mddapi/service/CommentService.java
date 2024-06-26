@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface CommentService {
     Optional<Comment> getCommentById(Long id);
     List<Comment> getCommentsByArticleId(Long articleId);
-    Comment saveComment(Comment comment);
+    Comment createComment(Comment comment, String emailJwt);
 }

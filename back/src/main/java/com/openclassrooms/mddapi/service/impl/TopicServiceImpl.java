@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.service.impl;
 
+import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
@@ -53,6 +54,7 @@ public class TopicServiceImpl implements TopicService{
      * @return le thème correspondant
      */
     @Override
+    // Utile pour les mappers
     public Optional<Topic> getTopicByTitle(String topic_title) {
         return topicRepository.findByTitle(topic_title);
     }
@@ -65,14 +67,23 @@ public class TopicServiceImpl implements TopicService{
      * @return le thème mis à jour
      */
     @Override
-    public Topic subscribeUserToTopic(Long topicId, Long userId) {
-        Topic topic = topicRepository.findById(topicId).orElse(null);
-        User user = userRepository.findById(userId).orElse(null);
+    public Topic subscribeUserToTopic(Long topicId, Long userId, String emailJwt){
+        // Vérifie si l'utilisateur qui emet la requête existe.
+        User userJwt = userRepository.findByEmail(emailJwt)
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + emailJwt));
 
-        // Gère le cas où le thème ou l'utilisateur n'existe pas
-        if(topic == null || user == null) {
-            throw new NotFoundException("User or topic not found");
+        // Vérifie si l'utilisateur est autorisé à s'abonner à la place d'un autre utilisateur.
+        if (!userJwt.getId().equals(userId)) {
+            throw new ForbiddenException("You are not allowed to subscribe other users to topics");
         }
+
+        // Récupère le thème
+        Topic topic = topicRepository.findById(topicId)
+                .orElseThrow(() -> new NotFoundException("Topic not found with id: " + topicId));
+
+        // Récupère l'utilisateur
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ForbiddenException("You are not allowed to subscribe other users to topics"));
 
         // Gère le cas où l'utilisateur est déjà abonné au thème
         boolean alreadySubscribed = topic.getUsers_subscribed().stream().anyMatch(o -> o.getId().equals(userId));
@@ -94,14 +105,24 @@ public class TopicServiceImpl implements TopicService{
      * @return le thème mis à jour
      */
     @Override
-    public Topic unsubscribeUserFromTopic(Long topicId, Long userId) {
-        Topic topic = topicRepository.findById(topicId).orElse(null);
-        User user = userRepository.findById(userId).orElse(null);
+    public Topic unsubscribeUserFromTopic(Long topicId, Long userId, String emailJwt){
+        // Vérifie si l'utilisateur qui emet la requête existe.
+        User userJwt = userRepository.findByEmail(emailJwt)
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + emailJwt));
 
-        // Gère le cas où le thème ou l'utilisateur n'existe pas
-        if(topic == null || user == null) {
-            throw new NotFoundException("User or topic not found");
+        // Vérifie si l'utilisateur est autorisé à se désabonner d'autres utilisateurs.
+        if (!userJwt.getId().equals(userId)) {
+            throw new ForbiddenException("You are not allowed to unsubscribe other users to topics");
         }
+
+        // Récupère le thème
+        Topic topic = topicRepository.findById(topicId)
+                .orElseThrow(() -> new NotFoundException("Topic not found with id: " + topicId));
+
+        // Récupère l'utilisateur
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ForbiddenException("You are not allowed to subscribe other users to topics"));
+
 
         // Gère le cas où l'utilisateur n'est pas abonné au thème
         boolean alreadySubscribed = topic.getUsers_subscribed().stream().anyMatch(o -> o.getId().equals(userId));
@@ -110,7 +131,7 @@ public class TopicServiceImpl implements TopicService{
         }
 
         // Retire l'utilisateur de la liste des abonnés
-        topic.setUsers_subscribed(topic.getUsers_subscribed().stream().filter(o -> !o.getId().equals(userId)).collect(Collectors.toList()));
+        topic.setUsers_subscribed(topic.getUsers_subscribed().stream().filter(o -> !o.getId().equals(user.getId())).collect(Collectors.toList()));
 
         return topicRepository.save(topic);
     }

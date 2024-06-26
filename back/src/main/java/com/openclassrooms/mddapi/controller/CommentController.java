@@ -71,8 +71,14 @@ public class CommentController {
     public ResponseEntity<List<CommentDto>> getCommentByArticleId(
             @PathVariable Long articleId
     ) {
-        List<Comment> comments = commentService.getCommentsByArticleId(articleId);
-        return ResponseEntity.ok(commentMapper.toDto(comments));
+        try{
+            List<Comment> comments = commentService.getCommentsByArticleId(articleId);
+            return ResponseEntity.ok(commentMapper.toDto(comments));
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     /**
@@ -88,22 +94,17 @@ public class CommentController {
     ) {
         // Récupère l'utilisateur à partir du jeton d'authentification.
         String jwt = token.substring(7);
-        String email = jwtUtils.getUserNameFromJwtToken(jwt);
+        String emailJwt = jwtUtils.getUserNameFromJwtToken(jwt);
 
-        // Vérifie si l'utilisateur existe.
-        User user = userService.getUserByEmail(email)
-                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
+        // Vérifie si l'auteur de l'article existe.
+        userService.getUserByUsername(commentDto.getUsername())
+                //(A méditer, car cela fournit bcp d'information sur nos users...)
+                //.orElseThrow(() -> new NotFoundException("User not found with username: " + commentDto.getUsername()));
 
-        // Vérifie si l'utilisateur est autorisé à créer un commentaire.
-        if(!user.getUsername().equals(commentDto.getUsername())) {
-            throw new ForbiddenException("You are not allowed to create a comment for another user");
-        }
+                // Permet de duper le hacker qui se croit malin
+                .orElseThrow(() -> new ForbiddenException("You are not allowed to create a comment for another user"));
 
-        // Crée un nouveau commentaire.
-        Comment comment = commentMapper.toEntity(commentDto);
-
-        comment = commentService.saveComment(comment);
-
+        Comment comment = commentService.createComment(commentMapper.toEntity(commentDto), emailJwt);
         return ResponseEntity.ok(commentMapper.toDto(comment));
     }
 
