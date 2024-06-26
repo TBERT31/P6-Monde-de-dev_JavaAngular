@@ -12,9 +12,12 @@ import java.util.Optional;
  */
 public interface UserService {
     Optional<User> getUserById(Long id);
+    Optional<User> getUserByIdWithAuthorization(Long id, String emailJwt);
     Optional<User> getUserByEmail(String email);
+    Optional<User> getUserByEmailWithAuthorization(String email, String emailJwt);
     Optional<User> getUserByUsername(String username);
-    User saveUser(User user);
+    User updateUserById(Long id, User user, String emailJwt);
+    User registerUser(User user);
     Optional<User> getUserByEmailOrUsername(String emailOrUsername);
-    List<Topic> getUserSubscribedTopics(Long userId);
+    List<Topic> getUserSubscribedTopics(Long userId, String emailJwt);
 }

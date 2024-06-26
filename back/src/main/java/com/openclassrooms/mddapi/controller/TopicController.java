@@ -12,7 +12,6 @@ import com.openclassrooms.mddapi.mapper.TopicMapper;
 import java.util.List;
 import java.util.Optional;
 import com.openclassrooms.mddapi.security.jwt.JwtUtils;
-import com.openclassrooms.mddapi.service.UserService;
 
 /**
  * Contrôleur pour les opérations liées aux sujets.

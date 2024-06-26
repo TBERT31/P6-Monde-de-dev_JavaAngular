@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.exception.NotFoundException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.openclassrooms.mddapi.exception.ForbiddenException;
-import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.security.jwt.JwtUtils;
 import com.openclassrooms.mddapi.service.UserService;
 import lombok.RequiredArgsConstructor;

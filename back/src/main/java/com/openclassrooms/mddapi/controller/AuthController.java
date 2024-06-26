@@ -91,14 +91,14 @@ public class AuthController {
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
 
-        // Crée un nouvel utilisateur.
+        // Créer une entité user avec les informations d'enregistrement.
         User user = new User(
                 signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 passwordEncoder.encode(signUpRequest.getPassword())
         );
 
-        userService.saveUser(user);
+        userService.registerUser(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.mapper.TopicMapper;
 import com.openclassrooms.mddapi.mapper.UserMapper;
@@ -57,32 +58,26 @@ public class UserController {
             @PathVariable Integer id,
             @RequestHeader("Authorization") String token
     ){
-        // Récupère l'email de l'utilisateur authentifié.
-        String jwt = token.substring(7);
-        String email = jwtUtils.getUserNameFromJwtToken(jwt);
+        try {
+            // Récupère l'email de l'utilisateur authentifié.
+            String jwt = token.substring(7);
+            String emailJwt = jwtUtils.getUserNameFromJwtToken(jwt);
 
-        // Récupère l'utilisateur authentifié.
-        User authUser = userService.getUserByEmail(email)
-                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
+            // Récupère l'utilisateur par son identifiant.
+            Optional<User> optionalUser = userService.getUserByIdWithAuthorization(id.longValue(), emailJwt);
 
-        // Vérifie si l'utilisateur authentifié est autorisé à accéder aux informations de l'utilisateur demandé.
-        if (authUser.getId() != id.longValue()) {
-            //throw new ForbiddenException("You are not allowed to access this user's information");
-            return ResponseEntity.badRequest().build();
-        }
+            // Vérifie si l'utilisateur existe.
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                UserDto userDto = userMapper.toDto(user);
 
-        // Récupère l'utilisateur par son identifiant.
-        Optional<User> optionalUser = userService.getUserById(id.longValue());
-
-        // Vérifie si l'utilisateur existe.
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            UserDto userDto = userMapper.toDto(user);
-
-            // Retourne l'utilisateur.
-            return ResponseEntity.ok(userDto);
-        } else {
-            //return ResponseEntity.notFound().build();
+                // Retourne l'utilisateur.
+                return ResponseEntity.ok(userDto);
+            } else {
+                //return ResponseEntity.notFound().build();
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -98,32 +93,25 @@ public class UserController {
             @PathVariable String email,
             @RequestHeader("Authorization") String token
     ){
-        // Récupère l'email de l'utilisateur authentifié.
-        String jwt = token.substring(7);
-        String jwtEmail = jwtUtils.getUserNameFromJwtToken(jwt);
+        try {
+            // Récupère l'email de l'utilisateur authentifié.
+            String jwt = token.substring(7);
+            String emailJwt = jwtUtils.getUserNameFromJwtToken(jwt);
 
-        // Récupère l'utilisateur authentifié.
-        User authUser = userService.getUserByEmail(jwtEmail)
-                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
+            Optional<User> optionalUser = userService.getUserByEmailWithAuthorization(email, emailJwt);
 
-        Optional<User> optionalUser = userService.getUserByEmail(email);
+            // Vérifie si l'utilisateur existe.
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                UserDto userDto = userMapper.toDto(user);
 
-        // Vérifie si l'utilisateur existe.
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-
-            // Vérifie si l'utilisateur authentifié est autorisé à accéder aux informations de l'utilisateur demandé.
-            if (!authUser.getId().equals(user.getId())) {
-                //throw new ForbiddenException("You are not allowed to access this user's information");
+                // Retourne l'utilisateur.
+                return ResponseEntity.ok(userDto);
+            } else {
+                //return ResponseEntity.notFound().build();
                 return ResponseEntity.badRequest().build();
             }
-
-            UserDto userDto = userMapper.toDto(user);
-
-            // Retourne l'utilisateur.
-            return ResponseEntity.ok(userDto);
-        } else {
-            //return ResponseEntity.notFound().build();
+        }catch (NumberFormatException e) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -141,31 +129,19 @@ public class UserController {
             @Valid @RequestBody UserDto userDto,
             @RequestHeader("Authorization") String token
     ) {
-        // Récupère l'email de l'utilisateur authentifié.
-        String jwt = token.substring(7);
-        String email = jwtUtils.getUserNameFromJwtToken(jwt);
+        try {
+            // Récupère l'email de l'utilisateur authentifié.
+            String jwt = token.substring(7);
+            String emailJwt = jwtUtils.getUserNameFromJwtToken(jwt);
 
-        // Récupère l'utilisateur authentifié.
-        User authUser = userService.getUserByEmail(email).orElse(null);
+            // Utilise le service pour mettre à jour l'utilisateur.
+            User updatedUser = userService.updateUserById(
+                    id.longValue(),
+                    userMapper.toEntity(userDto),
+                    emailJwt
+            );
 
-        // Vérifie si l'utilisateur authentifié est autorisé à mettre à jour les informations de l'utilisateur demandé.
-        if (authUser == null || authUser.getId() != id.longValue()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
-        Optional<User> optionalUser = userService.getUserById(id.longValue());
-
-        // Vérifie si l'utilisateur existe.
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-
-            user.setUsername(userDto.getUsername());
-            user.setEmail(userDto.getEmail());
-
-            // Met à jour l'utilisateur.
-            User updatedUser = userService.saveUser(user);
-
-            // Générer un nouveau JWT en utilisant l'authentification de l'utilisateur mis à jour
+            // Générer un nouveau JWT en utilisant l'authentification de l'utilisateur mis à jour.
             UserDetailsImpl userDetails = new UserDetailsImpl(
                     updatedUser.getId(),
                     updatedUser.getUsername(),
@@ -173,7 +149,6 @@ public class UserController {
                     updatedUser.getPassword()
             );
 
-            // Authentifie l'utilisateur avec les informations mises à jour.
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());
 
@@ -187,8 +162,12 @@ public class UserController {
                     updatedUser.getUsername());
 
             return ResponseEntity.ok(jwtResponse);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (ForbiddenException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -203,21 +182,19 @@ public class UserController {
             @PathVariable Long id,
             @RequestHeader("Authorization") String token
     ) {
-        // Récupère l'email de l'utilisateur authentifié.
-        String jwt = token.substring(7);
-        String email = jwtUtils.getUserNameFromJwtToken(jwt);
+        try {
+            // Récupère l'email de l'utilisateur authentifié.
+            String jwt = token.substring(7);
+            String emailJwt = jwtUtils.getUserNameFromJwtToken(jwt);
 
-        // Récupère l'utilisateur authentifié.
-        User authUser = userService.getUserByEmail(email).orElse(null);
-
-        // Vérifie si l'utilisateur authentifié est autorisé à accéder aux sujets auxquels l'utilisateur demandé est abonné.
-        if (authUser == null || authUser.getId() != id.longValue()) {
+            // Récupère et retourne les sujets auxquels l'utilisateur est abonné.
+            List<Topic> topics = userService.getUserSubscribedTopics(id, emailJwt);
+            List<TopicDto> topicDtos = topicMapper.toDto(topics);
+            return ResponseEntity.ok(topicDtos);
+        } catch (ForbiddenException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
         }
-
-        // Récupère et retourne les sujets auxquels l'utilisateur est abonné.
-        List<Topic> topics = userService.getUserSubscribedTopics(id);
-        List<TopicDto> topicDtos = topicMapper.toDto(topics);
-        return ResponseEntity.ok(topicDtos);
     }
 }
