@@ -16,8 +16,9 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
 
   constructor(private articleService: ArticlesService) {}
 
+  // Initialisation du composant.
   ngOnInit(): void {
-    this.loadArticles();
+    this.loadArticles(); // Chargement des articles.
   }
 
 
@@ -26,10 +27,12 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
     //this.subscription.unsubscribe();
   }
 
+  // Chargement des articles en fonction du tri et de l'ordre.
   loadArticles(): void {
     this.articles$ = this.articleService.getAllArticles(this.sortBy, this.order);
   }
 
+  // Changement de l'ordre de tri.
   toggleSortOrder(): void {
     this.order = this.order === 'asc' ? 'desc' : 'asc';
     this.loadArticles();

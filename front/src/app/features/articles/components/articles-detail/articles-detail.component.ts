@@ -17,13 +17,14 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./articles-detail.component.scss']
 })
 export class ArticleDetailComponent implements OnInit, OnDestroy {
-
+  // Déclaration des propriétés du composant.
   public commentForm!: FormGroup;
   public article: Article | undefined;
   private username: string | undefined;
   public comments$: Observable<Comment[]> | undefined;
   private subscriptions: Subscription = new Subscription();
 
+  // Constructeur du composant, injection des dépendances nécessaires.
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -32,44 +33,50 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     private matSnackBar: MatSnackBar,
   ) { 
-    this.initCommentForm();
+    this.initCommentForm(); // Initialisation du formulaire de commentaire.
   }
 
+  // Méthode appelée à l'initialisation du composant.
   ngOnInit(): void {
-    const id = +this.route.snapshot.paramMap.get('id')!;
+    const id = +this.route.snapshot.paramMap.get('id')!; // Récupération de l'ID de l'article depuis l'URL.
 
-    const session = this.sessionService.getSession();
+    const session = this.sessionService.getSession(); // Récupération de la session courante.
     if (session) {
-      this.username = session.username;
+      this.username = session.username; // Mise à jour du nom d'utilisateur.
     }
 
+    // Souscription au service pour récupérer l'article par son ID et mise à jour de l'article courant.
     const articleSubscription = this.articlesService
       .getArticleById(id)
       .subscribe((article: Article) => {
         this.article = article;
-        this.loadComments();
+        this.loadComments(); // Chargement des commentaires pour l'article courant.
     });
 
-    this.subscriptions.add(articleSubscription);
+    this.subscriptions.add(articleSubscription); // Ajout de l'abonnement à la gestion des abonnements.
   }
 
+  // Méthode appelée à la destruction du composant.
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.subscriptions.unsubscribe(); // Désabonnement de tous les observables pour éviter les fuites de mémoire.
   }
 
+  // Initialisation du formulaire de commentaire avec validation.
   private initCommentForm(): void{
     this.commentForm = this.fb.group({
       message: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(2000)]],
     });
   }
 
-  // Pas besoin d'unsubscribe cet observable là le pipe async s'en charge
+  // Chargement des commentaires pour l'article courant. 
+  // (Pas besoin d'unsubscribe cet observable là le pipe async s'en charge)
   private loadComments(): void{
     if (this.article) {
       this.comments$ = this.commentsService.getCommentByArticleId(this.article.id);
     }
   }
 
+  // Envoi d'un commentaire.
   public sendComment(): void {
     if (this.article && this.username) {
       const comment = {
@@ -77,7 +84,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
         username: this.username,
         message: this.commentForm.value.message
       } as CommentRequest;
-
+ 
+      // Création du commentaire via le service et réinitialisation du formulaire et rechargement des commentaires après succès.
       const commentSubscription = this.commentsService.createComment(comment).subscribe(
         (commentResponse: Comment) => {
           this.initCommentForm();
@@ -90,6 +98,7 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Méthode pour revenir à la page précédente.
   public back(): void {
     window.history.back();
   }

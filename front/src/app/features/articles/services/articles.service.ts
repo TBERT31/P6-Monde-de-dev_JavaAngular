@@ -15,13 +15,20 @@ export class ArticlesService {
   constructor(private httpClient: HttpClient) { }
 
   public getAllArticles(sortBy: string = 'id', order: string = 'asc'): Observable<Article[]> {
+    // Initialisation d'un objet HttpParams vide.
     let params = new HttpParams();
+
+    // Si un critère de tri (sortBy) est fourni, il est ajouté à l'objet params.
     if (sortBy) {
       params = params.set('sortBy', sortBy);
     }
+
+    // Si un ordre de tri (order) est fourni, il est également ajouté à l'objet params.
     if (order) {
       params = params.set('order', order);
     }
+
+    // Les paramètres de tri (params) sont passés dans l'objet d'options de la requête.
     return this.httpClient.get<Article[]>(this.pathService, { params });
   }
 
