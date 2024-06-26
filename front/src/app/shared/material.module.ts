@@ -8,6 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+
+// Module d'import des composants Angular Material
 @NgModule({
   exports: [
     MatButtonModule,

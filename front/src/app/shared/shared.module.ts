@@ -16,7 +16,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   exports: [
     TruncatePipe,
     ReactiveFormsModule,
-    MaterialModule,
+    MaterialModule, /* Il suffira d'importer SharedModule pour avoir accès 
+    aux imports material nécessaire, WebPack ne multipliera pas les imports, 
+    de notre côté cela nous allège le code en évitant de la redondance d'import */
   ]
 })
 export class SharedModule { }

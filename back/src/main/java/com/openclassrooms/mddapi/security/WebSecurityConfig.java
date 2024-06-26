@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,14 +29,13 @@ import com.openclassrooms.mddapi.security.services.UserDetailsServiceImpl;
         // jsr250Enabled = true,
         prePostEnabled = true
 )
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // Injecte une instance de UserDetailsServiceImpl
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     // Injecte une instance de AuthEntryPointJwt
-    @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
+    private final AuthEntryPointJwt unauthorizedHandler;
 
     /**
      * Déclare un bean Spring pour AuthTokenFilter.
