@@ -16,7 +16,7 @@ public interface UserService {
     Optional<User> getUserByEmail(String email);
     Optional<User> getUserByEmailWithAuthorization(String email, String emailJwt);
     Optional<User> getUserByUsername(String username);
-    User updateUserById(Long id, User user, String emailJwt);
+    User updateEmailOrUsername(Long id, String newEmail, String newUsername, String emailJwt);
     User registerUser(User user);
     Optional<User> getUserByEmailOrUsername(String emailOrUsername);
 }

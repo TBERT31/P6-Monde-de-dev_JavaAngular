@@ -94,7 +94,7 @@ export class MeComponent implements OnInit, OnDestroy {
     if (this.userForm.valid) {
       // Mise à jour des informations de l'utilisateur
       const updatedUser: User = { ...this.user, ...this.userForm.value };
-      const sub = this.userService.updateUser(updatedUser).subscribe({
+      const sub = this.userService.updateEmailOrUsername(updatedUser).subscribe({
         next: (response: Session) => {
           this.sessionService.logOut(); // Déconnexion de l'utilisateur
           this.sessionService.logIn(response); // Connexion de l'utilisateur avec les nouvelles informations

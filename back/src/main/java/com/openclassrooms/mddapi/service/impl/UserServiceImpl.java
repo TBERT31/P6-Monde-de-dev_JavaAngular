@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
      * @return l'utilisateur sauvegardé
      */
     @Override
-    public User updateUserById(Long id, User user, String emailJwt) {
+    public User updateEmailOrUsername(Long id, String newEmail, String newUsername, String emailJwt) {
         // Récupère l'utilisateur authentifié.
         User authUser = userRepository.findByEmail(emailJwt)
                 .orElseThrow(() -> new NotFoundException("User not found with email: " + emailJwt));
@@ -140,8 +140,8 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ForbiddenException("You are not allowed to update this user's information"));
 
         // Met à jour les informations de l'utilisateur.
-        updatedUser.setUsername(user.getUsername());
-        updatedUser.setEmail(user.getEmail());
+        updatedUser.setUsername(newUsername);
+        updatedUser.setEmail(newEmail);
 
         // Sauvegarde les modifications.
         return userRepository.save(updatedUser);

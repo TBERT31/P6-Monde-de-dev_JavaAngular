@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : dim. 16 juin 2024 à 09:33
+-- Généré le : mer. 26 juin 2024 à 17:40
 -- Version du serveur : 8.0.36
 -- Version de PHP : 8.2.12
 
@@ -79,8 +79,8 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `message`, `user_id`, `article_id`, `created_at`, `updated_at`) VALUES
-(1, 'mon message', 1, 1, '2024-06-07 14:36:20', '2024-06-07 14:36:20'),
-(2, 'mon second message', 1, 1, '2024-06-07 14:40:22', '2024-06-08 22:43:42');
+(1, 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l\'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.', 1, 1, '2024-06-17 20:10:27', '2024-06-17 20:10:44'),
+(2, 'On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L\'avantage du Lorem Ipsum sur un texte générique comme \'Du texte. Du texte. ', 1, 1, '2024-06-17 20:10:27', '2024-06-17 20:10:49');
 
 -- --------------------------------------------------------
 
@@ -92,6 +92,20 @@ CREATE TABLE `subscriptions` (
   `user_id` bigint NOT NULL,
   `topic_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `subscriptions`
+--
+
+INSERT INTO `subscriptions` (`user_id`, `topic_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 8);
 
 -- --------------------------------------------------------
 
@@ -112,14 +126,14 @@ CREATE TABLE `topics` (
 --
 
 INSERT INTO `topics` (`id`, `title`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'JavaScript', 'JavaScript est un langage de programmation de scripts principalement employé dans les pages web interactives et à ce titre est une partie essentielle des applications web. Avec les langages HTML et CSS, JavaScript est au cœur des langages utilisés par les développeurs web.', '2024-06-07 11:31:52', '2024-06-08 23:07:25'),
-(2, 'Java', 'Java est un langage de programmation de haut niveau orienté objet créé par James Gosling et Patrick Naughton, employés de Sun Microsystems, avec le soutien de Bill Joy, présenté officiellement le 23 mai 1995 au SunWorld. La société Sun est rachetée en 2009 par la société Oracle qui détient et maintient désormais Java.', '2024-06-07 11:31:58', '2024-06-07 11:32:00'),
-(3, 'Python', 'Python est un langage de programmation interprété, multiparadigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet.', '2024-06-07 11:32:02', '2024-06-07 11:32:06'),
-(4, 'C#', 'C# est un langage de programmation orientée objet, commercialisé par Microsoft depuis 2002 et destiné à développer sur la plateforme Microsoft .NET, au même titre que d’autres langages liés à cette plateforme.', '2024-06-07 11:32:08', '2024-06-07 11:32:12'),
-(5, 'PHP', 'PHP: Hypertext Preprocessor, plus connu sous son sigle PHP, est un langage de programmation libre, principalement utilisé pour produire des pages Web dynamiques via un serveur web, mais pouvant également fonctionner comme n\'importe quel langage interprété de façon locale. PHP est un langage impératif orienté objet.', '2024-06-07 11:32:14', '2024-06-07 11:32:16'),
-(6, 'Ruby', 'Ruby est un langage de programmation libre. Il est interprété, orienté objet et multi-paradigme. Le langage a été standardisé au Japon en 2011 (JIS X 3017:2011), et en 2012 par l\'Organisation internationale de normalisation (ISO 30170:2012).', '2024-06-07 11:32:18', '2024-06-07 11:32:20'),
-(7, 'Web3', 'Le Web3 ou Web 3.0 est un terme utilisé pour désigner l\'idée d\'un web décentralisé exploitant la technologie des chaînes de blocs, se voulant ainsi le successeur du Web 2.0, terme utilisé pour désigner le web « social ».', '2024-06-07 11:32:22', '2024-06-07 11:32:25'),
-(8, 'Data Science', 'La Data Science ou science des données est un vaste champ multi-disciplinaire visant à donner du sens aux données brutes. Data Science : définition, champs d\'applications et limites actuelles, découvrez tout ce que vous devez savoir sur ce domaine complexe, devenu un enjeu prioritaire dans les entreprises de toutes les industries.', '2024-06-07 11:32:27', '2024-06-07 11:32:29');
+(1, 'JavaScript', 'JavaScript est un langage de programmation de scripts principalement employé dans les pages web interactives et à ce titre est une partie essentielle des applications web. Avec les langages HTML et CSS, JavaScript est au cœur des langages utilisés par les développeurs web.', '2024-06-07 11:31:52', '2024-06-26 15:33:59'),
+(2, 'Java', 'Java est un langage de programmation de haut niveau orienté objet créé par James Gosling et Patrick Naughton, employés de Sun Microsystems, avec le soutien de Bill Joy, présenté officiellement le 23 mai 1995 au SunWorld. La société Sun est rachetée en 2009 par la société Oracle qui détient et maintient désormais Java.', '2024-06-07 11:31:58', '2024-06-26 15:34:00'),
+(3, 'Python', 'Python est un langage de programmation interprété, multiparadigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet.', '2024-06-07 11:32:02', '2024-06-26 15:33:59'),
+(4, 'C#', 'C# est un langage de programmation orientée objet, commercialisé par Microsoft depuis 2002 et destiné à développer sur la plateforme Microsoft .NET, au même titre que d’autres langages liés à cette plateforme.', '2024-06-07 11:32:08', '2024-06-26 15:34:01'),
+(5, 'PHP', 'PHP: Hypertext Preprocessor, plus connu sous son sigle PHP, est un langage de programmation libre, principalement utilisé pour produire des pages Web dynamiques via un serveur web, mais pouvant également fonctionner comme n\'importe quel langage interprété de façon locale. PHP est un langage impératif orienté objet.', '2024-06-07 11:32:14', '2024-06-26 15:34:02'),
+(6, 'Ruby', 'Ruby est un langage de programmation libre. Il est interprété, orienté objet et multi-paradigme. Le langage a été standardisé au Japon en 2011 (JIS X 3017:2011), et en 2012 par l\'Organisation internationale de normalisation (ISO 30170:2012).', '2024-06-07 11:32:18', '2024-06-26 15:34:03'),
+(7, 'Web3', 'Le Web3 ou Web 3.0 est un terme utilisé pour désigner l\'idée d\'un web décentralisé exploitant la technologie des chaînes de blocs, se voulant ainsi le successeur du Web 2.0, terme utilisé pour désigner le web « social ».', '2024-06-07 11:32:22', '2024-06-26 15:34:03'),
+(8, 'Data Science', 'La Data Science ou science des données est un vaste champ multi-disciplinaire visant à donner du sens aux données brutes. Data Science : définition, champs d\'applications et limites actuelles, découvrez tout ce que vous devez savoir sur ce domaine complexe, devenu un enjeu prioritaire dans les entreprises de toutes les industries.', '2024-06-07 11:32:27', '2024-06-26 15:34:04');
 
 -- --------------------------------------------------------
 
@@ -141,7 +155,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'john.doe01', 'john.doe@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:30:34', '2024-06-08 20:26:50'),
+(1, 'john.doe01', 'john.doe@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:30:34', '2024-06-21 19:56:19'),
 (2, 'jane.doe02', 'jane.doe@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:30:45', '2024-06-08 20:26:53'),
 (3, 'john.smith03', 'john.smith@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:30:53', '2024-06-08 20:26:56'),
 (4, 'jane.smith04', 'jane.smith@test.com', '$2a$10$C0XI8htK5dZUoqVld2w5d.d9eVwvoa748GbmAiUVA0/JLPpgfU6Bu', '2024-06-07 11:31:00', '2024-06-08 20:27:00'),

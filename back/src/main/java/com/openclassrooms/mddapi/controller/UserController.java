@@ -1,12 +1,11 @@
 package com.openclassrooms.mddapi.controller;
 
-import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.exception.ForbiddenException;
 import com.openclassrooms.mddapi.exception.NotFoundException;
 import com.openclassrooms.mddapi.mapper.TopicMapper;
 import com.openclassrooms.mddapi.mapper.UserMapper;
-import com.openclassrooms.mddapi.model.Topic;
+
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,7 +24,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -124,7 +122,7 @@ public class UserController {
      * @return une réponse avec le nouveau jeton JWT si la mise à jour est réussie.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<JwtResponse> updateUser(
+    public ResponseEntity<JwtResponse> updateEmailOrUsername(
             @PathVariable Integer id,
             @Valid @RequestBody UserDto userDto,
             @RequestHeader("Authorization") String token
@@ -135,11 +133,13 @@ public class UserController {
             String emailJwt = jwtUtils.getUserNameFromJwtToken(jwt);
 
             // Utilise le service pour mettre à jour l'utilisateur.
-            User updatedUser = userService.updateUserById(
+            User updatedUser = userService.updateEmailOrUsername(
                     id.longValue(),
-                    userMapper.toEntity(userDto),
+                    userDto.getEmail(),
+                    userDto.getUsername(),
                     emailJwt
             );
+
 
             // Générer un nouveau JWT en utilisant l'authentification de l'utilisateur mis à jour.
             UserDetailsImpl userDetails = new UserDetailsImpl(
