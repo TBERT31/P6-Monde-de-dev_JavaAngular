@@ -18,7 +18,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
   // Déclaration des propriétés du composant.
   public articleForm!: FormGroup;
   public topics$ =  this.topicService.getAllTopics();
-  public username: string = "";
+  private username: string = "";
   private subscriptions: Subscription = new Subscription();
 
   // Constructeur du composant, injection des dépendances nécessaires.
@@ -47,7 +47,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
   }
 
   // Initialisation du formulaire avec ou sans données d'article existant.
-  public initForm(article?: Article): void {
+  private initForm(article?: Article): void {
       this.articleForm = this.fb.group({
         topic_title: [article ? article.topic_title : '', [Validators.required]],
         title: [article ? article.title : '', [Validators.required, Validators.maxLength(200)]],
@@ -75,7 +75,7 @@ export class ArticleFormComponent implements OnInit, OnDestroy {
   }
 
   // Méthode pour quitter la page actuelle après la création ou la mise à jour d'un article.
-  public exitPage(message: string): void {
+  private exitPage(message: string): void {
     this.matSnackBar.open(message, 'Close', { duration: 3000 }); 
     this.router.navigate(['articles']); 
   }

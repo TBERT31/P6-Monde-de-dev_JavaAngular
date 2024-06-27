@@ -28,12 +28,12 @@ export class ArticlesListComponent implements OnInit, OnDestroy {
   }
 
   // Chargement des articles en fonction du tri et de l'ordre.
-  loadArticles(): void {
+  private loadArticles(): void {
     this.articles$ = this.articleService.getAllArticles(this.sortBy, this.order);
   }
 
   // Changement de l'ordre de tri.
-  toggleSortOrder(): void {
+  public toggleSortOrder(): void {
     this.order = this.order === 'asc' ? 'desc' : 'asc';
     this.loadArticles();
   }

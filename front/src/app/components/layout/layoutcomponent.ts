@@ -15,12 +15,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
   @ViewChild('drawer') drawer!: MatSidenav;
 
   // Variables pour contrôler l'affichage de la barre d'outils et la visibilité du tiroir.
-  showToolbar: boolean = true;
-  showToolbarSubscription: Subscription | null = null;
-  resizeSubscription: Subscription | null = null;
-  isLoggedIn$: Observable<boolean>;
+  public showToolbar: boolean = true;
+  private isLoggedIn$: Observable<boolean>;
   private readonly mobileWidthLoginsPages = 768;
-  drawerCanBeVisible: boolean = window.innerWidth < 640;
+  public drawerCanBeVisible: boolean = window.innerWidth < 640;
   private subscriptions: Subscription = new Subscription();
 
   // Injection du Router et du SessionService dans le constructeur.
@@ -82,7 +80,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   // Fonction pour naviguer vers la page d'accueil ou la page des articles en fonction du statut de connexion.
-  navigateHome(): void {
+  public navigateHome(): void {
     const logInSub = this.isLoggedIn$.subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.router.navigate(['articles']);

@@ -19,10 +19,10 @@ import { TopicService } from 'src/app/features/topics/services/topic.service';
 export class MeComponent implements OnInit, OnDestroy {
   // Déclaration des variables utilisées dans le composant
   public userForm: FormGroup;
-  public user: User | undefined;
-  public userId: number = 0;
-  public username: string = "";
-  public email: string = "";
+  private user: User | undefined;
+  private userId: number = 0;
+  private username: string = "";
+  private email: string = "";
   public errorMsg: string = "";
   public topicsSubscribed: Topic[] = [];
   private subscriptions: Subscription = new Subscription();
@@ -53,6 +53,12 @@ export class MeComponent implements OnInit, OnDestroy {
         // Récupération de l'utilisateur connecté
         user => {
           this.user = user;
+
+          //Déclanche une erreur si les informations fournies ne correspondent pas aux informations de session
+          if (this.user === undefined || this.user.username !== this.username || this.user.email !== this.email) {
+            throw new HttpErrorResponse({ status: 401, statusText: 'Unauthorized', error: { message: 'Session expired' } });
+          }
+          
           this.initForm(user);
           this.loadTopcisSubscribed();
         },
@@ -74,7 +80,7 @@ export class MeComponent implements OnInit, OnDestroy {
   }
 
   // Méthode d'initialisation du formulaire avec les données de l'utilisateur
-  public initForm(user: User): void {
+  private initForm(user: User): void {
     this.userForm.patchValue({
       username: user.username,
       email: user.email,
@@ -82,7 +88,7 @@ export class MeComponent implements OnInit, OnDestroy {
   }
 
   // Méthode de chargement des topics auxquels l'utilisateur est abonné
-  loadTopcisSubscribed(): void {
+  private loadTopcisSubscribed(): void {
     const sub = this.topicService.getTopicsByUserId(this.userId).subscribe(topics => {
       this.topicsSubscribed = topics;
     });
